@@ -240,14 +240,14 @@
 }
 
 .card-header-green{
-    background-color: #002b2f;
-    color: #e3e3e3;
+    background-color: #002b2f90;
+    color: rgb(33, 37, 41);
 }
 .card-header-red{
-    background-color: #e55f50;
-    color: #e3e3e3;
+    background-color: #e55f5090;
+    color: rgb(33, 37, 41);
 }
 .card-header-blue{
-    background-color: #330072;
-    color: #e3e3e3;
+    background-color: #33007290;
+    color: rgb(33, 37, 41);
 }
