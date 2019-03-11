@@ -33,9 +33,12 @@
 #month-select-name-container{
     display: inline-block;
     min-width: 150px;
+    color: rgba(119, 119, 119, 0.92);
+    font-weight: 700;
 }
 
 #calendar-weekdays-container{
+    margin-top: 10px;
     /*background-color: #34ce57;*/
     /*min-height: 550px;*/
 }
@@ -46,9 +49,9 @@
 
 #filters-header-icons{
     /*background-color: #005cbf;*/
-    font-size: 30px;
-    min-height: 35px;
-    color: rgb(108, 117, 125);
+    font-size: 22px;
+    min-height: 43px;
+    color: rgba(119, 119, 119, 0.92);
 }
 
 #calendar-view-button, #list-view-button{
@@ -56,7 +59,7 @@
 }
 
 #calendar-view-button:hover, #list-view-button:hover{
-    color: #000;
+    color: #330072;
 }
 
 #calendar-view-button{
@@ -84,7 +87,7 @@
 .calendar-cell{
     width: 20%;
     float: left;
-    height: 100px;
+    height: 115px;
     /*background-color: #686868;*/
     /*border-top: 1px solid rgb(108, 117, 125);*/
     /*border-left: 1px solid rgb(108, 117, 125);*/
@@ -92,8 +95,8 @@
     border-left: 1px solid #c8ccd0;
 }
 
-.calendar-cell-active{
-    background-color: #aff4ad;
+.calendar-cell-today{
+    background-color: rgba(229, 95, 80, 0.8);;
 }
 
 .calendar-cell-date{
@@ -111,7 +114,7 @@
 }
 
 .fa-active{
-    color: #000 !important;
+    color: #330072 !important;
 }
 
 #calendar-cells-container {
@@ -201,7 +204,7 @@
     padding-right: 10px;
 }
 
-.greed-event-container{
+.grid-event-container{
     /*height: 70px;*/
     /*background-color: #e3e3e3;*/
     /*border-bottom: 2px solid rgb(108, 117, 125);*/
@@ -215,4 +218,11 @@
 
 .grid-card-body{
     padding: 0;
+}
+
+#calendar-search {
+}
+
+.grid-header-container {
+    min-height: 43px;
 }
