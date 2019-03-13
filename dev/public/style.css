@@ -1,0 +1,253 @@
+#calendar-app{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+#calendar-app, #calendar-container, #filters-container{
+    /*min-height: 600px;*/
+}
+
+#calendar-app{
+    /*background-color: #f9f9f9;*/
+    user-select: none;
+}
+
+#calendar-app-container{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#calendar-container{
+    /*background-color: #6610f2;*/
+}
+
+#month-select-arrow-name{
+    padding-bottom: 15px;
+}
+
+#month-select-container{
+    /*background-color: #005cbf;*/
+    height: 45px;
+}
+
+#month-select-name-container{
+    display: inline-block;
+    min-width: 150px;
+    color: rgba(119, 119, 119, 0.92);
+    font-weight: 700;
+}
+
+#calendar-weekdays-container{
+    margin-top: 10px;
+    /*background-color: #34ce57;*/
+    /*min-height: 550px;*/
+}
+
+#filters-container{
+    /*background-color: #abdde5;*/
+}
+
+#filters-header-icons{
+    /*background-color: #005cbf;*/
+    font-size: 22px;
+    min-height: 43px;
+    color: rgba(119, 119, 119, 0.92);
+}
+
+#calendar-view-button, #list-view-button{
+    cursor: pointer;
+}
+
+#calendar-view-button:hover, #list-view-button:hover{
+    color: #330072;
+}
+
+#calendar-view-button{
+
+}
+
+#list-view-button{
+
+}
+
+.weekday-name{
+    width: 20%;
+    float: left;
+    height: 45px;
+    /*padding-left: 5px;*/
+    padding-top: 8px;
+    font-weight: 700;
+    color: rgba(119, 119, 119, 0.92);
+    text-align: center;
+    /*background-color: #c78f4d;*/
+    border-top: 1px solid #c8ccd0;
+    border-left: 1px solid #c8ccd0;
+}
+
+.calendar-cell{
+    width: 20%;
+    float: left;
+    height: 115px;
+    /*background-color: #686868;*/
+    /*border-top: 1px solid rgb(108, 117, 125);*/
+    /*border-left: 1px solid rgb(108, 117, 125);*/
+    border-top: 1px solid #c8ccd0;
+    border-left: 1px solid #c8ccd0;
+}
+
+.calendar-cell-today{
+    background-color: rgba(229, 95, 80, 0.8);;
+}
+
+.calendar-cell-date{
+    font-size: 13px;
+    padding-top: 2px;
+    padding-right: 5px;
+}
+
+.filter-row-container{
+    padding-top: 10px;
+}
+
+.no-padding{
+    padding: 0;
+}
+
+.fa-active{
+    color: #330072 !important;
+}
+
+#calendar-cells-container {
+
+}
+
+.ce-1{
+    width: 130px;
+}
+
+.ce-2{
+    width: 267px;
+}
+
+.ce-3{
+    width: 405px;
+}
+
+.ce-4{
+    width: 542px;
+}
+
+.ce-5{
+    width: 682px;
+}
+
+.calendar-event {
+    position: absolute;
+    height: 15px;
+    margin-left: 3px;
+    margin-top: 3px;
+    background-color: #e3e3e3;
+}
+
+.calendar-event-container{
+    line-height: 15px;
+    padding: 0;
+    cursor: pointer;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    /* IE 5-7 */
+    filter: alpha(opacity=80);
+    /* Netscape */
+    -moz-opacity: 0.80;
+    /* Safari 1.x */
+    -khtml-opacity: 0.80;
+    /* Good browsers */
+    opacity: 0.80;
+}
+
+.calendar-event-container:hover {
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    /* IE 5-7 */
+    filter: alpha(opacity=100);
+    /* Netscape */
+    -moz-opacity: 1;
+    /* Safari 1.x */
+    -khtml-opacity: 1;
+    /* Good browsers */
+    opacity: 1;
+}
+.calendar-event-type {
+    height: 15px;
+    /*padding-bottom: 5px;*/
+    width: 5px;
+    display: inline-block;
+}
+
+.calendar-event-type-green {
+    background-color: #34ce57;
+}
+
+.calendar-event-type-red {
+    background-color: #c78f4d;
+}
+
+.calendar-event-name {
+    font-size: 12px;
+    display: inline-block;
+    top: -4px;
+    position: relative;
+}
+
+.calendar-event-icons{
+    font-size: 12px;
+    padding-right: 10px;
+}
+
+.grid-event-container{
+    /*height: 70px;*/
+    /*background-color: #e3e3e3;*/
+    /*border-bottom: 2px solid rgb(108, 117, 125);*/
+    /*border-right: 2px solid rgb(108, 117, 125);*/
+    margin-top: 12px;
+}
+
+.grid-row-name{
+    height: 40px;
+}
+
+.grid-card-body{
+    padding: 0;
+}
+
+#calendar-search {
+}
+
+.grid-header-container {
+    min-height: 43px;
+}
+
+.card-body{
+    padding: 10px 15px;
+}
+
+.card-header{
+    padding: 10px 15px;
+}
+
+.fa-red{
+    color: #e9041e;
+}
+
+.card-header-green{
+    background-color: #002b2f90;
+    color: rgb(33, 37, 41);
+}
+.card-header-red{
+    background-color: #e55f5090;
+    color: rgb(33, 37, 41);
+}
+.card-header-blue{
+    background-color: #33007290;
+    color: rgb(33, 37, 41);
+}
