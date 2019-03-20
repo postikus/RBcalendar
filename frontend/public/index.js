@@ -262,7 +262,7 @@
                     }
                 }
                 else{
-                    __overall_date_counter = ( 7 - __calendar_object.days_in_row ) + (__calendar_object.this_month_first_dayweek - __calendar_object.days_in_row);
+                    __overall_date_counter = ( 7 - __calendar_object.days_in_row ) + (7 - __calendar_object.this_month_first_dayweek);
                 }
             }
             this_ex = 0;
