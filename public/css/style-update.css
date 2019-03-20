@@ -1,0 +1,64 @@
+.calendar-cell-today {
+    background-color: #fbd0e6;
+    /*background-color: #eb2d90;*/
+}
+.weekday-name {
+    height: 2em;
+    font-size: 1em;
+    line-height: 2em;
+    vertical-align: middle;
+    padding: 0;
+}
+.calendar-search {
+    font-size: 1em;
+    line-height: 2em;
+    padding: 0 0.7em;
+    height: auto;
+    font-weight: 400;
+    vertical-align: middle;
+}
+.calendar-event-name {
+    font-size: 12px;
+    display: inline-block;
+     top: 1px; 
+    height: 16px;
+    line-height: 1;
+    vertical-align: middle;
+     position: relative; 
+}
+    .calendar-event-type {
+        height: 16px;
+        /* padding-bottom: 5px; */
+        width: 5px;
+        position: relative;
+        top: 1px;
+        margin: -2px 0;
+        font-size: 16px;
+        line-height: 1;
+        display: inline-block;
+    }
+
+    .calendar-event-icons {
+        font-size: 12px;
+        padding-right: 10px;
+        position: relative;
+        top: 1px;
+    }
+
+[data-event-color_1] {
+    background-color: #e9d6ff;
+}
+[data-event-color_1] .calendar-event-type {
+    background-color: #4900a3;
+}
+
+[data-event-color_2] {
+    background-color:#ccfbff;
+}
+[data-event-color_2] .calendar-event-type {
+    background-color: #005961;
+}
+
+[data-ex] {
+    background: #eaeaea;
+}

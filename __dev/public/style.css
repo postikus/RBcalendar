@@ -1,36 +1,36 @@
-#calendar-app{
+.calendar-app{
     width: 1000px;
     margin: 0 auto;
 }
 
-#calendar-app, #calendar-container, #filters-container{
+.calendar-app, .calendar-container, .filters-container{
     /*min-height: 600px;*/
 }
 
-#calendar-app{
+.calendar-app{
     /*background-color: #f9f9f9;*/
     user-select: none;
 }
 
-#calendar-app-container{
+.calendar-app-container{
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
-#calendar-container{
+.calendar-container{
     /*background-color: #6610f2;*/
 }
 
-#month-select-arrow-name{
+.month-select-arrow-name{
     padding-bottom: 15px;
 }
 
-#month-select-container{
+.month-select-container{
     /*background-color: #005cbf;*/
     height: 45px;
 }
 
-#month-select-name-container{
+.month-select-name-container{
     display: inline-block;
     min-width: 150px;
     color: rgba(119, 119, 119, 0.92);
@@ -43,30 +43,30 @@
     /*min-height: 550px;*/
 }
 
-#filters-container{
+.filters-container{
     /*background-color: #abdde5;*/
 }
 
-#filters-header-icons{
+.filters-header-icons{
     /*background-color: #005cbf;*/
     font-size: 22px;
     min-height: 43px;
     color: rgba(119, 119, 119, 0.92);
 }
 
-#calendar-view-button, #list-view-button{
+.calendar-view-button, .list-view-button{
     cursor: pointer;
 }
 
-#calendar-view-button:hover, #list-view-button:hover{
+.calendar-view-button:hover, .list-view-button:hover{
     color: #330072;
 }
 
-#calendar-view-button{
+.calendar-view-button{
 
 }
 
-#list-view-button{
+.list-view-button{
 
 }
 

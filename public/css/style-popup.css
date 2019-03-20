@@ -1,0 +1,220 @@
+/* main style */
+[data-hiddenElement] {
+  display: none !important;
+}
+
+
+
+/* data-modal style */
+[data-modal] {
+ /*  outline: 1px solid pink; */
+}
+[data-modalOverlay] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba( 100, 100, 100, 0.8 );
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  visibility 0.3s 0s; 
+}
+[data-modalWindow] {
+  display: block;
+  min-width: 320px;
+  min-height: 320px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: auto;
+  padding: 16px;
+  transform: translateX(-50%) translateY(-50%) scale(1.2);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 10001;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba( 255, 255, 255, 1 );
+  transition: transform 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  opacity 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  visibility 0.3s 0s; 
+}
+[data-modalTrigger]:checked ~ [data-modalWindow]{
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(-50%);
+  transition: transform 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  opacity 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  visibility 0.3s 0s; 
+}
+[data-modalTrigger]:checked ~ [data-modalOverlay]{
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+  visibility 0.3s 0s; 
+}
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+}
+
+
+/* link to popup-window */
+.btn_0 {
+  display: inline-block;
+  margin: 16px;
+  padding: 8px 16px;
+  border: 1px solid #aaa;
+  border-top-color: #ddd;
+  border-left-color: #ddd;
+  cursor: pointer;
+  user-select: none;
+  transition: 0.3s cubic-bezier( 0.3, 1, 0.3, 1 );
+}
+.btn_0:hover {
+  background-color: #eee;
+  border-color: #eee;
+  box-shadow: 0 0 1px 1px #ddd, 1px 1px 16px rgba( 0, 0, 0, 0.2 );
+}
+.btn_0.active {
+  background-color: #0a0;
+}
+
+.calendar-event_btn {
+ display: block;
+ width: 100%;
+ height: 100%;
+ position: absolute;
+ top: 0;
+ left: 0;
+ cursor: pointer;
+ background: transparent;
+}
+
+
+
+
+
+.m-cell-1 {
+  display: inline-block;
+  width: auto;
+  min-width: 330px;
+  flex-basis: 60%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  padding: 0 20px 0 0;
+}
+
+.m-cell-2 {
+  display: block;
+  width: auto;
+  flex-basis: 250px;
+  flex-grow: 1;
+  flex-shrink: 0;
+  vertical-align: top;
+  /* height: 100%; */
+  position: relative;
+  /* right: -15px; */
+  text-align: center;
+  padding: 0 0 0 20px;
+  /* background-color: aliceblue; */
+  color: #fff;
+}
+.m-cell-2::before {
+  content: "";
+  position: absolute;
+  width: calc(100% + 32px);
+  height: calc(100% + 32px);
+  top: -16px;
+  left: 0;
+  z-index: -1;
+  background-color: red;
+  display: block;
+}
+
+.m-name {
+  display:block;
+  position: relative;
+  color: red;
+  font-weight:900;
+  font-size: 2em;
+  margin: 0.67em 0;
+  text-transform:uppercase;
+  line-height: 1;
+}
+.m-name::after {
+  content:"";
+  width:100px;
+  height:6px;
+  background-color: currentColor;
+  position:absolute;
+  bottom: -20px;
+  left: 100px;
+}
+
+.m-header, .m-main, .m-footer {
+  padding: 0 16px;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.m-control {
+  position: absolute;
+  bottom: 1em;
+  display: block;
+  width: calc(100% + 32px);
+  left: 0;
+}
+
+a.m-control-link {
+  color: #fff;
+  margin: 0 8px 0;
+}
+
+.m-main .m-cell-2 {
+  text-align: left;
+  padding: 0 0 0 20px;
+}
+.m-main .m-cell-2::before {
+  left: 0px;
+}
+
+.m-title {
+  display: block;
+  margin: 1em 0;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.m-main p {
+  margin-left: 32px;
+}
+
+.m-main img {
+  display: block;
+  margin: 16px 0;
+}
+
+.m-cell-1 button.btn {
+  border: 1px solid;
+  margin: 16px 0;
+}
+
+.m-cell-2 button.btn {
+  color: #fff;
+  border: 1px solid;
+  margin: 16px 0 16px 10px;
+}
+
+.m-footer {
+  text-align: center;
+}
