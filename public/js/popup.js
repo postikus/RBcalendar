@@ -94,7 +94,7 @@
         }
         resolve( {name:name,data:resp} );
 
-      }, 2000 );  
+      }, 0 );
     } );
 
     /* ajax or fetch or xhr */
@@ -169,8 +169,8 @@
 
     var response = getInfo( e.target.getAttribute( "data-name" ) );
 
-    modal.window.innerHTML = '<div id="spn" class="container" style="position: relative;top:70px;display: block;box-sizing: border-box;padding: 0px;width: 25%;height: 140px;">'
-    +'<div class="circle" style="box-sizing: border-box;width: 100px;height: 100px;border-radius: 100%; border: 16px solid rgba(55, 255, 55, 0.2);border-top-color: #FF5;animation: spin 1s infinite linear;"></div></div>';
+    // modal.window.innerHTML = '<div id="spn" class="container" style="position: relative;top:70px;display: block;box-sizing: border-box;padding: 0px;width: 25%;height: 140px;">'
+    // +'<div class="circle" style="box-sizing: border-box;width: 100px;height: 100px;border-radius: 100%; border: 16px solid rgba(55, 255, 55, 0.2);border-top-color: #FF5;animation: spin 1s infinite linear;"></div></div>';
 
     response.then( function( resp ){
       createContent( resp );  
