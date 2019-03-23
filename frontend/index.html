@@ -27,27 +27,28 @@
             ,cur_date: cur_date
             ,days_in_row: 5
         });
+        rb_calendar.get_events({calendar_obj: this_calendar});
 
 
-var a = ('<div class="calendar-event ce-4" style="margin-top: 21px" data-event-color_2>\n' +
-            '<div class="calendar-event-container container-fluid">\n' +
-                '<div class="row">\n' +
-                    '<div class="col-9">\n' +
-                        '<div class="calendar-event-type calendar-event-type-green"></div>\n' +
-                        '<span class="calendar-event-name">Управление временем</span>\n' +
-                    '</div>\n' +
-                    '<div class="col-3">\n' +
-                        '<div class="calendar-event-icons text-right">\n' +
-                        '5 <i class="fa fa-users"></i>\n' +
-                    '</div>\n' +
-                '</div>\n' +
-            '</div>\n' +
-        '</div>\n' +
-        '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-name="event1" title="show more info"></label>\n'
-);
-
-$($('.calendar-cell-event-wrapper')[6]).append(a);
-$($('.calendar-cell-event-wrapper')[10]).append(a);
+//var a = ('<div class="calendar-event ce-4" style="margin-top: 21px" data-event-color_2>\n' +
+//            '<div class="calendar-event-container container-fluid">\n' +
+//                '<div class="row">\n' +
+//                    '<div class="col-9">\n' +
+//                        '<div class="calendar-event-type calendar-event-type-green"></div>\n' +
+//                        '<span class="calendar-event-name">Управление временем</span>\n' +
+//                    '</div>\n' +
+//                    '<div class="col-3">\n' +
+//                        '<div class="calendar-event-icons text-right">\n' +
+//                        '5 <i class="fa fa-users"></i>\n' +
+//                    '</div>\n' +
+//                '</div>\n' +
+//            '</div>\n' +
+//        '</div>\n' +
+//        '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-name="event1" title="show more info"></label>\n'
+//);
+//
+//$($('.calendar-cell-event-wrapper')[6]).append(a);
+//$($('.calendar-cell-event-wrapper')[10]).append(a);
 //$($('.calendar-cell-event-wrapper')[12).append(a);
 
 
