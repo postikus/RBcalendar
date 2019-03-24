@@ -285,7 +285,7 @@
   font-weight: 700;
 }
 
-.m-title:first-child {
+.m-main *:first-child {
   margin-top: 0;
 }
 
@@ -296,7 +296,9 @@
 .m-main p {
   margin-left: 32px;
 }
-
+.m-main ul {
+  padding: 0 0 0 52px;
+}
 .m-main img {
   display: block;
   margin: 16px 0;
@@ -327,4 +329,17 @@
   background-color: #fff;
   border-color: #fff;
   color: red;
+}
+
+[data-modalwindow][data-event-color="1"] .m-cell-2 {
+  background: #4900a3;
+}
+[data-modalwindow][data-event-color="1"] .m-name {
+  color: #4900a3;
+}
+[data-modalwindow][data-event-color="2"] .m-cell-2 {
+  background: #005961;
+}
+[data-modalwindow][data-event-color="2"] .m-name {
+  color: #005961;
 }

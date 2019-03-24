@@ -198,7 +198,7 @@
     +'<p>' + obj.company + '</p>'
     +'<div class="m-title">Adress:</div>'
     +'<p>' + obj.address + '</p>'
-    +'</div>';
+    +'</div>'
 
 
     var mFooter = document.createElement( "div" );
@@ -233,6 +233,8 @@
     // } ).catch( function( e ){ console.error( e ); } )
     
     console.log( events[e.target.getAttribute( "data-idx" )].name );
+    //if ( modal.window.hasAttribute( e.target.getAttribute( "data-opt" ) ) ) modal.window.removeAttribute( e.target.getAttribute( "data-opt" ) );
+    modal.window.setAttribute( "data-event-color", e.target.getAttribute( "data-opt" ) );
     createContent( e.target.getAttribute( "data-idx" ) );
 
   }

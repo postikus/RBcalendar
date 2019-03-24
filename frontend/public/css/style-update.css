@@ -62,3 +62,23 @@
 [data-ex] {
   background: #eaeaea;
 }
+.filter-row-container {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+.filter-row-container:nth-child(2) {
+  padding-top: 0
+}
+.filter-name {
+  font-weight: 700;
+  color: rgba(119, 119, 119, 0.92);
+}
+.col-9.calendar-mount-container {
+  padding-right: 32px;
+}
+.form-control {
+  width: 250px
+}
+.form-check-label {
+  line-height: 1.1;
+} 
