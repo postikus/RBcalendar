@@ -85,9 +85,12 @@ var events = {};
 response.then( function( resp ){
 
     events = resp;
+    var count = 0;
 
     function _a( idx ) {
-        return '<div class="calendar-event ce-4" data-event-color_2>\n' +
+        // type event color
+        if ( count > 3 ) count = 0;
+        return '<div class="calendar-event ce-4" data-event-color_' + ( ++count ) + '>\n' +
            '<div class="calendar-event-container container-fluid">\n' +
                '<div class="row">\n' +
                    '<div class="col-9">\n' +
@@ -101,7 +104,7 @@ response.then( function( resp ){
                '</div>\n' +
            '</div>\n' +
        '</div>\n' +
-       '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-idx="' + idx + '" title="show more info about ' + resp[idx].name + ' "></label>\n'
+       '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-opt="' + ( +count ) + '" data-idx="' + idx + '" title="show more info about ' + resp[idx].name + ' "></label>\n'
     };
 
 
