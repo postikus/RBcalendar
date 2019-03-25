@@ -88,6 +88,8 @@ response.then( function( resp ){
     var count = 0;
 
     function _a( idx ) {
+        // type event color
+        if ( count > 3 ) count = 0;
         return '<div class="calendar-event ce-4" data-event-color_' + ( ++count ) + '>\n' +
            '<div class="calendar-event-container container-fluid">\n' +
                '<div class="row">\n' +

@@ -221,7 +221,7 @@
   position: relative;
   color: red;
   font-weight:900;
-  font-size: 25px;
+  font-size: 22px;
   margin: 0.67em 0;
   text-transform:uppercase;
   line-height: 1;
@@ -240,6 +240,7 @@
   padding: 0;
   margin: 0;
   display: flex;
+  font-size: 14px;
   align-items: stretch;
   justify-content: space-between;
 }
@@ -279,7 +280,7 @@
 .m-main h4
  {
   display: block;
-  margin: 1em 0 0.5em;
+  margin: 0.5em 0 0.1em;
   font-size: 16px;
   text-transform: uppercase;
   font-weight: 700;
@@ -342,4 +343,10 @@
 }
 [data-modalwindow][data-event-color="2"] .m-name {
   color: #005961;
+}
+[data-modalwindow][data-event-color="3"] .m-cell-2 {
+  background: red;
+}
+[data-modalwindow][data-event-color="3"] .m-name {
+  color: red;
 }
