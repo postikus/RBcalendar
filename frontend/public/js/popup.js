@@ -151,7 +151,7 @@
 
     }
 
-    function createContent( idx ) {
+    function createContent( events, idx ) {
 
         modal.content.innerHTML = '';
 
@@ -162,8 +162,9 @@
         var mHeader = document.createElement( "div" );
         mHeader.classList.add( "m-header" );
 
-        console.log( idx, obj );
-        console.log( replacer("&laquo;Рец&lsquo;&rsquo;епт&amp;amp;©успе&bull;шной®презе&ldquo;нт&rdquo;ац&bdquo;ии&deg;от&nbsp;ай&mdash;&hellip;ай&lt;ен&gt;ан&trade;ка&raquo;") );
+        // console.log( idx, new Date(obj.start_date) );
+        // console.log( idx, obj );
+        // console.log( replacer("&laquo;Рец&lsquo;&rsquo;епт&amp;amp;©успе&bull;шной®презе&ldquo;нт&rdquo;ац&bdquo;ии&deg;от&nbsp;ай&mdash;&hellip;ай&lt;ен&gt;ан&trade;ка&raquo;") );
 
         /* TODO */
         mHeader.innerHTML = '<div class="m-cell-1">'
@@ -230,10 +231,10 @@
         // createContent( resp );
         // } ).catch( function( e ){ console.error( e ); } )
 
-        console.log( events[e.target.getAttribute( "data-idx" )].name );
+        // console.log( this_calendar.events[e.target.getAttribute( "data-idx" )].name );
         //if ( modal.window.hasAttribute( e.target.getAttribute( "data-opt" ) ) ) modal.window.removeAttribute( e.target.getAttribute( "data-opt" ) );
         modal.window.setAttribute( "data-event-color", e.target.getAttribute( "data-opt" ) );
-        createContent( e.target.getAttribute( "data-idx" ) );
+        createContent( this_calendar.events, e.target.getAttribute( "data-idx" ) ); //todo: refactor to reusable
 
     }
     document.body.addEventListener( "click", catchEventOpen, false );

@@ -19,7 +19,7 @@
     var cl = function(msg, msg2){
         msg2 = msg2 || '';
         if(_private.mode === 'test'){
-            console.log(msg, msg2);
+            console.log(msg, msg2?msg2:'');
         }
     };
     _private.CalendarObj = function (__date, __days_in_row){
@@ -41,9 +41,9 @@
     };
     _private.CalendarObj.prototype.cl = function () {
         var __self = this;
-        cl('-----------CALENDAR OBJ------------------->');
+        // cl('-----------CALENDAR OBJ------------------->');
         cl(__self);
-        cl('<-----------CALENDAR OBJ-------------------');
+        // cl('<-----------CALENDAR OBJ-------------------');
     };
     _private.CalendarObj.prototype.set_date_month = function (){
         this.date_month = this.date_with_first_day.getMonth();
@@ -93,10 +93,10 @@
         __calendar_obj.date_with_first_day = new Date(__calendar_obj.date_year, __new_month, 1);
     };
     _private.CalendarObj.prototype.init_calendar_view = function(__$_calendar_v_mount_obj){
-        cl('calendar view init');
+        // cl('calendar view init');
         var __calendar_view_html = '';
         __$_calendar_v_mount_obj.html(__calendar_view_html);
-        cl('calendar view mounted');
+        // cl('calendar view mounted');
     };
     _private.CalendarObj.prototype.get_calendar_view_button_container = function () {
         var __calendar_view_button_html = '';
@@ -312,11 +312,11 @@
         return calendar_html;
     };
     _private.CalendarObj.prototype.init_calendar = function (_mount_id, _calendar_obj) {
-        cl('Start mounting');
+        // cl('Start mounting');
         var $_mount_obj = $(_mount_id);
         var _calendar_inner_html;
         if ($_mount_obj.length === 0){
-            cl('No valid mount object parameter. Aborting...' + _mount_id);
+            // cl('No valid mount object parameter. Aborting...' + _mount_id);
         }
         else{
             _calendar_inner_html = '';
@@ -335,7 +335,7 @@
             _calendar_inner_html += '</div>';
             /* <- magic goes here*/
             _private.CalendarObj.prototype.state = 'mounted';
-            cl('Mounted');
+            // cl('Mounted');
             $_mount_obj.html(_calendar_inner_html);
         }
         return _calendar_obj;
@@ -400,13 +400,18 @@
         // cl(event_cell_row_array);
 
 
+
+
         __morphed_array.map(function(self){
-            self.length = ((new Date(self.finish_date).getTime()) - (new Date(self.start_date)).getTime()) / (1000 * 3600 * 24);
-            self.length_round = Math.round(self.length);
-            self.day_start = new Date(self.start_date).getUTCDate();
-            self.day_end = new Date(self.finish_date).getUTCDate();
+
+            // self.length = (Math.abs((new Date(self.finish_date)).getTime() - (new Date(self.start_date)).getTime())) / (1000 * 3600 * 24);
+            self.length = ((new Date(self.finish_date)).getDate() - (new Date(self.start_date)).getDate())+1;
+
+            self.length_round = Math.ceil(self.length);
+            self.day_start = new Date(self.start_date).getDate();
+            self.day_end = new Date(self.finish_date).getDate();
             self.position = self.position ? self.position++ : 0;
-            // cl('day_start', self.day_start);
+            // // cl('day_start', self.day_start);
         });
 
         __morphed_array.sort(function(a,b){
@@ -416,11 +421,16 @@
         var additional_cells = 0;
 
         for (var __event = 0; __event < __morphed_array.length; __event++){
-            event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
-            for (var _event_length = 1; _event_length < (__morphed_array[__event].length_round); _event_length++){
-                additional_cells = __morphed_array[__event].day_start + (+_event_length);
+            // event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
+            additional_cells = 0;
+            for (var _event_length = 0; _event_length < (__morphed_array[__event].length_round); _event_length++){
+                // cl(__morphed_array[__event].name + ' 1 ->', additional_cells);
+
+                additional_cells = __morphed_array[__event].day_start + _event_length;
+                // cl(__morphed_array[__event].name + ' 2 ->', additional_cells);
                 if (additional_cells < 31){
-                    event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
+                    // event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
+                    event_cell_row_array[additional_cells].push(__morphed_array[__event]);
                 }
             }
         }
@@ -429,14 +439,15 @@
         for (var __cell = 0; __cell < 31; __cell++){
             for (var _event = 0; _event<event_cell_row_array[__cell].length; _event++){
                 if (event_cell_row_array[__cell][_event]){
-                    // cl('event_cell_row_array[__cell][_event]',_private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id));
+                    // // cl('event_cell_row_array[__cell][_event]',_private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id));
                     __morphed_array[ _private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id) ].top = _event;
                 }
             }
         }
 
 
-        cl('event_cell_row_array', event_cell_row_array);
+        // cl('event_cell_row_array', event_cell_row_array);
+        this_calendar.events = __morphed_array;
         return __morphed_array;
     };
 
@@ -451,18 +462,18 @@
             for (var public_attrname in $public) { __options[public_attrname] = $public[public_attrname]; }
             return __options;
         })(_private, args);
-        cl('_options:', _options);
+        // cl('_options:', _options);
         _options.state = 'started';
         _private.calendar_object = new _private.CalendarObj(_options.cur_date, _options.days_in_row);
         var new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
         new_calendar.mount_id = _options.mount_id;
         $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
         $(_options.mount_id).on('click', '.month-select-arrow-left-button', function () {
-            cl('prev');
+            // cl('prev');
             new_calendar.change_month('b');
         });
         $(_options.mount_id).on('click', '.month-select-arrow-right-button', function () {
-            cl('next');
+            // cl('next');
             new_calendar.change_month('f');
         });
 
@@ -480,17 +491,17 @@
 
         // get this month events: delete after backend configured
         var middleware = function( _events ){
-            cl(this_calendar.date_with_first_day);
+            // cl(this_calendar.date_with_first_day);
             _events = _events
                 .filter(function(_events){
                     return ( ( new Date(_events.start_date) > new Date(this_calendar.date_with_first_day)) && ( new Date(_events.start_date) < new Date(this_calendar.date_with_last_day)));
                 });
 
-            cl('gogo powerRangers:', _events);
+            // cl('gogo powerRangers:', _events);
             return _events;
         };
 
-        cl('get_events args:', args);
+        // cl('get_events args:', args);
         return new Promise ( function( resolve, reject ) {
             /* TODO fetch */
             $.ajax({
@@ -500,19 +511,19 @@
             })
                 .done( function( msg ) {
                     msg = middleware(msg);
-                    cl( "Event data loaded: ", msg );
+                    // cl( "Event data loaded: ", msg );
                     resolve( msg );
                 });
         } );
     };
 
     _private.CalendarObj.prototype.render_events = function (__events) {
-        cl('rendering events... ', __events);
+        // cl('rendering events... ', __events);
         __events = _private.morph_events_array(__events);
-        cl('morphed events... ', __events);
+        // cl('morphed events... ', __events);
 
         function _a( idx ) {
-            return '<div data-event-color_2 class="calendar-event ct-'+__events[idx].top+' ce-'+__events[idx].length_round +'" data-event-color_2>\n' +
+            return '<div data-event-color_2 class="calendar-event ct-'+__events[idx].top+' ce-'+(__events[idx].length_round) +'" data-event-color_2>\n' +
                 '<div class="calendar-event-container container-fluid">\n' +
                 '<div class="row">\n' +
                 '<div class="col-9">\n' +
@@ -535,7 +546,7 @@
         }
 
 
-        events = __events;
+
         // $( $('.calendar-cell-event-wrapper')[6]).append( _a( 1 ) );
         // $( $('.calendar-cell-event-wrapper')[10]).append( _a( 3 ) );
         // $( $('.calendar-cell-event-wrapper')[15]).append( _a( 7 ) );
