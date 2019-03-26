@@ -421,14 +421,7 @@
         var additional_cells = 0;
 
         for (var __event = 0; __event < __morphed_array.length; __event++){
-            cl(event_cell_row_array[__morphed_array[__event].day_start].length + 1)
-            for (var free_space = 0; free_space < event_cell_row_array[__morphed_array[__event].day_start].length + 1; free_space++){
-                if (!event_cell_row_array[__morphed_array[__event].day_start][free_space]){
-                    event_cell_row_array[__morphed_array[__event].day_start][free_space] = __morphed_array[__event];
-                    break;
-                }
-            }
-
+            event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
             additional_cells = 0;
             for (var _event_length = 0; _event_length < (__morphed_array[__event].length_round-1); _event_length++){
                 // cl(__morphed_array[__event].name + ' 1 ->', additional_cells);
