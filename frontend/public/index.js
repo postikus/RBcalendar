@@ -406,7 +406,7 @@
 
             // self.length = (Math.abs((new Date(self.finish_date)).getTime() - (new Date(self.start_date)).getTime())) / (1000 * 3600 * 24);
             self.length = ((new Date(self.finish_date)).getDate() - (new Date(self.start_date)).getDate())+1;
-
+            self.length = self.length > 0 ? self.length : 31+self.length;
             self.length_round = Math.ceil(self.length);
             self.day_start = new Date(self.start_date).getDate();
             self.day_end = new Date(self.finish_date).getDate();
@@ -421,16 +421,23 @@
         var additional_cells = 0;
 
         for (var __event = 0; __event < __morphed_array.length; __event++){
-            // event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
+            cl(event_cell_row_array[__morphed_array[__event].day_start].length + 1)
+            for (var free_space = 0; free_space < event_cell_row_array[__morphed_array[__event].day_start].length + 1; free_space++){
+                if (!event_cell_row_array[__morphed_array[__event].day_start][free_space]){
+                    event_cell_row_array[__morphed_array[__event].day_start][free_space] = __morphed_array[__event];
+                    break;
+                }
+            }
+
             additional_cells = 0;
-            for (var _event_length = 0; _event_length < (__morphed_array[__event].length_round); _event_length++){
+            for (var _event_length = 0; _event_length < (__morphed_array[__event].length_round-1); _event_length++){
                 // cl(__morphed_array[__event].name + ' 1 ->', additional_cells);
 
-                additional_cells = __morphed_array[__event].day_start + _event_length;
+                additional_cells = __morphed_array[__event].day_start + _event_length+1;
                 // cl(__morphed_array[__event].name + ' 2 ->', additional_cells);
                 if (additional_cells < 31){
-                    // event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
-                    event_cell_row_array[additional_cells].push(__morphed_array[__event]);
+                    event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
+                    // event_cell_row_array[additional_cells].push(__morphed_array[__event]);
                 }
             }
         }
@@ -446,7 +453,7 @@
         }
 
 
-        // cl('event_cell_row_array', event_cell_row_array);
+        cl('event_cell_row_array', event_cell_row_array);
         this_calendar.events = __morphed_array;
         return __morphed_array;
     };
