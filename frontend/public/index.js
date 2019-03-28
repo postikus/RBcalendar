@@ -385,23 +385,6 @@
             event_cell_row_array[i] = [];
         }
 
-        // for (var _row_counter = 0; _row_counter < 5; _row_counter++){
-        //     event_cell_row_array[_row_counter] = [];
-        //     for (var _cell_counter = 0; _cell_counter < 5; _cell_counter++) {
-        //         event_cell_row_array[_row_counter][_cell_counter] = [];
-        //     }
-        // }
-
-
-        // for (var __event = 0; __event < __morphed_array.length; __event++){
-        //     event_cell_row_array[_row_counter][_cell_counter].push(__morphed_array[__event]);
-        // }
-
-        // cl(event_cell_row_array);
-
-
-
-
         __morphed_array.map(function(self){
 
             // self.length = (Math.abs((new Date(self.finish_date)).getTime() - (new Date(self.start_date)).getTime())) / (1000 * 3600 * 24);
@@ -411,6 +394,7 @@
             self.day_start = new Date(self.start_date).getDate();
             self.day_end = new Date(self.finish_date).getDate();
             self.position = self.position ? self.position++ : 0;
+            self.break = 'none';
             // // cl('day_start', self.day_start);
         });
 
@@ -426,14 +410,12 @@
         for (var __event = 0; __event < __morphed_array.length; __event++){
 
 
-            // event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
             // cl(__morphed_array[__event]);
             // cl(event_cell_row_array[__morphed_array[__event].day_start]);
             date_start_length = event_cell_row_array[__morphed_array[__event].day_start].length;
             for (var n = 0; n <= date_start_length; n++) {
                 // cl(!event_cell_row_array[__morphed_array[__event].day_start][n] === true);
                 if(!event_cell_row_array[__morphed_array[__event].day_start][n] ){
-                    // console.log(__morphed_array[__event].day_start, n);
                     event_cell_row_array[__morphed_array[__event].day_start][n] = __morphed_array[__event];
                     break;
                 }
@@ -448,19 +430,10 @@
                 additional_cells = __morphed_array[__event].day_start + _event_length+1;
                 // cl(__morphed_array[__event].name + ' 2 ->', additional_cells);
                 if (additional_cells < 31){
-                    if (__morphed_array[__event].id === "5c97cb0095a8b5441d9b026f"){
-                        cl(additional_cells);
-                        cl(event_cell_row_array[__morphed_array[__event].day_start]);
-                    }
-                    // console.log(event_cell_row_array[__morphed_array[__event].day_start]);
-                    // for (var n = 0; n < event_cell_row_array[__morphed_array[__event].day_start].length-1; n++){
-                        // if (!event_cell_row_array[additional_cells][n]){
-                        //     event_cell_row_array[additional_cells][n] = __morphed_array[__event];
-                        // }
-                        // else{
-                        // }
+                    // if (__morphed_array[__event].id === "5c97cb0095a8b5441d9b026f"){
+                    //     cl(additional_cells);
+                    //     cl(event_cell_row_array[__morphed_array[__event].day_start]);
                     // }
-                    // event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
                     event_cell_row_array[additional_cells][n] = __morphed_array[__event];
                 }
             }
@@ -476,8 +449,63 @@
         }
 
 
-        cl('event_cell_row_array', event_cell_row_array);
-        cl('!', __morphed_array);
+        // cl('event_cell_row_array', event_cell_row_array);
+
+
+
+
+
+
+        cl(__morphed_array);
+
+        var morphed_lenth = __morphed_array.length;
+        for (var __event_counter = 0; __event_counter < morphed_lenth; __event_counter++){
+            var __this_event = Object.assign({}, __morphed_array[__event_counter]);
+            var __event_start_date = new Date(__this_event.start_date);
+            var __event_weekday = __event_start_date.getDay();
+            __event_weekday = __event_weekday === 0 ? 7 : __event_weekday;
+            // cl(__event_weekday);
+
+
+            // cl('7 - '+ __event_weekday, 7 - __event_weekday - __morphed_array[__event_counter].length_round );
+
+            var this_week_length =  7 - __event_weekday - __morphed_array[__event_counter].length_round < 0 ?  8 - __event_weekday : __morphed_array[__event_counter].length_round;
+            // cl ('this_week_length', this_week_length);
+
+            if (__morphed_array[__event_counter].length_round !== this_week_length){
+                var next_week_length = __morphed_array[__event_counter].length_round - this_week_length;
+                cl('next_week_length',next_week_length);
+                __morphed_array[__event_counter].length_round = this_week_length;
+                __morphed_array[__event_counter].break = 'end';
+                __this_event.length_round = next_week_length;
+                __this_event.day_start += this_week_length;
+                __this_event.break = 'start';
+                __morphed_array.push(__this_event);
+            }
+
+
+
+            // var next_week_length = __event_weekday - 5;
+            // var next_week_start = '';
+            // if (__event_weekday > 5){
+            //     cl(__event_weekday);
+            //     __morphed_array.push(__this_event);
+            // }
+        }
+
+        // __morphed_array.map(function (__event) {
+        //     var __event_start_date = new Date(__event.start_date);
+        //     var __event_weekday = __event_start_date.getDay();
+
+            // cl(new Date());
+        // });
+
+
+
+
+
+
+
         this_calendar.events = __morphed_array;
         cl (this_calendar.events);
         return __morphed_array;
