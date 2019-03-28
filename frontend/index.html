@@ -9,8 +9,11 @@
     <link href="./public/libs/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
     <link href="./public/libs/fontawesome-free-5.7.2-web/css/all.css" rel="stylesheet">
     <link href="./public/style.css" rel="stylesheet">
-    <link href="./public/css/style-popup.css" rel="stylesheet">
-    <link href="./public/css/style-update.css" rel="stylesheet">
+    <!-- <link href="./frontend/public/css/style-popup.css" rel="stylesheet"> -->
+    <link href="./frontend/public/css/style-popup-autopref.css" rel="stylesheet">
+    <!-- <link href="./frontend/public/css/style-update.css" rel="stylesheet"> -->
+    <link href="./frontend/public/css/style-update-autopref.css" rel="stylesheet">
+
     <script src="./public/libs/jquery-3.3.1.min.js"></script>
     <script src="./public/index.js"></script>
 
@@ -112,6 +115,33 @@ response.then( function( resp ){
 } ).catch( function( e ){ console.error( e ); } )
 
 </script>
+
+<script>
+    ;'use strict';
+    ( function( undefined ) {
+        var _legend = window[ '_legend' ] || {};
+
+        _legend.target = document.querySelector( '.filters-container' );
+        _legend.body = document.createDocumentFragment();
+
+        _legend.init = function( opt ) {
+            var _r = document.createElement( 'div' );
+            _r.classList.add( 'row' );
+            _r.innerHTML = '<div class="col-12"><hr><div class="legend-title">Легенда:</div><div>' + opt + ' </div></div>';
+            _legend.body.appendChild( _r );
+            _legend.target.appendChild( _legend.body );
+        };
+        _str = '<div class="legend-list">'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="conf"></div><div class="legend-description"> - Конференция</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="webinar"></div><div class="legend-description"> - Вебинар</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="training"></div><div class="legend-description"> - Тренинг</div></div>'
+            + '</div>';
+        _legend.init( _str );
+
+    } ( void( 0 ) ) );
+</script>
+
+
 <script src="./public/js/popup.js"></script>
 </body>
 </html>

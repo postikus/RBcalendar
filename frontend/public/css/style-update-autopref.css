@@ -1,11 +1,12 @@
 .calendar-cell-today {
   background-color: #fbd0e6;
+  background-color: rgba(255, 229, 243, 0.78);
   /*background-color: #eb2d90;*/
 }
 .weekday-name {
-  height: 2em;
+  height: 2.3em;
   font-size: 1em;
-  line-height: 2em;
+  line-height: 2.2em;
   vertical-align: middle;
   padding: 0;
 }
@@ -18,13 +19,13 @@
   vertical-align: middle;
 }
 .calendar-event-name {
-      font-size: 12px;
-    display: inline-block;
-    top: -3px;
-    height: 1em;
-    line-height: 1;
-    vertical-align: middle;
-    position: relative;
+  font-size: 10px;
+  display: inline-block;
+  top: -3px;
+  height: 1em;
+  line-height: 1;
+  vertical-align: middle;
+  position: relative;
 }
 .calendar-event-type {
   height: 17px;
@@ -45,23 +46,23 @@
   top: 1px;
 }
 
-[data-event-color_1] {
+[data-event-type="webinar"] {
   background-color: #e9d6ff;
 }
-[data-event-color_1] .calendar-event-type {
+[data-event-type="webinar"] .calendar-event-type {
   background-color: #4900a3;
 }
 
-[data-event-color_2] {
+[data-event-type="training"] {
   background-color:#ccfbff;
 }
-[data-event-color_2] .calendar-event-type {
+[data-event-type="training"] .calendar-event-type {
   background-color: #005961;
 }
-[data-event-color_3] {
+[data-event-type="conf"] {
   background-color: #f0adb3;
 }
-[data-event-color_3] .calendar-event-type {
+[data-event-type="conf"] .calendar-event-type {
   background-color: red;
 }
 
@@ -87,13 +88,13 @@
 }
 .form-check-label {
   line-height: 1.1;
-} 
+}
 .form-check {
   margin-left: 16px;
   font-size: 14px;
   color: #000;
 }
-.form-check .form-check-input, 
+.form-check .form-check-input,
 .form-check .form-check-label {
   cursor: pointer;
 }
@@ -103,6 +104,53 @@
 .weekday-name {
   font-size: 14px;
 }
+.btn-outline-secondary {
+  border-color:rgba( 0, 0, 0, 0.03 );
+}
 .btn-outline-secondary:hover {
   background: red;
+}
+.month-select-name-container_color {
+  color: red;
+  font-weight: 700;
+  position: relative;
+}
+.month-select-name-container {
+  font-weight: 400;
+  position: relative;
+}
+.month-select-name-container_color::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 90%;
+  width: 3em;
+  height: 2px;
+  background: red;
+}
+.calendar-event-pers {
+  position: absolute;
+  right: -16px;
+}
+.calendar-event-container .row .col-12 {
+    padding-right: 54px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.legend-title {
+    font-weight: 700;
+    margin-left: -16px;
+    color: rgba(119, 119, 119, 0.92);
+}
+.legend-box {
+    display: inline-block;
+    width: 1em;
+    position: relative;
+    height: 1em;
+    top: 2px;
+    margin-right: 4px;
+  }
+.legend-description {
+  display: inline-block;
 }

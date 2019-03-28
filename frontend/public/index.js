@@ -197,9 +197,9 @@
         __calendar_header_html += '<span class="month-select-left-button">' +
             '<button type="button" class="btn btn-outline-secondary btn-sm month-select-arrow-left-button"><</button>' +
             '</span>';
-        __calendar_header_html += '<span class="month-select-name-container">';
-        __calendar_header_html += __calendar_object.date_month_name_ru + ' ' + __calendar_object.date_year;
-        __calendar_header_html += '</span>';
+        __calendar_header_html += '<span class="month-select-name-container"><span class="month-select-name-container_color">';
+        __calendar_header_html += __calendar_object.date_month_name_ru + '</span> <span>' + __calendar_object.date_year;
+        __calendar_header_html += '</span></span>';
         __calendar_header_html += '<span class="month-select-right-button">' +
             '<button type="button" class="btn btn-outline-secondary btn-sm month-select-arrow-right-button">></button>' +
             '</span>';
@@ -449,7 +449,7 @@
         }
 
 
-        // cl('event_cell_row_array', event_cell_row_array);
+        cl('event_cell_row_array', event_cell_row_array);
 
 
 
@@ -617,10 +617,10 @@
         // cl('morphed events... ', __events);
 
         function _a( idx ) {
-            __event_html = '<div data-event-color_2 data-id="'+__events[idx].id+'" class="calendar-event ct-'+__events[idx].top+' ce-'+(__events[idx].length_round) +'" data-event-color_2>\n' +
+            __event_html = '<div data-event-type="' + __events[idx].type + '" data-id="'+__events[idx].id+'" class="calendar-event ct-'+__events[idx].top+' ce-'+(__events[idx].length_round) +'">\n' +
                 '<div class="calendar-event-container container-fluid">\n' +
                 '<div class="row">\n' +
-                '<div class="col-9">\n'
+                '<div class="col-12">\n'
             if (__events[idx].break === 'start'){
                 __event_html+= '<div class="calendar-event-break "></div>\n';
             }
@@ -630,14 +630,14 @@
 
             __event_html+= '<span class="calendar-event-name">' + __events[idx].name + '</span>\n' +
                 '</div>\n' +
-                '<div class="col-3 no-padding">\n' +
+                '<div class="calendar-event-pers">\n' +
                 '<div class="calendar-event-icons text-right">\n' + __events[idx].max_pers +
                 ' <i class="fa fa-users"></i>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '</div>\n' +
-                '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-idx="' + idx + '" data-opt="2" title="show more info about ' + __events[idx].name + ' "></label>\n'
+                '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-idx="' + idx + '" data-opt-event-type="' + __events[idx].type + '" title="show more info about ' + __events[idx].name + ' "></label>\n'
              return __event_html;
         }
 
