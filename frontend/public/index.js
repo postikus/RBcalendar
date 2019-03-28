@@ -418,10 +418,29 @@
             return (a.day_start - b.day_start);
         });
 
-        var additional_cells = 0;
 
+        // __morphed_array = __morphed_array.slice(1, 5);
+
+        var additional_cells = 0;
+        var date_start_length = 0;
         for (var __event = 0; __event < __morphed_array.length; __event++){
-            event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
+
+
+            // event_cell_row_array[__morphed_array[__event].day_start].push(__morphed_array[__event]);
+            // cl(__morphed_array[__event]);
+            // cl(event_cell_row_array[__morphed_array[__event].day_start]);
+            date_start_length = event_cell_row_array[__morphed_array[__event].day_start].length;
+            for (var n = 0; n <= date_start_length; n++) {
+                // cl(!event_cell_row_array[__morphed_array[__event].day_start][n] === true);
+                if(!event_cell_row_array[__morphed_array[__event].day_start][n] ){
+                    // console.log(__morphed_array[__event].day_start, n);
+                    event_cell_row_array[__morphed_array[__event].day_start][n] = __morphed_array[__event];
+                    break;
+                }
+            }
+
+
+
             additional_cells = 0;
             for (var _event_length = 0; _event_length < (__morphed_array[__event].length_round-1); _event_length++){
                 // cl(__morphed_array[__event].name + ' 1 ->', additional_cells);
@@ -429,17 +448,28 @@
                 additional_cells = __morphed_array[__event].day_start + _event_length+1;
                 // cl(__morphed_array[__event].name + ' 2 ->', additional_cells);
                 if (additional_cells < 31){
-                    event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
-                    // event_cell_row_array[additional_cells].push(__morphed_array[__event]);
+                    if (__morphed_array[__event].id === "5c97cb0095a8b5441d9b026f"){
+                        cl(additional_cells);
+                        cl(event_cell_row_array[__morphed_array[__event].day_start]);
+                    }
+                    // console.log(event_cell_row_array[__morphed_array[__event].day_start]);
+                    // for (var n = 0; n < event_cell_row_array[__morphed_array[__event].day_start].length-1; n++){
+                        // if (!event_cell_row_array[additional_cells][n]){
+                        //     event_cell_row_array[additional_cells][n] = __morphed_array[__event];
+                        // }
+                        // else{
+                        // }
+                    // }
+                    // event_cell_row_array[additional_cells][event_cell_row_array[__morphed_array[__event].day_start].length-1] = __morphed_array[__event];
+                    event_cell_row_array[additional_cells][n] = __morphed_array[__event];
                 }
             }
         }
 
-
         for (var __cell = 0; __cell < 31; __cell++){
             for (var _event = 0; _event<event_cell_row_array[__cell].length; _event++){
                 if (event_cell_row_array[__cell][_event]){
-                    // // cl('event_cell_row_array[__cell][_event]',_private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id));
+                    // cl('event_cell_row_array[__cell][_event]',_private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id));
                     __morphed_array[ _private.find_index_event_by_id(__morphed_array, event_cell_row_array[__cell][_event].id) ].top = _event;
                 }
             }
@@ -447,7 +477,9 @@
 
 
         cl('event_cell_row_array', event_cell_row_array);
+        cl('!', __morphed_array);
         this_calendar.events = __morphed_array;
+        cl (this_calendar.events);
         return __morphed_array;
     };
 
