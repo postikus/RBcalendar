@@ -341,7 +341,7 @@
         return _calendar_obj;
     };
     _private.CalendarObj.prototype.change_month = function(direction){ //f/b
-        cl(this.date_month);
+        // cl(this.date_month);
         this.date_with_first_day = new Date(this.date_year, direction ==='f' ? (this.date_month + 1) : (this.date_month - 1), 1);
         this.render_calendar();
 
@@ -456,7 +456,7 @@
 
 
 
-        cl(__morphed_array);
+        // cl(__morphed_array);
 
         var morphed_lenth = __morphed_array.length;
         for (var __event_counter = 0; __event_counter < morphed_lenth; __event_counter++){
@@ -484,27 +484,7 @@
             }
 
 
-
-            // var next_week_length = __event_weekday - 5;
-            // var next_week_start = '';
-            // if (__event_weekday > 5){
-            //     cl(__event_weekday);
-            //     __morphed_array.push(__this_event);
-            // }
         }
-
-        // __morphed_array.map(function (__event) {
-        //     var __event_start_date = new Date(__event.start_date);
-        //     var __event_weekday = __event_start_date.getDay();
-
-            // cl(new Date());
-        // });
-
-
-
-
-
-
 
         this_calendar.events = __morphed_array;
         cl (this_calendar.events);
@@ -583,12 +563,18 @@
         // cl('morphed events... ', __events);
 
         function _a( idx ) {
-            return '<div data-event-color_2 class="calendar-event ct-'+__events[idx].top+' ce-'+(__events[idx].length_round) +'" data-event-color_2>\n' +
+            __event_html = '<div data-event-color_2 data-id="'+__events[idx].id+'" class="calendar-event ct-'+__events[idx].top+' ce-'+(__events[idx].length_round) +'" data-event-color_2>\n' +
                 '<div class="calendar-event-container container-fluid">\n' +
                 '<div class="row">\n' +
-                '<div class="col-9">\n' +
-                '<div class="calendar-event-type "></div>\n' +
-                '<span class="calendar-event-name">' + __events[idx].name + '</span>\n' +
+                '<div class="col-9">\n'
+            if (__events[idx].break === 'start'){
+                __event_html+= '<div class="calendar-event-break "></div>\n';
+            }
+            else{
+                __event_html+= '<div class="calendar-event-type "></div>\n';
+            }
+
+            __event_html+= '<span class="calendar-event-name">' + __events[idx].name + '</span>\n' +
                 '</div>\n' +
                 '<div class="col-3 no-padding">\n' +
                 '<div class="calendar-event-icons text-right">\n' + __events[idx].max_pers +
@@ -598,6 +584,7 @@
                 '</div>\n' +
                 '</div>\n' +
                 '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-idx="' + idx + '" data-opt="2" title="show more info about ' + __events[idx].name + ' "></label>\n'
+             return __event_html;
         }
 
 
@@ -605,7 +592,19 @@
             $('[data-id="'+__events[_event].day_start+'"]').append( _a( _event ) );
         }
 
+        $(document).on('mouseenter','.calendar-event',function () {
+            var this_id = $(this).attr('data-id');
+            $('[data-id="'+this_id+'"]').addClass('event-hover');
+            // cl(this_id);
+           // cl('hover');
+        });
 
+        $(document).on('mouseleave','.calendar-event',function () {
+            var this_id = $(this).attr('data-id');
+            $('[data-id="'+this_id+'"]').removeClass('event-hover');
+            // cl(this_id);
+            // cl('hover');
+        });
 
         // $( $('.calendar-cell-event-wrapper')[6]).append( _a( 1 ) );
         // $( $('.calendar-cell-event-wrapper')[10]).append( _a( 3 ) );
