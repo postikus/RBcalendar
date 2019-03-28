@@ -114,7 +114,7 @@
     _private.CalendarObj.prototype.get_checkbox_html = function (__q_object) {
         var __checkbox_html = '';
         __checkbox_html +=   '<div class="form-check">';
-        __checkbox_html +=   '<input class="form-check-input" type="checkbox" value="" id="'+__q_object.id+'">';
+        __checkbox_html +=   '<input class="form-check-input" type="checkbox" checked="true" value="" id="'+__q_object.id+'">';
         __checkbox_html += '<label class="form-check-label" for="'+__q_object.id+'">';
         __checkbox_html += __q_object.label;
         __checkbox_html += '</label>';
@@ -126,7 +126,7 @@
         __checkboxs_html += '<div class="filter-name" id="'+__q_object.id+'">'+__q_object.label+'</div>';
         for (var __checkbox_counter = 0; __checkbox_counter < __q_object.checkbox_array.length; __checkbox_counter++){
             __checkboxs_html += '<div class="form-check">';
-            __checkboxs_html += '<input class="form-check-input" type="checkbox" value="" id="'+__q_object.checkbox_array[__checkbox_counter].id+'">';
+            __checkboxs_html += '<input class="form-check-input" type="checkbox" checked="true" value="" id="'+__q_object.checkbox_array[__checkbox_counter].id+'">';
             __checkboxs_html += '<label class="form-check-label" for="'+__q_object.checkbox_array[__checkbox_counter].id+'">';
             __checkboxs_html += __q_object.checkbox_array[__checkbox_counter].label;
             __checkboxs_html += '</label>';
@@ -507,6 +507,16 @@
         _private.calendar_object = new _private.CalendarObj(_options.cur_date, _options.days_in_row);
         var new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
         new_calendar.mount_id = _options.mount_id;
+
+        $public.get_events().then( function( resp ){
+            events = resp;
+            _private.calendar_object.events = events;
+            _private.calendar_object.render_events(this_calendar.events);
+        } ).catch( function( e ){ cl( e ); } );
+
+
+
+
         $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
         $(_options.mount_id).on('click', '.month-select-arrow-left-button', function () {
             // cl('prev');
@@ -517,11 +527,40 @@
             new_calendar.change_month('f');
         });
 
-        $public.get_events().then( function( resp ){
-            events = resp;
-            _private.calendar_object.events = events;
-            _private.calendar_object.render_events(this_calendar.events);
-        } ).catch( function( e ){ cl( e ); } );
+
+        $(_options.mount_id).on('mouseenter','.calendar-event',function () {
+            if (!$(this).hasClass('event-hover')){
+                var this_id = $(this).attr('data-id');
+                $('[data-id="'+this_id+'"]').addClass('event-hover');
+            }
+            // cl(this_id);
+            // cl('hover');
+        });
+
+        $(_options.mount_id).on('mouseleave','.calendar-event',function () {
+            var this_id = $(this).attr('data-id');
+            $('[data-id="'+this_id+'"]').removeClass('event-hover');
+            // cl(this_id);
+            // cl('hover');
+        });
+
+        var make_url = function(){
+            var $checked_cb = $('.filters-container').find('input:checked');
+            cl($checked_cb);
+            var checked_cb_ids = [];
+            $checked_cb.map(function (cb) {
+                // cl(cb);
+                checked_cb_ids.push($(this).attr('id'));
+            });
+            window.location.hash = checked_cb_ids.join('&');
+        };
+
+        make_url();
+
+        $(_options.mount_id).on('change','.form-check-input',function () {
+            make_url();
+            // cl();
+        });
 
         return new_calendar;
     };
@@ -592,19 +631,7 @@
             $('[data-id="'+__events[_event].day_start+'"]').append( _a( _event ) );
         }
 
-        $(document).on('mouseenter','.calendar-event',function () {
-            var this_id = $(this).attr('data-id');
-            $('[data-id="'+this_id+'"]').addClass('event-hover');
-            // cl(this_id);
-           // cl('hover');
-        });
 
-        $(document).on('mouseleave','.calendar-event',function () {
-            var this_id = $(this).attr('data-id');
-            $('[data-id="'+this_id+'"]').removeClass('event-hover');
-            // cl(this_id);
-            // cl('hover');
-        });
 
         // $( $('.calendar-cell-event-wrapper')[6]).append( _a( 1 ) );
         // $( $('.calendar-cell-event-wrapper')[10]).append( _a( 3 ) );
