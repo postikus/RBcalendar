@@ -1,8 +1,13 @@
 .calendar-cell-today {
-  background-color: #fbd0e6;
-  background-color: rgba(255, 229, 243, 0.78);
+  /*background-color: #fbd0e6;*/
+  /*background-color: rgba(255, 229, 243, 0.78);*/
   /*background-color: #eb2d90;*/
+  background-color: #0300d0;
 }
+.calendar-cell-today .calendar-cell-date{
+	color: #FFF;
+}
+
 .weekday-name {
   height: 2.3em;
   font-size: 1em;
@@ -20,7 +25,7 @@
 }
 .calendar-event-name {
   font-size: 10px;
-  display: inline-block;
+  display: inline;
   top: -3px;
   height: 1em;
   line-height: 1;
@@ -47,23 +52,27 @@
 }
 
 [data-event-type="webinar"] {
-  background-color: #e9d6ff;
+	background-color: rgb(183, 151, 207);
+  /*background-color: #e9d6ff;*/
 }
 [data-event-type="webinar"] .calendar-event-type {
   background-color: #4900a3;
 }
 
 [data-event-type="training"] {
-  background-color:#ccfbff;
+	background-color: rgb(238, 151, 157);
+	/*background-color: #f0adb3;*/
+	/*background-color:#ccfbff;*/
 }
 [data-event-type="training"] .calendar-event-type {
-  background-color: #005961;
+	background-color: red;
+  /*background-color: #005961;*/
 }
 [data-event-type="conf"] {
-  background-color: #f0adb3;
+  /*background-color: #f0adb3;*/
 }
 [data-event-type="conf"] .calendar-event-type {
-  background-color: red;
+  /*background-color: red;*/
 }
 
 [data-ex] {
@@ -116,17 +125,18 @@
   position: relative;
 }
 .month-select-name-container {
-  font-weight: 400;
+  font-weight: 500;
   position: relative;
+  font-size: 16px;
 }
 .month-select-name-container_color::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 90%;
-  width: 3em;
-  height: 2px;
-  background: red;
+	content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 107%;
+    width: 36px;
+    height: 2px;
+    background: red;
 }
 .calendar-event-pers {
   position: absolute;

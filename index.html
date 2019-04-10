@@ -1,26 +1,31 @@
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=0.5, maximum-scale=1.0, minimum-scale=0.3">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>RBcalendar</title>
-    <link href="./frontend/public/libs/normalize-8.0.1/normalize.css" rel="stylesheet">
-    <link href="./frontend/public/libs/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
-    <link href="./frontend/public/libs/fontawesome-free-5.7.2-web/css/all.css" rel="stylesheet">
-    <link href="./frontend/public/style.css" rel="stylesheet">
-    <!-- <link href="./frontend/public/css/style-popup.css" rel="stylesheet"> -->
-    <link href="./frontend/public/css/style-popup-autopref.css" rel="stylesheet">
-    <!-- <link href="./frontend/public/css/style-update.css" rel="stylesheet"> -->
-    <link href="./frontend/public/css/style-update-autopref.css" rel="stylesheet">
-    <script src="./frontend/public/libs/es6-promise.min.js"></script>
-    <script src="./frontend/public/libs/es6-promise.auto.min.js"></script>
-    <script src="./frontend/public/libs/jquery-3.3.1.min.js"></script>
-    <script src="./frontend/public/index.js"></script>
-</head>
-<body>
-<div id="calendar-app"></div>
+<link href="/rosbank/rb_calendar/frontend/public/libs/normalize-8.0.1/normalize.css" rel="stylesheet">
+<link href="/rosbank/rb_calendar/frontend/public/libs/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
+<link href="/rosbank/rb_calendar/frontend/public/libs/fontawesome-free-5.7.2-web/css/all.css" rel="stylesheet">
+<link href="/rosbank/rb_calendar/frontend/public/style.css" rel="stylesheet">
+<!-- <link href="/rosbank/rb_calendar/frontend/public/css/style-popup.css" rel="stylesheet"> -->
+<link href="/rosbank/rb_calendar/frontend/public/css/style-popup-autopref.css" rel="stylesheet">
+<!-- <link href="/rosbank/rb_calendar/frontend/public/css/style-update.css" rel="stylesheet"> -->
+<link href="/rosbank/rb_calendar/frontend/public/css/style-update-autopref.css" rel="stylesheet">
+<link href="/rosbank/rb_calendar/frontend/public/css/updates.css" rel="stylesheet">
+<script src="/rosbank/rb_calendar/frontend/public/libs/es6-promise.min.js"></script>
+<script src="/rosbank/rb_calendar/frontend/public/libs/es6-promise.auto.min.js"></script>
+<script src="/rosbank/rb_calendar/frontend/public/libs/jquery-3.3.1.min.js"></script>
+<script>
+$.noConflict();
+</script>
 
+<script src="/rosbank/rb_calendar/frontend/public/index.js"></script>
+<input type="hidden" id="curUserID" value="<%=curUserID%>">
+<div id="calendar-app"></div>
+<%
+function dateFormatter(_date){
+	var new_date = String(_date).split(' ')[0];
+	//Response.Write(new_date);
+	new_date = new_date.split('.');
+	//Response.Write('DATE'+new_date[2]+'-'+new_date[1]+'-'+new_date[0])
+	return (new_date[2]+'-'+new_date[1]+'-'+new_date[0]);
+}
+%>
 <script>
     //    $(document).ready(function(){
 
@@ -45,11 +50,11 @@
                 if (i in t) {
                     var val = t[i];
 
-                    // РџР РРњР•Р§РђРќРР•: РўРµС…РЅРёС‡РµСЃРєРё, Р·РґРµСЃСЊ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ Object.defineProperty РЅР°
-                    //             СЃР»РµРґСѓСЋС‰РёР№ РёРЅРґРµРєСЃ, РїРѕСЃРєРѕР»СЊРєСѓ push РјРѕР¶РµС‚ Р·Р°РІРёСЃРµС‚СЊ РѕС‚
-                    //             СЃРІРѕР№СЃС‚РІ РЅР° Object.prototype Рё Array.prototype.
-                    //             РќРѕ СЌС‚РѕС‚ РјРµС‚РѕРґ РЅРѕРІС‹Р№ Рё РєРѕР»Р»РёР·РёРё РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ СЂРµРґРєРёРјРё,
-                    //             С‚Р°Рє С‡С‚Рѕ РёСЃРїРѕР»СЊР·СѓРµРј Р±РѕР»РµРµ СЃРѕРІРјРµСЃС‚РёРјСѓСЋ Р°Р»СЊС‚РµСЂРЅР°С‚РёРІСѓ.
+                    // ПРИМЕЧАНИЕ: Технически, здесь должен быть Object.defineProperty на
+                    //             следующий индекс, поскольку push может зависеть от
+                    //             свойств на Object.prototype и Array.prototype.
+                    //             Но этот метод новый и коллизии должны быть редкими,
+                    //             так что используем более совместимую альтернативу.
                     if (fun.call(thisArg, val, i, t)) {
                         res.push(val);
                     }
@@ -62,9 +67,9 @@
 
 
     // map polyfill
-    // РЁР°РіРё Р°Р»РіРѕСЂРёС‚РјР° ECMA-262, 5-Рµ РёР·РґР°РЅРёРµ, 15.4.4.19
-    // РЎСЃС‹Р»РєР° (en): http://es5.github.com/#x15.4.4.19
-    // РЎСЃС‹Р»РєР° (ru): http://es5.javascript.ru/x15.4.html#x15.4.4.19
+    // Шаги алгоритма ECMA-262, 5-е издание, 15.4.4.19
+    // Ссылка (en): http://es5.github.com/#x15.4.4.19
+    // Ссылка (ru): http://es5.javascript.ru/x15.4.html#x15.4.4.19
     if (!Array.prototype.map) {
 
         Array.prototype.map = function(callback, thisArg) {
@@ -75,66 +80,66 @@
                 throw new TypeError(' this is null or not defined');
             }
 
-            // 1. РџРѕР»РѕР¶РёРј O СЂР°РІРЅС‹Рј СЂРµР·СѓР»СЊС‚Р°С‚Сѓ РІС‹Р·РѕРІР° ToObject СЃ РїРµСЂРµРґР°С‡РµР№ РµРјСѓ
-            //    Р·РЅР°С‡РµРЅРёСЏ |this| РІ РєР°С‡РµСЃС‚РІРµ Р°СЂРіСѓРјРµРЅС‚Р°.
+            // 1. Положим O равным результату вызова ToObject с передачей ему
+            //    значения |this| в качестве аргумента.
             var O = Object(this);
 
-            // 2. РџРѕР»РѕР¶РёРј lenValue СЂР°РІРЅС‹Рј СЂРµР·СѓР»СЊС‚Р°С‚Сѓ РІС‹Р·РѕРІР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РјРµС‚РѕРґР° Get
-            //    РѕР±СЉРµРєС‚Р° O СЃ Р°СЂРіСѓРјРµРЅС‚РѕРј "length".
-            // 3. РџРѕР»РѕР¶РёРј len СЂР°РІРЅС‹Рј ToUint32(lenValue).
+            // 2. Положим lenValue равным результату вызова внутреннего метода Get
+            //    объекта O с аргументом "length".
+            // 3. Положим len равным ToUint32(lenValue).
             var len = O.length >>> 0;
 
-            // 4. Р•СЃР»Рё РІС‹Р·РѕРІ IsCallable(callback) СЂР°РІРµРЅ false, РІС‹РєРёРґС‹РІР°РµРј РёСЃРєР»СЋС‡РµРЅРёРµ TypeError.
-            // РЎРјРѕС‚СЂРёС‚Рµ (en): http://es5.github.com/#x9.11
-            // РЎРјРѕС‚СЂРёС‚Рµ (ru): http://es5.javascript.ru/x9.html#x9.11
+            // 4. Если вызов IsCallable(callback) равен false, выкидываем исключение TypeError.
+            // Смотрите (en): http://es5.github.com/#x9.11
+            // Смотрите (ru): http://es5.javascript.ru/x9.html#x9.11
             if (typeof callback !== 'function') {
                 throw new TypeError(callback + ' is not a function');
             }
 
-            // 5. Р•СЃР»Рё thisArg РїСЂРёСЃСѓС‚СЃС‚РІСѓРµС‚, РїРѕР»РѕР¶РёРј T СЂР°РІРЅС‹Рј thisArg; РёРЅР°С‡Рµ РїРѕР»РѕР¶РёРј T СЂР°РІРЅС‹Рј undefined.
+            // 5. Если thisArg присутствует, положим T равным thisArg; иначе положим T равным undefined.
             if (arguments.length > 1) {
                 T = thisArg;
             }
 
-            // 6. РџРѕР»РѕР¶РёРј A СЂР°РІРЅС‹Рј РЅРѕРІРѕРјСѓ РјР°СЃРёРІСѓ, РєР°Рє РµСЃР»Рё Р±С‹ РѕРЅ Р±С‹Р» СЃРѕР·РґР°РЅ РІС‹СЂР°Р¶РµРЅРёРµРј new Array(len),
-            //    РіРґРµ Array СЏРІР»СЏРµС‚СЃСЏ СЃС‚Р°РЅРґР°СЂС‚РЅС‹Рј РІСЃС‚СЂРѕРµРЅРЅС‹Рј РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРј СЃ СЌС‚РёРј РёРјРµРЅРµРј,
-            //    Р° len СЏРІР»СЏРµС‚СЃСЏ Р·РЅР°С‡РµРЅРёРµРј len.
+            // 6. Положим A равным новому масиву, как если бы он был создан выражением new Array(len),
+            //    где Array является стандартным встроенным конструктором с этим именем,
+            //    а len является значением len.
             A = new Array(len);
 
-            // 7. РџРѕР»РѕР¶РёРј k СЂР°РІРЅС‹Рј 0
+            // 7. Положим k равным 0
             k = 0;
 
-            // 8. РџРѕРєР° k < len, Р±СѓРґРµРј РїРѕРІС‚РѕСЂСЏС‚СЊ
+            // 8. Пока k < len, будем повторять
             while (k < len) {
 
                 var kValue, mappedValue;
 
-                // a. РџРѕР»РѕР¶РёРј Pk СЂР°РІРЅС‹Рј ToString(k).
-                //   Р­С‚Рѕ РЅРµСЏРІРЅРѕРµ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёРµ РґР»СЏ Р»РµРІРѕСЃС‚РѕСЂРѕРЅРЅРµРіРѕ РѕРїРµСЂР°РЅРґР° РІ РѕРїРµСЂР°С‚РѕСЂРµ in
-                // b. РџРѕР»РѕР¶РёРј kPresent СЂР°РІРЅС‹Рј СЂРµР·СѓР»СЊС‚Р°С‚Сѓ РІС‹Р·РѕРІР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РјРµС‚РѕРґР° HasProperty
-                //    РѕР±СЉРµРєС‚Р° O СЃ Р°СЂРіСѓРјРµРЅС‚РѕРј Pk.
-                //   Р­С‚РѕС‚ С€Р°Рі РјРѕР¶РµС‚ Р±С‹С‚СЊ РѕР±СЉРµРґРёРЅС‘РЅ СЃ С€Р°РіРѕРј c
-                // c. Р•СЃР»Рё kPresent СЂР°РІРµРЅ true, С‚Рѕ
+                // a. Положим Pk равным ToString(k).
+                //   Это неявное преобразование для левостороннего операнда в операторе in
+                // b. Положим kPresent равным результату вызова внутреннего метода HasProperty
+                //    объекта O с аргументом Pk.
+                //   Этот шаг может быть объединён с шагом c
+                // c. Если kPresent равен true, то
                 if (k in O) {
 
-                    // i. РџРѕР»РѕР¶РёРј kValue СЂР°РІРЅС‹Рј СЂРµР·СѓР»СЊС‚Р°С‚Сѓ РІС‹Р·РѕРІР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РјРµС‚РѕРґР° Get
-                    //    РѕР±СЉРµРєС‚Р° O СЃ Р°СЂРіСѓРјРµРЅС‚РѕРј Pk.
+                    // i. Положим kValue равным результату вызова внутреннего метода Get
+                    //    объекта O с аргументом Pk.
                     kValue = O[k];
 
-                    // ii. РџРѕР»РѕР¶РёРј mappedValue СЂР°РІРЅС‹Рј СЂРµР·СѓР»СЊС‚Р°С‚Сѓ РІС‹Р·РѕРІР° РІРЅСѓС‚СЂРµРЅРЅРµРіРѕ РјРµС‚РѕРґР° Call
-                    //     С„СѓРЅРєС†РёРё callback СЃРѕ Р·РЅР°С‡РµРЅРёРµРј T РІ РєР°С‡РµСЃС‚РІРµ Р·РЅР°С‡РµРЅРёСЏ this Рё СЃРїРёСЃРєРѕРј
-                    //     Р°СЂРіСѓРјРµРЅС‚РѕРІ, СЃРѕРґРµСЂР¶Р°С‰РёРј kValue, k Рё O.
+                    // ii. Положим mappedValue равным результату вызова внутреннего метода Call
+                    //     функции callback со значением T в качестве значения this и списком
+                    //     аргументов, содержащим kValue, k и O.
                     mappedValue = callback.call(T, kValue, k, O);
 
-                    // iii. Р’С‹Р·РѕРІРµРј РІРЅСѓС‚СЂРµРЅРЅРёР№ РјРµС‚РѕРґ DefineOwnProperty РѕР±СЉРµРєС‚Р° A СЃ Р°СЂРіСѓРјРµРЅС‚Р°РјРё
-                    // Pk, РћРїРёСЃР°С‚РµР»СЊ РЎРІРѕР№СЃС‚РІР°
+                    // iii. Вызовем внутренний метод DefineOwnProperty объекта A с аргументами
+                    // Pk, Описатель Свойства
                     // { Value: mappedValue,
                     //   Writable: true,
                     //   Enumerable: true,
                     //   Configurable: true }
-                    // Рё false.
+                    // и false.
 
-                    // Р’ Р±СЂР°СѓР·РµСЂР°С…, РїРѕРґРґРµСЂР¶РёРІР°СЋС‰РёС… Object.defineProperty, РёСЃРїРѕР»СЊР·СѓРµРј СЃР»РµРґСѓСЋС‰РёР№ РєРѕРґ:
+                    // В браузерах, поддерживающих Object.defineProperty, используем следующий код:
                     // Object.defineProperty(A, k, {
                     //   value: mappedValue,
                     //   writable: true,
@@ -142,14 +147,14 @@
                     //   configurable: true
                     // });
 
-                    // Р”Р»СЏ Р»СѓС‡С€РµР№ РїРѕРґРґРµСЂР¶РєРё Р±СЂР°СѓР·РµСЂР°РјРё, РёСЃРїРѕР»СЊР·СѓРµРј СЃР»РµРґСѓСЋС‰РёР№ РєРѕРґ:
+                    // Для лучшей поддержки браузерами, используем следующий код:
                     A[k] = mappedValue;
                 }
-                // d. РЈРІРµР»РёС‡РёРј k РЅР° 1.
+                // d. Увеличим k на 1.
                 k++;
             }
 
-            // 9. Р’РµСЂРЅС‘Рј A.
+            // 9. Вернём A.
             return A;
         };
     }
@@ -186,12 +191,16 @@
         });
     }
 
-    var cur_date = new Date();
+    var cur_date = new Date('<%=dateFormatter(Date())%>');
+	//console.log(cur_date);
+	
+	
     var this_calendar = rb_calendar.init({
         mount_id: '#calendar-app'
         ,cur_date: cur_date
         ,days_in_row: 5
-        ,json_path: './server/db.json'
+        //,json_path: '/rosbank/rb_calendar/server/db.json'
+        ,json_path: "./custom_web_template.html?object_id=6673451655755009275"
     });
 
 
@@ -218,20 +227,20 @@
         _legend.init = function( opt ) {
             var _r = document.createElement( 'div' );
             _r.classList.add( 'row' );
-            _r.innerHTML = '<div class="col-12"><hr><div class="legend-title">Р›РµРіРµРЅРґР°:</div><div>' + opt + ' </div></div>';
+            _r.innerHTML = '<div class="col-12"><hr><div class="legend-title"><!--Легенда:--></div><div>' + opt + ' </div></div>';
             _legend.body.appendChild( _r );
             _legend.target.appendChild( _legend.body );
         };
         _str = '<div class="legend-list">'
-            + '<div class="legend-list-item"><div class="legend-box" data-event-type="conf"></div><div class="legend-description"> - РљРѕРЅС„РµСЂРµРЅС†РёСЏ</div></div>'
-            + '<div class="legend-list-item"><div class="legend-box" data-event-type="webinar"></div><div class="legend-description"> - Р’РµР±РёРЅР°СЂ</div></div>'
-            + '<div class="legend-list-item"><div class="legend-box" data-event-type="training"></div><div class="legend-description"> - РўСЂРµРЅРёРЅРі</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="training"></div><div class="legend-description"> - Тренинг</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="webinar"></div><div class="legend-description"> - Вебинар</div></div>'
+			+ '<div class="legend-list-item"><br></div>'
+            + '<div class="legend-list-item"><div class="legend-box"><i class="fa fa-users"></i></div><div class="legend-description"> - Свободные места</div></div>'
             + '</div>';
         _legend.init( _str );
 
     } ( void( 0 ) ) );
 </script>
 
-<script src="./frontend/public/js/popup.js"></script>
-</body>
-</html>
+<script src="/rosbank/rb_calendar/frontend/public/js/popup.js"></script>
+
