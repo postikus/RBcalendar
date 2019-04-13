@@ -192,13 +192,8 @@ function dateFormatter(_date){
             }
         });
     }
-
-
     //var cur_date = new Date('<%=dateFormatter(Date())%>'); //dev
     var cur_date = new Date(); //dev
-	// console.log('cur_date', cur_date);
-
-
     var this_calendar = rb_calendar.init({
         mount_id: '#calendar-app'
         ,cur_date: cur_date
@@ -206,17 +201,6 @@ function dateFormatter(_date){
         ,json_path: './server/db.json' //dev
         //,json_path: "./custom_web_template.html?object_id=6673451655755009275" //dev
     });
-
-
-//    rb_calendar.get_events({calendar_obj: this_calendar});
-
-//    var response = rb_calendar.get_events( "any thng" );
-
-//    response.then( function( resp ){
-//        events = resp;
-//        this_calendar.events = events;
-//        this_calendar.render_events(this_calendar.events);
-//    } ).catch( function( e ){ console.error( e ); } )
 
 </script>
 
