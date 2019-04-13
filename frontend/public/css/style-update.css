@@ -249,6 +249,10 @@
   box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
   background-color: rgba(255, 255, 255, 0.4);
 }
+.list-box__item-param {
+  display: inline-block;
+  margin-right: 1em;
+}
 .list-box__item {
   margin: 0 0 16px;
   /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
@@ -260,7 +264,7 @@
   overflow: hidden;
   max-height: 0;
   position: absolute;
-  transition: transform 0s 0.4s ease, opacity 0.3s ease, 0.4s 0s visibility ease;
+  transition: transform 0s 0.4s ease, opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item {
   transform: none;
@@ -271,6 +275,11 @@
   transition-property: transform, opacity, max-height, visibility;
   transition-duration: 0.3s, 0.3s, 0s, 0s;
   transition-delay: 0s, 0s, 0s, 0s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item.event-hover {
+  background-color: #555!important;
+  color: #fff;
+  text-shadow: none;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(1) {
   transition-delay:0s,0s;

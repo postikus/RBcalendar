@@ -294,8 +294,7 @@ _pagination.innerHTML += '<div data-p-btn data-p-btn-right class="enabled" title
 _pagination_wrap.appendChild(_pagination);
 _frag.appendChild(_pagination_wrap);
 _paginationTarget.appendChild(_frag);
-//_paginationTarget.insertBefore(_frag, null);
-console.log(_pagination);
+
 
 } () );
 
