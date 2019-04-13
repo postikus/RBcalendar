@@ -20,7 +20,9 @@ https://www.json-generator.com/
         type_val: '{{random("tle][manp", "manp][manp", "prof][manp", "all][manp")}}',
         price: '{{floating(1000, 4000, 2, "$0,0.00")}}',
         isObligatory: '{{bool()}}',
+        hub: '{{random("msc", "west_hub", "east_hub")}}',
         type: '{{random("webinar", "training")}}',
+        type_detailed: '{{random("type_training", "type_webinar", "type_confcall", "type_onlinetraining", "type_marathon", "type_buisnesssim")}}',
         description: '<h1>{{lorem(integer(1, 7), "words")}}</h1><p>{{lorem(integer(5, 20),"words")}}<br><a href="#" title="">link</a></p><p><strong>strong </strong><em>em </em>{{lorem(integer(5, 20),"words")}}</p><h2>title2</h2><ul><li>l-item</li><li>l-item2</li></ul>',
         start_date: '{{date(new Date(2019, 0, 1), new Date(2020, 0, 1), "YYYY-MM-ddThh:mm:ss")}}',
         finish_date: function () {
