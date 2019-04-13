@@ -10,9 +10,17 @@ https://www.json-generator.com/
         company: '{{company().toUpperCase()}}',
         address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
         max_pers: '{{integer(20, 40)}}',
+        is_open: '{{integer(0, 1)}}',
+        registred: '{{integer(0, 1)}}',
+        beexpert: '{{integer(0, 1)}}',
+        calendar_group: '{{objectId()}}',
+        type_no_access: '123123213',
+        for_type: '{{random("spec", "boss")}}',
+        event_rb_type: '{{random("tle", "manp", "prof", "all")}}',
+        type_val: '{{random("tle][manp", "manp][manp", "prof][manp", "all][manp")}}',
         price: '{{floating(1000, 4000, 2, "$0,0.00")}}',
         isObligatory: '{{bool()}}',
-        type: '{{random("webinar", "training", "conf")}}',
+        type: '{{random("webinar", "training")}}',
         description: '<h1>{{lorem(integer(1, 7), "words")}}</h1><p>{{lorem(integer(5, 20),"words")}}<br><a href="#" title="">link</a></p><p><strong>strong </strong><em>em </em>{{lorem(integer(5, 20),"words")}}</p><h2>title2</h2><ul><li>l-item</li><li>l-item2</li></ul>',
         start_date: '{{date(new Date(2019, 0, 1), new Date(2020, 0, 1), "YYYY-MM-ddThh:mm:ss")}}',
         finish_date: function () {
@@ -24,6 +32,8 @@ https://www.json-generator.com/
         }
     }
 ]
+
+
 
     [
     '{{repeat(5, 7)}}',
