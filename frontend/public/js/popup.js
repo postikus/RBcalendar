@@ -1,4 +1,4 @@
-"use strict";
+п»ї"use strict";
 
 ;( function( window, undefined ) {
 
@@ -57,16 +57,16 @@
     */
 
     if ("onpropertychange" in modalTrigger) {
-        // старый IE
+        // СЃС‚Р°СЂС‹Р№ IE
         modalTrigger.onpropertychange = function() {
-            // проверим имя изменённого свойства
+            // РїСЂРѕРІРµСЂРёРј РёРјСЏ РёР·РјРµРЅС‘РЅРЅРѕРіРѕ СЃРІРѕР№СЃС‚РІР°
             if (event.propertyName == "checked") {
                 //changeApply();
                 // do something
             }
         };
     } else {
-        // остальные браузеры
+        // РѕСЃС‚Р°Р»СЊРЅС‹Рµ Р±СЂР°СѓР·РµСЂС‹
         modalTrigger.onchange = function() {
             //changeApply();
             // do something
@@ -82,7 +82,7 @@
 }( window, void( 0 ) ) );
 
 
-/* типа обработчик клика и эмуляция запроса */
+/* С‚РёРїР° РѕР±СЂР°Р±РѕС‚С‡РёРє РєР»РёРєР° Рё СЌРјСѓР»СЏС†РёСЏ Р·Р°РїСЂРѕСЃР° */
 ;( function() {
 
     /* replacer function */
@@ -90,25 +90,25 @@
         return item.replace( /&amp;/g, "&" )
             .replace( /&amp;/g, "&" )
             .replace( /&nbsp;/g, " " )
-            .replace( /&raquo;/g, "»" )
-            .replace( /&laquo;/g, "«" )
+            .replace( /&raquo;/g, "В»" )
+            .replace( /&laquo;/g, "В«" )
             .replace( /&quot;/g, "\"" )
-            .replace( /&lsquo;/g, "‘" )
-            .replace( /&rsquo;/g, "’" )
-            .replace( /&copy;/g, "©" )
-            .replace( /&bull;/g, "•" )
-            .replace( /&reg;/g, "®" )
-            .replace( /&deg;/g, "°" )
+            .replace( /&lsquo;/g, "вЂ" )
+            .replace( /&rsquo;/g, "вЂ™" )
+            .replace( /&copy;/g, "В©" )
+            .replace( /&bull;/g, "вЂў" )
+            .replace( /&reg;/g, "В®" )
+            .replace( /&deg;/g, "В°" )
             .replace( /&lt;/g, "<" )
             .replace( /&gt;/g, ">" )
             .replace( /&tilde;/g, "~" )
-            .replace( /&ndash;/g, "–" )
-            .replace( /&mdash;/g, "—" )
-            .replace( /&ldquo;/g, "“" )
-            .replace( /&rdquo;/g, "”" )
-            .replace( /&bdquo;/g, "„" )
-            .replace( /&hellip;/g, "…" )
-            .replace( /&trade;/g, "™" )
+            .replace( /&ndash;/g, "вЂ“" )
+            .replace( /&mdash;/g, "вЂ”" )
+            .replace( /&ldquo;/g, "вЂњ" )
+            .replace( /&rdquo;/g, "вЂќ" )
+            .replace( /&bdquo;/g, "вЂћ" )
+            .replace( /&hellip;/g, "вЂ¦" )
+            .replace( /&trade;/g, "в„ў" )
     }
 
     window.modal || console.error( "not loaded module popup" );
@@ -173,7 +173,7 @@
         mHeader.classList.add( "m-header" );
 
         // console.log( idx, obj );
-        // console.log( replacer("&laquo;Рец&lsquo;&rsquo;епт&amp;amp;©успе&bull;шной®презе&ldquo;нт&rdquo;ац&bdquo;ии&deg;от&nbsp;ай&mdash;&hellip;ай&lt;ен&gt;ан&trade;ка&raquo;") );
+        // console.log( replacer("&laquo;Р РµС†&lsquo;&rsquo;РµРїС‚&amp;amp;В©СѓСЃРїРµ&bull;С€РЅРѕР№В®РїСЂРµР·Рµ&ldquo;РЅС‚&rdquo;Р°С†&bdquo;РёРё&deg;РѕС‚&nbsp;Р°Р№&mdash;&hellip;Р°Р№&lt;РµРЅ&gt;Р°РЅ&trade;РєР°&raquo;") );
 
         /* TODO */
         
@@ -209,15 +209,15 @@
             +'<div class="m-cell-2">'
             //+'<div class="m-title">Type:</div>'
             //+'<p>' + obj.type + '</p>'
-            +'<div class="m-title">Дата начала:</div>'
+            +'<div class="m-title">Р”Р°С‚Р° РЅР°С‡Р°Р»Р°:</div>'
             +'<p>' + format_date(obj.start_date) + '</p>'
-            +'<div class="m-title">Дата завершения:</div>'
+            +'<div class="m-title">Р”Р°С‚Р° Р·Р°РІРµСЂС€РµРЅРёСЏ:</div>'
             +'<p>' + format_date(obj.finish_date) + '</p>'
-            +'<div class="m-title">Свободных мест:</div>'
+            +'<div class="m-title">РЎРІРѕР±РѕРґРЅС‹С… РјРµСЃС‚:</div>'
             +'<p>' + obj.max_pers + '</p>'
             //+'<div class="m-title">Price:</div>'
             //+'<p>' + obj.price + '</p>'
-            +'<div class="m-title">Преподаватель:</div>'
+            +'<div class="m-title">РџСЂРµРїРѕРґР°РІР°С‚РµР»СЊ:</div>'
             +'<p>' + obj.company.replace('br', '<br>') + '</p>'
             +'</div>'
 
@@ -233,14 +233,14 @@
             footer_html += obj.type_no_access;
         }
         else if (obj.registred == 0){
-            footer_html +='<button class="btn m-btn m-btn_black" id="reg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Зарегистрироваться</button>';
+            footer_html +='<button class="btn m-btn m-btn_black" id="reg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ</button>';
         } 
         else if (obj.registred == 1){
-            footer_html +='<button class="btn m-btn m-btn_black" id="unreg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Отменить регистрацию</button>';
+            footer_html +='<button class="btn m-btn m-btn_black" id="unreg-button" data-id="'+obj.id+'" data-idx="'+idx+'">РћС‚РјРµРЅРёС‚СЊ СЂРµРіРёСЃС‚СЂР°С†РёСЋ</button>';
         }
         footer_html +='</div>'
             +'<div class="m-cell-2">'
-            /*+'<button class="btn m-btn m-btn_white">Зарегистрироваться</button>    '*/
+            /*+'<button class="btn m-btn m-btn_white">Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°С‚СЊСЃСЏ</button>    '*/
             +'</div>';
         
         mFooter.innerHTML = footer_html;
@@ -276,3 +276,26 @@
     }
     document.body.addEventListener( "click", catchEventOpen, false );
 }());
+
+
+/* С‚РёРїР° РџРђР“РРќРђРўРћР  */
+;(function () {
+
+/* get button */
+var _paginationTarget = document.querySelector( ".list-container" );
+var _frag = document.createDocumentFragment();
+var _pagination = document.createElement( "div" );
+var _pagination_wrap = document.createElement( "div" );
+_pagination_wrap.style.textAlign="center";
+_pagination.setAttribute( "data-p-box", "" );
+_pagination.innerHTML = '<div data-p-btn data-p-btn-left title="СЃСЋРґР°">&lt;</div>';
+_pagination.innerHTML += '<div data-p-btn data-p-btn-num title="СЃС‚СЂР°РЅРёС†Р° в„– 1">1</div>';
+_pagination.innerHTML += '<div data-p-btn data-p-btn-right class="enabled" title="С‚СѓРґР°">&gt;</div>';
+_pagination_wrap.appendChild(_pagination);
+_frag.appendChild(_pagination_wrap);
+_paginationTarget.appendChild(_frag);
+//_paginationTarget.insertBefore(_frag, null);
+console.log(_pagination);
+
+} () );
+
