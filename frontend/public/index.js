@@ -1075,7 +1075,6 @@
                 'data-opt-event-type="' + __events[idx].type + '" ' +
                 'title="' + __events[idx].name + ' ">' +
                 '</label>\n'
-            return __event_html;
         }
 
 

@@ -57,16 +57,16 @@
     */
 
     if ("onpropertychange" in modalTrigger) {
-        // старый IE
+        // пїЅпїЅпїЅпїЅпїЅпїЅ IE
         modalTrigger.onpropertychange = function() {
-            // проверим имя изменённого свойства
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             if (event.propertyName == "checked") {
                 //changeApply();
                 // do something
             }
         };
     } else {
-        // остальные браузеры
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         modalTrigger.onchange = function() {
             //changeApply();
             // do something
@@ -82,7 +82,7 @@
 }( window, void( 0 ) ) );
 
 
-/* типа обработчик клика и эмуляция запроса */
+/* пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ */
 ;( function() {
 
     /* replacer function */
@@ -90,25 +90,25 @@
         return item.replace( /&amp;/g, "&" )
             .replace( /&amp;/g, "&" )
             .replace( /&nbsp;/g, " " )
-            .replace( /&raquo;/g, "»" )
-            .replace( /&laquo;/g, "«" )
+            .replace( /&raquo;/g, "пїЅ" )
+            .replace( /&laquo;/g, "пїЅ" )
             .replace( /&quot;/g, "\"" )
-            .replace( /&lsquo;/g, "‘" )
-            .replace( /&rsquo;/g, "’" )
-            .replace( /&copy;/g, "©" )
-            .replace( /&bull;/g, "•" )
-            .replace( /&reg;/g, "®" )
-            .replace( /&deg;/g, "°" )
+            .replace( /&lsquo;/g, "пїЅ" )
+            .replace( /&rsquo;/g, "пїЅ" )
+            .replace( /&copy;/g, "пїЅ" )
+            .replace( /&bull;/g, "пїЅ" )
+            .replace( /&reg;/g, "пїЅ" )
+            .replace( /&deg;/g, "пїЅ" )
             .replace( /&lt;/g, "<" )
             .replace( /&gt;/g, ">" )
             .replace( /&tilde;/g, "~" )
-            .replace( /&ndash;/g, "–" )
-            .replace( /&mdash;/g, "—" )
-            .replace( /&ldquo;/g, "“" )
-            .replace( /&rdquo;/g, "”" )
-            .replace( /&bdquo;/g, "„" )
-            .replace( /&hellip;/g, "…" )
-            .replace( /&trade;/g, "™" )
+            .replace( /&ndash;/g, "пїЅ" )
+            .replace( /&mdash;/g, "пїЅ" )
+            .replace( /&ldquo;/g, "пїЅ" )
+            .replace( /&rdquo;/g, "пїЅ" )
+            .replace( /&bdquo;/g, "пїЅ" )
+            .replace( /&hellip;/g, "пїЅ" )
+            .replace( /&trade;/g, "пїЅ" )
     }
 
     window.modal || console.error( "not loaded module popup" );
@@ -173,7 +173,7 @@
         mHeader.classList.add( "m-header" );
 
         // console.log( idx, obj );
-        // console.log( replacer("&laquo;Рец&lsquo;&rsquo;епт&amp;amp;©успе&bull;шной®презе&ldquo;нт&rdquo;ац&bdquo;ии&deg;от&nbsp;ай&mdash;&hellip;ай&lt;ен&gt;ан&trade;ка&raquo;") );
+        // console.log( replacer("&laquo;пїЅпїЅпїЅ&lsquo;&rsquo;пїЅпїЅпїЅ&amp;amp;пїЅпїЅпїЅпїЅпїЅ&bull;пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ&ldquo;пїЅпїЅ&rdquo;пїЅпїЅ&bdquo;пїЅпїЅ&deg;пїЅпїЅ&nbsp;пїЅпїЅ&mdash;&hellip;пїЅпїЅ&lt;пїЅпїЅ&gt;пїЅпїЅ&trade;пїЅпїЅ&raquo;") );
 
         /* TODO */
 		
@@ -209,15 +209,15 @@
             +'<div class="m-cell-2">'
             //+'<div class="m-title">Type:</div>'
             //+'<p>' + obj.type + '</p>'
-            +'<div class="m-title">Дата начала:</div>'
+            +'<div class="m-title">пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ:</div>'
             +'<p>' + format_date(obj.start_date) + '</p>'
-            +'<div class="m-title">Дата завершения:</div>'
+            +'<div class="m-title">пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:</div>'
             +'<p>' + format_date(obj.finish_date) + '</p>'
-            +'<div class="m-title">Свободных мест:</div>'
+            +'<div class="m-title">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ:</div>'
             +'<p>' + obj.max_pers + '</p>'
             //+'<div class="m-title">Price:</div>'
             //+'<p>' + obj.price + '</p>'
-            +'<div class="m-title">Преподаватель:</div>'
+            +'<div class="m-title">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ:</div>'
             +'<p>' + obj.company.replace('br', '<br>') + '</p>'
             +'</div>'
 
@@ -233,14 +233,14 @@
 			footer_html += obj.type_no_access;
 		}
 		else if (obj.registred == 0){
-			footer_html +='<button class="btn m-btn m-btn_black" id="reg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Зарегистрироваться</button>';
+			footer_html +='<button class="btn m-btn m-btn_black" id="reg-button" data-id="'+obj.id+'" data-idx="'+idx+'">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</button>';
 		} 
 		else if (obj.registred == 1){
-			footer_html +='<button class="btn m-btn m-btn_black" id="unreg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Отменить регистрацию</button>';
+			footer_html +='<button class="btn m-btn m-btn_black" id="unreg-button" data-id="'+obj.id+'" data-idx="'+idx+'">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</button>';
 		}
         footer_html +='</div>'
             +'<div class="m-cell-2">'
-            /*+'<button class="btn m-btn m-btn_white">Зарегистрироваться</button>    '*/
+            /*+'<button class="btn m-btn m-btn_white">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</button>    '*/
             +'</div>';
 		
         mFooter.innerHTML = footer_html;

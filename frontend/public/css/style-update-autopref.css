@@ -1,6 +1,8 @@
 .calendar-cell-today {
   /*background-color: #fbd0e6;*/
   /*background-color: rgba(255, 229, 243, 0.78);*/
+  background-color: #fbd0e6;
+  background-color: rgba(255, 229, 243, 0.78);
   /*background-color: #eb2d90;*/
   background-color: #0300d0;
 }
@@ -163,4 +165,15 @@
   }
 .legend-description {
   display: inline-block;
+  font-weight: 400;
+  position: relative;
+}
+.month-select-name-container_color::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 90%;
+  width: 3em;
+  height: 2px;
+  background: red;
 }
