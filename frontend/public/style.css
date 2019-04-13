@@ -1,6 +1,7 @@
 .calendar-app{
     width: 1000px;
     margin: 0 auto;
+	overflow: hidden
 }
 
 .calendar-app, .calendar-container, .filters-container{
@@ -33,8 +34,13 @@
 .month-select-name-container{
     display: inline-block;
     min-width: 150px;
-    color: rgba(119, 119, 119, 0.92);
+    /* color: rgba(119, 119, 119, 0.92); */
     font-weight: 700;
+}
+
+.month-select-arrow-left-button, .month-select-arrow-right-button{
+    font-size: 20px;
+    color: #000;
 }
 
 #calendar-weekdays-container{
@@ -77,7 +83,7 @@
     /*padding-left: 5px;*/
     padding-top: 8px;
     font-weight: 700;
-    color: rgba(119, 119, 119, 0.92);
+    /*color: rgba(119, 119, 119, 0.92);*/
     text-align: center;
     /*background-color: #c78f4d;*/
     border-top: 1px solid #c8ccd0;
@@ -87,7 +93,9 @@
 .calendar-cell{
     width: 20%;
     float: left;
-    height: 115px;
+    height: 185px;
+	font-weight: 600;
+    color: #000;
     /*background-color: #686868;*/
     /*border-top: 1px solid rgb(108, 117, 125);*/
     /*border-left: 1px solid rgb(108, 117, 125);*/
@@ -96,7 +104,8 @@
 }
 
 .calendar-cell-today{
-    background-color: rgba(229, 95, 80, 0.8);;
+    /*background-color: rgba(229, 95, 80, 0.8);*/
+
 }
 
 .calendar-cell-date{
@@ -106,7 +115,14 @@
 }
 
 .filter-row-container{
-    padding-top: 10px;
+    /*display: inline-block;*/
+    /*padding-top: 10px;*/
+	padding-top: 0 !important;
+	padding-bottom: 0 !important;
+}
+
+.form-check{
+	padding-bottom: 4px !important;
 }
 
 .no-padding{
@@ -117,28 +133,32 @@
     color: #330072 !important;
 }
 
-#calendar-cells-container {
+.calendar-cells{
+    overflow: hidden;
+}
+
+.calendar-cells-container {
 
 }
 
 .ce-1{
-    width: 130px;
+    width: 131px;
 }
 
 .ce-2{
-    width: 267px;
+    width: 271px;
 }
 
 .ce-3{
-    width: 405px;
+    width: 412px;
 }
 
 .ce-4{
-    width: 542px;
+    width: 553px;
 }
 
 .ce-5{
-    width: 682px;
+    width: 693px;
 }
 
 .calendar-event {
@@ -149,10 +169,49 @@
     background-color: #e3e3e3;
 }
 
+.ct-1{
+    top: 42px;
+}
+
+.ct-2{
+    top: 62px;
+}
+
+.ct-3{
+    top: 82px;
+}
+
+.ct-4{
+    top: 102px;
+}
+
+.ct-5{
+    top: 122px;
+}
+
+.ct-6{
+    top: 142px;
+}
+
+.ct-7{
+    top: 162px;
+}
+
+.ct-8{
+    top: 182px;
+}
+.ct-9{
+    top: 202px;
+}
+
+.ct-10{
+    top: 222px;
+}
+
 .calendar-event-container{
     line-height: 15px;
     padding: 0;
-    cursor: pointer;
+    /*cursor: pointer;*/
     /* IE 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
     /* IE 5-7 */
@@ -200,8 +259,10 @@
 }
 
 .calendar-event-icons{
+    min-width: 42px;
     font-size: 12px;
     padding-right: 10px;
+    right: 10px;
 }
 
 .grid-event-container{
@@ -250,4 +311,33 @@
 .card-header-blue{
     background-color: #33007290;
     color: rgb(33, 37, 41);
+}
+.calendar-event-break{
+    height: 100%;
+    width: 0px;
+    display: inline-block;
+    border-left: 2px dotted black;
+}
+.event-hover{
+    background-color: #ff0000 !important;
+    color: #ffffff;
+}
+
+.event-opacity02{
+	/* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    /* IE 5-7 */
+    filter: alpha(opacity=20);
+    /* Netscape */
+    -moz-opacity: 0.20;
+    /* Safari 1.x */
+    -khtml-opacity: 0.20;
+    /* Good browsers */
+    opacity: 0.20;
+	cursor: default !important;
+}
+
+.event-opacity02 .calendar-event_btn{
+    pointer-events: none;
+	cursor: default !important;
 }
