@@ -57,6 +57,7 @@
     */
 
     if ("onpropertychange" in modalTrigger) {
+
         // старый IE
         modalTrigger.onpropertychange = function() {
             // проверим имя изменённого свойства
@@ -891,12 +892,14 @@
         // старый IE
         modalTrigger.onpropertychange = function() {
             // проверим имя изменённого свойства
+
             if (event.propertyName == "checked") {
                 //changeApply();
                 // do something
             }
         };
     } else {
+
         // остальные браузеры
         modalTrigger.onchange = function() {
             //changeApply();
@@ -913,7 +916,7 @@
 }( window, void( 0 ) ) );
 
 
-/* типа обработчик клика и эмуляция запроса */
+
 ;( function() {
 
     /* replacer function */
@@ -921,6 +924,7 @@
         return item.replace( /&amp;/g, "&" )
             .replace( /&amp;/g, "&" )
             .replace( /&nbsp;/g, " " )
+
             .replace( /&raquo;/g, "»" )
             .replace( /&laquo;/g, "«" )
             .replace( /&quot;/g, "\"" )
@@ -983,6 +987,7 @@
 
     }
 
+
     function format_date( _date ){
         var st_date_str = _date.split('+')[0].replace('T', ' ');
         st_date_str = st_date_str.substring(0, st_date_str.length-3);
@@ -991,7 +996,6 @@
         var st_date_date_str = st_date_date.split('-');
         return st_date_date_str[2]+'.'+st_date_date_str[1]+'.'+st_date_date_str[0] + ' ' + st_date_time;
     }
-
     function createContent( idx ) {
 
         modal.content.innerHTML = '';
@@ -1031,6 +1035,7 @@
         mHeader.innerHTML = mheader_html;
 
 
+
         var mMain = document.createElement( "div" );
         mMain.classList.add( "m-main" );
         /* TODO */
@@ -1040,6 +1045,7 @@
             +'<div class="m-cell-2">'
             //+'<div class="m-title">Type:</div>'
             //+'<p>' + obj.type + '</p>'
+
             +'<div class="m-title">Дата начала:</div>'
             +'<p>' + format_date(obj.start_date) + '</p>'
             +'<div class="m-title">Дата завершения:</div>'
@@ -1049,6 +1055,7 @@
             //+'<div class="m-title">Price:</div>'
             //+'<p>' + obj.price + '</p>'
             +'<div class="m-title">Преподаватель:</div>'
+
             +'<p>' + obj.company.replace('br', '<br>') + '</p>'
             +'</div>'
 
@@ -1056,6 +1063,7 @@
         var mFooter = document.createElement( "div" );
         mFooter.classList.add( "m-footer" );
         /* TODO */
+
 
         var footer_html = '';
 
