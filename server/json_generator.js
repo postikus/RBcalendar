@@ -14,7 +14,7 @@ https://www.json-generator.com/
         registred: '{{integer(0, 1)}}',
         beexpert: '{{integer(0, 1)}}',
         calendar_group: '{{objectId()}}',
-        type_no_access: '123123213',
+        type_no_access: 'wops! no access text!',
         for_type: '{{random("spec", "boss")}}',
         event_rb_type: '{{random("tle", "manp", "prof", "all")}}',
         type_val: '{{random("tle][manp", "manp][manp", "prof][manp", "all][manp")}}',
@@ -27,8 +27,7 @@ https://www.json-generator.com/
             var start_date = new Date (this.start_date);
             var finish_date = new Date(start_date.setDate(start_date.getDate() + Math.floor(Math.random() * 4) + 1));
             finish_date = finish_date;
-            return finish_date
-
+            return finish_date;
         }
     }
 ]

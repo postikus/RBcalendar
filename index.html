@@ -66,9 +66,6 @@ function dateFormatter(_date){
 
 
     // map polyfill
-    // ���� ��������� ECMA-262, 5-� �������, 15.4.4.19
-    // ������ (en): http://es5.github.com/#x15.4.4.19
-    // ������ (ru): http://es5.javascript.ru/x15.4.html#x15.4.4.19
     if (!Array.prototype.map) {
 
         Array.prototype.map = function(callback, thisArg) {
@@ -78,7 +75,6 @@ function dateFormatter(_date){
             if (this == null) {
                 throw new TypeError(' this is null or not defined');
             }
-
             // 1. ������� O ������ ���������� ������ ToObject � ��������� ���
             //    �������� |this| � �������� ���������.
             var O = Object(this);
@@ -109,9 +105,11 @@ function dateFormatter(_date){
             k = 0;
 
             // 8. ���� k < len, ����� ���������
+
             while (k < len) {
 
                 var kValue, mappedValue;
+
 
                 // a. ������� Pk ������ ToString(k).
                 //   ��� ������� �������������� ��� �������������� �������� � ��������� in
@@ -132,6 +130,7 @@ function dateFormatter(_date){
 
                     // iii. ������� ���������� ����� DefineOwnProperty ������� A � �����������
                     // Pk, ��������� ��������
+
                     // { Value: mappedValue,
                     //   Writable: true,
                     //   Enumerable: true,
@@ -139,12 +138,14 @@ function dateFormatter(_date){
                     // � false.
 
                     // � ���������, �������������� Object.defineProperty, ���������� ��������� ���:
+
                     // Object.defineProperty(A, k, {
                     //   value: mappedValue,
                     //   writable: true,
                     //   enumerable: true,
                     //   configurable: true
                     // });
+
 
                     // ��� ������ ��������� ����������, ���������� ��������� ���:
                     A[k] = mappedValue;
