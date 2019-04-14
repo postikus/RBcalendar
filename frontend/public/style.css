@@ -323,7 +323,7 @@
     color: #ffffff;
 }
 
-.event-opacity02{
+.event-disabled{
 	/* IE 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     /* IE 5-7 */
@@ -337,7 +337,7 @@
 	cursor: default !important;
 }
 
-.event-opacity02 .calendar-event_btn{
+.event-disabled .calendar-event_btn{
     pointer-events: none;
 	cursor: default !important;
 }
