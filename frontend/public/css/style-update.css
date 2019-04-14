@@ -254,6 +254,8 @@
   margin-right: 1em;
 }
 .list-box__item {
+  display: block;
+  height: auto;
   margin: 0 0 16px;
   /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -288,43 +290,43 @@
   transition-delay:0.3s,0.3s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(3) {
-  transition-delay:0.55s,0.55s;
+  transition-delay:0.4s,0.4s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(4) {
-  transition-delay:0.75s,0.75s;
+  transition-delay:0.5s,0.5s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(5) {
-  transition-delay:0.90s,0.90s;
+  transition-delay:0.6s,0.6s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(6) {
-  transition-delay:1s,1s;
+  transition-delay:0.7s,0.7s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(7) {
-  transition-delay:1.1s,1.1s;
+  transition-delay:0.8s,0.8s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(8) {
-  transition-delay:1.2s,1.2s;
+  transition-delay:0.9s,0.9s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(9) {
-  transition-delay:1.3s,1.3s;
+  transition-delay:1s,1s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(10) {
-  transition-delay:1.4s,1.4s;
+  transition-delay:1.1s,1.1s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(11) {
-  transition-delay:1.5s,1.5s;
+  transition-delay:1.2s,1.2s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(12) {
-  transition-delay:1.6s,1.6s;
+  transition-delay:1.3s,1.3s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(13) {
-  transition-delay:1.7s,1.7s;
+  transition-delay:1.4s,1.4s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(14) {
-  transition-delay:1.8s,1.8s;
+  transition-delay:1.5s,1.5s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(15) {
-  transition-delay:1.9s,1.9s;
+  transition-delay:1.6s,1.6s;
 }
 
 [data-p-box] {
