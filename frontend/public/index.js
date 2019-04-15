@@ -1,3 +1,159 @@
+// filter polifyl
+if (!Array.prototype.filter) {
+    Array.prototype.filter = function(fun/*, thisArg*/) {
+        'use strict';
+
+        if (this === void 0 || this === null) {
+            throw new TypeError();
+        }
+
+        var t = Object(this);
+        var len = t.length >>> 0;
+        if (typeof fun !== 'function') {
+            throw new TypeError();
+        }
+
+        var res = [];
+        var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+        for (var i = 0; i < len; i++) {
+            if (i in t) {
+                var val = t[i];
+
+                // ПРИМЕЧАНИЕ: Технически, здесь должен быть Object.defineProperty на
+                //             следующий индекс, поскольку push может зависеть от
+                //             свойств на Object.prototype и Array.prototype.
+                //             Но этот метод новый и коллизии должны быть редкими,
+                //             так что используем более совместимую альтернативу.
+                if (fun.call(thisArg, val, i, t)) {
+                    res.push(val);
+                }
+            }
+        }
+
+        return res;
+    };
+}
+// map polyfill
+if (!Array.prototype.map) {
+
+    Array.prototype.map = function(callback, thisArg) {
+
+        var T, A, k;
+
+        if (this == null) {
+            throw new TypeError(' this is null or not defined');
+        }
+
+        // 1. Положим O равным результату вызова ToObject с передачей ему
+        //    значения |this| в качестве аргумента.
+        var O = Object(this);
+
+        // 2. Положим lenValue равным результату вызова внутреннего метода Get
+        //    объекта O с аргументом "length".
+        // 3. Положим len равным ToUint32(lenValue).
+        var len = O.length >>> 0;
+
+        // 4. Если вызов IsCallable(callback) равен false, выкидываем исключение TypeError.
+        // Смотрите (en): http://es5.github.com/#x9.11
+        // Смотрите (ru): http://es5.javascript.ru/x9.html#x9.11
+        if (typeof callback !== 'function') {
+            throw new TypeError(callback + ' is not a function');
+        }
+
+        // 5. Если thisArg присутствует, положим T равным thisArg; иначе положим T равным undefined.
+        if (arguments.length > 1) {
+            T = thisArg;
+        }
+
+        // 6. Положим A равным новому масиву, как если бы он был создан выражением new Array(len),
+        //    где Array является стандартным встроенным конструктором с этим именем,
+        //    а len является значением len.
+        A = new Array(len);
+
+        // 7. Положим k равным 0
+        k = 0;
+
+        // 8. Пока k < len, будем повторять
+        while (k < len) {
+
+            var kValue, mappedValue;
+
+            // a. Положим Pk равным ToString(k).
+            //   Это неявное преобразование для левостороннего операнда в операторе in
+            // b. Положим kPresent равным результату вызова внутреннего метода HasProperty
+            //    объекта O с аргументом Pk.
+            //   Этот шаг может быть объединён с шагом c
+            // c. Если kPresent равен true, то
+            if (k in O) {
+
+                // i. Положим kValue равным результату вызова внутреннего метода Get
+                //    объекта O с аргументом Pk.
+                kValue = O[k];
+
+                // ii. Положим mappedValue равным результату вызова внутреннего метода Call
+                //     функции callback со значением T в качестве значения this и списком
+                //     аргументов, содержащим kValue, k и O.
+                mappedValue = callback.call(T, kValue, k, O);
+
+                // iii. Вызовем внутренний метод DefineOwnProperty объекта A с аргументами
+                // Pk, Описатель Свойства
+                // { Value: mappedValue,
+                //   Writable: true,
+                //   Enumerable: true,
+                //   Configurable: true }
+                // и false.
+
+                // В браузерах, поддерживающих Object.defineProperty, используем следующий код:
+                // Object.defineProperty(A, k, {
+                //   value: mappedValue,
+                //   writable: true,
+                //   enumerable: true,
+                //   configurable: true
+                // });
+
+                // Для лучшей поддержки браузерами, используем следующий код:
+                A[k] = mappedValue;
+            }
+            // d. Увеличим k на 1.
+            k++;
+        }
+
+        // 9. Вернём A.
+        return A;
+    };
+}
+// assign polyfill
+if (!Object.assign) {
+    Object.defineProperty(Object, 'assign', {
+        enumerable: false,
+        configurable: true,
+        writable: true,
+        value: function(target, firstSource) {
+            'use strict';
+            if (target === undefined || target === null) {
+                throw new TypeError('Cannot convert first argument to object');
+            }
+
+            var to = Object(target);
+            for (var i = 1; i < arguments.length; i++) {
+                var nextSource = arguments[i];
+                if (nextSource === undefined || nextSource === null) {
+                    continue;
+                }
+
+                var keysArray = Object.keys(Object(nextSource));
+                for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+                    var nextKey = keysArray[nextIndex];
+                    var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+                    if (desc !== undefined && desc.enumerable) {
+                        to[nextKey] = nextSource[nextKey];
+                    }
+                }
+            }
+            return to;
+        }
+    });
+}
 /* global jQuery, rb_calendar */
 
 ///
@@ -7,6 +163,7 @@
 ///
 
 ;(function($public, $window, $, undefined) {
+
     var _private = {};
     _private = {
         state: 'start_init',
@@ -47,7 +204,6 @@
     };
     _private.CalendarObj.prototype.change_hash = function(__hash_object){
         //cl('__hash_object', __hash_object);
-        var new_hash = '';
         window.location.hash = __hash_object.month
             + '/' + __hash_object.year
             + '/' + __hash_object.filters.join('&')
@@ -66,17 +222,11 @@
         this.date_month = this.date_with_first_day.getMonth();
     };
     _private.CalendarObj.prototype.opacity_change = function(){
-
-
-
         function arr_diff (a1, a2) {
-
             var a = [], diff = [];
-
             for (var i = 0; i < a1.length; i++) {
                 a[a1[i]] = true;
             }
-
             for (var i = 0; i < a2.length; i++) {
                 if (a[a2[i]]) {
                     delete a[a2[i]];
@@ -84,21 +234,17 @@
                     a[a2[i]] = true;
                 }
             }
-
             for (var k in a) {
                 diff.push(k);
             }
-
             return diff;
         }
-
-
         //cl('opacity change start');
-        var this_hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
-        cl('this_hash_obj111111111!', this_hash_obj);
-        var $fc = $('.filters-container');
-        $('.calendar-event').removeClass('event-opacity02');
-        var $not_checked_cb = $fc.find('input:not(:checked)');
+        // var this_hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
+        // cl('this_hash_obj111111111!', this_hash_obj);
+        // var $fc = $('.filters-container');
+        $('.calendar-event').removeClass('event-disabled');
+        // var $not_checked_cb = $fc.find('input:not(:checked)');
         var filter_arr = [];
         var checked_filter_arr = [];
         var cb_counter = 0;
@@ -112,9 +258,6 @@
             // $(this).find('input:checkbox');
             cb_counter++;
         });
-
-
-
         // cl('filter_arr!!!!!!!',filter_arr);
         // cl('checked_filter_arr!!!!!!!',checked_filter_arr);
         var show_arr_values = [];
@@ -132,35 +275,31 @@
                     show_arr_values.push(checked_filter_arr[checked_counter][cf]);
                 }
             }
-            else{
+            else {
                 for (var ncf=0; ncf<filter_arr[checked_counter].length; ncf++){
                     show_arr_values.push(filter_arr[checked_counter][ncf]);
                 }
                 // cl('checked_filter_arr!!!!!!!',filter_arr[checked_counter]);
             }
         }
-
-
-
-        cl('show_arr_values', show_arr_values);
-        cl('all_arr_values', all_arr_values);
-        cl(arr_diff(all_arr_values,show_arr_values));
+        // cl('show_arr_values', show_arr_values);
+        // cl('all_arr_values', all_arr_values);
+        // cl(arr_diff(all_arr_values,show_arr_values));
         arr_diff(all_arr_values,show_arr_values).map(function (t) {
-            $('.calendar-event[data-'+t+'="1"]').addClass('event-opacity02');
+            $('.calendar-event[data-'+t+'="1"]').addClass('event-disabled');
             //cl('t', t);
         });
-
         // hide solo checkboxs ->
-        cl('yo', filter_arr);
+        // cl('yo', filter_arr);
         var solo_checked;
         for (var _filter_c = 0; _filter_c < filter_arr.length; _filter_c++){
-            if (filter_arr[_filter_c].length == 1){
-                cl('solo found', filter_arr[_filter_c]);
+            if (filter_arr[_filter_c].length === 1){
+                // cl('solo found', filter_arr[_filter_c]);
                 //check is checked
                 solo_checked = $('#'+filter_arr[_filter_c][0]).prop('checked');
-                cl('solo_checked', solo_checked);
+                // cl('solo_checked', solo_checked);
                 if (solo_checked === true){
-                    $('.calendar-event[data-'+filter_arr[_filter_c][0]+'="0"]').addClass('event-opacity02');
+                    $('.calendar-event[data-'+filter_arr[_filter_c][0]+'="0"]').addClass('event-disabled');
                 }
             }
         }
@@ -169,7 +308,7 @@
 
 
         //cl('show_arr_values',"$('.calendar-event[data-"+show_arr_values.join('="1"][data-')+'="1"]\')');
-        // $('.calendar-event[data-'+show_arr_values.join('="1"][data-')+'="1"]').removeClass('event-opacity02');
+        // $('.calendar-event[data-'+show_arr_values.join('="1"][data-')+'="1"]').removeClass('event-disabled');
         //$('.calendar-event[data-registred="1"][data-spec="1"][data-manp="1"]')
         // for (cb_counter=0; cb_counter < this_hash_obj.filters.length; cb_counter++){
         //     filter_arr = this_hash_obj.filters[cb_counter].split('=');//.filter(function(t){return t!==''});
@@ -186,7 +325,7 @@
         //cl('opicaty accepted');
         // $not_checked_cb.map(function (cb) {
         //     var this_id = $(this).attr('id');
-        // $('[data-'+this_id+'="1"]').addClass('event-opacity02');
+        // $('[data-'+this_id+'="1"]').addClass('event-disabled');
         // });
         // }
 
@@ -229,15 +368,15 @@
         var __prev_month_num = __month_num;
         return (__prev_month_num === 0 ? 11 : --__prev_month_num);
     };
-    /*_private.CalendarObj.prototype.change_month_num = function (__calendar_obj, __new_month) {
-        __calendar_obj.date_with_first_day = new Date(__calendar_obj.date_year, __new_month, 1);
-    }; */
-    _private.CalendarObj.prototype.init_calendar_view = function(__$_calendar_v_mount_obj){
-        // cl('calendar view init');
-        var __calendar_view_html = '';
-        __$_calendar_v_mount_obj.html(__calendar_view_html);
-        // cl('calendar view mounted');
-    };
+    // _private.CalendarObj.prototype.change_month_num = function (__calendar_obj, __new_month) {
+    //     __calendar_obj.date_with_first_day = new Date(__calendar_obj.date_year, __new_month, 1);
+    // };
+    // _private.CalendarObj.prototype.init_calendar_view = function(__$_calendar_v_mount_obj){
+    //     // cl('calendar view init');
+    //     var __calendar_view_html = '';
+    //     __$_calendar_v_mount_obj.html(__calendar_view_html);
+    //     // cl('calendar view mounted');
+    // };
     _private.CalendarObj.prototype.get_calendar_view_button_container = function () {
         var __calendar_view_button_html = '';
         __calendar_view_button_html += '<div class="col-12 text-right filters-header-icons">';
@@ -277,17 +416,18 @@
     };
     _private.CalendarObj.prototype.get_filters_row_container = function (type, q_object) { //search/checkbox/checkboxs
         var __filter_row_html = '';
+        var _self = this;
         __filter_row_html += '<div class="row filter-row-container">';
         __filter_row_html += '<div class="col-12 filter-col-container" data-id="'+q_object.id+'" data-value="">';
         switch (type){
             case 'search':
-                __filter_row_html += _private.CalendarObj.prototype.get_search_html();
+                __filter_row_html += _self.get_search_html();
                 break;
             case 'checkbox':
-                __filter_row_html += _private.CalendarObj.prototype.get_checkbox_html(q_object);
+                __filter_row_html += _self.get_checkbox_html(q_object);
                 break;
             case 'checkboxs':
-                __filter_row_html += _private.CalendarObj.prototype.get_checkboxs_html(q_object);
+                __filter_row_html += _self.get_checkboxs_html(q_object);
                 break;
             default:
                 __filter_row_html += '';
@@ -298,9 +438,10 @@
         return __filter_row_html;
     };
     _private.CalendarObj.prototype.get_filters_html = function(){
+        var self = this;
         var __filters_html = '';
         __filters_html += '<div class="row" id="filters-header-container">';
-        __filters_html += _private.CalendarObj.prototype.get_calendar_view_button_container();
+        __filters_html += self.get_calendar_view_button_container();
         __filters_html += '</div>';
         // __filters_html += _private.CalendarObj.prototype.get_filters_row_container('search');
         __filters_html += _private.CalendarObj.prototype.get_filters_row_container('checkbox', {id: 'registred', label: 'Мои мероприятия'});
@@ -331,8 +472,7 @@
                 {id: 'tle', label: 'Тренинги личной эффективности'},
                 {id: 'manp', label: 'Менеджерские программы'},
                 {id: 'prof', label: 'Профессиональное обучение'},
-                {id: 'all', label: 'Общебанковские тренинги'},
-                {id: 'club', label: 'Клуб'}
+                {id: 'all', label: 'Общебанковские тренинги'}
             ]
         });
         __filters_html += _private.CalendarObj.prototype.get_filters_row_container('checkboxs', {
@@ -410,11 +550,12 @@
         return __calendar_cell_html;
     };
     _private.CalendarObj.prototype.get_calendar_row_cells_html = function (__calendar_object, __cells_array) {
+        var self = this;
         var __row_cells_html = '';
         __row_cells_html += '<div class="row calendar-cells">';
         __row_cells_html += '<div class="col-12">';
         for (var __cell_counter = 0; __cell_counter < __calendar_object.days_in_row; __cell_counter++){
-            __row_cells_html += _private.CalendarObj.prototype.get_calendar_cell_html(
+            __row_cells_html += self.get_calendar_cell_html(
                 __cells_array[__cell_counter].date
                 ,__cells_array[__cell_counter].row
                 ,__cells_array[__cell_counter].cell
@@ -429,6 +570,7 @@
     };
     _private.CalendarObj.prototype.get_calendar_block_html = function (__calendar_object){
         // __calendar_object.cl();
+        var self = this;
         var __calendar_obj_array = []; //[[{},{}...],[...],[],[],[]]
         var row_count = 5;
         var __overall_date_counter = 1;
@@ -484,19 +626,27 @@
         __calendar_block_html +=  '<div class="col-12">';
         __calendar_block_html +=  '<div class="container-fluid no-padding">';
         for (var __month_row=0; __month_row < row_count; __month_row++){
-            __calendar_block_html += _private.CalendarObj.prototype.get_calendar_row_cells_html(__calendar_object, __calendar_obj_array[__month_row]);
+            __calendar_block_html += self.get_calendar_row_cells_html(__calendar_object, __calendar_obj_array[__month_row]);
         }
         __calendar_block_html += '</div>';
         __calendar_block_html += '</div>';
         __calendar_block_html += '</div>';
         return __calendar_block_html;
     };
+    _private.CalendarObj.prototype.get_legend_html = function(){
+        return '<div class="legend-list">'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="training"></div><div class="legend-description"> - Тренинг</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="webinar"></div><div class="legend-description"> - Вебинар</div></div>'
+            + '<div class="legend-list-item"><br></div>'
+            + '<div class="legend-list-item"><div class="legend-box"><i class="fa fa-users"></i></div><div class="legend-description"> - Свободные места</div></div>'
+            + '</div>';
+    };
     _private.CalendarObj.prototype.get_calendar_html = function(__calendar_object){
         var calendar_html = '';
         calendar_html += '<div class="calendar-container">';
-        calendar_html += _private.CalendarObj.prototype.get_calendar_header_html(__calendar_object);
-        calendar_html += _private.CalendarObj.prototype.get_weekdayheaders(__calendar_object);
-        calendar_html += _private.CalendarObj.prototype.get_calendar_block_html(__calendar_object);
+        calendar_html += this.get_calendar_header_html(__calendar_object);
+        calendar_html += this.get_weekdayheaders(__calendar_object);
+        calendar_html += this.get_calendar_block_html(__calendar_object);
         calendar_html += '</div>';
         return calendar_html;
     };
@@ -514,16 +664,17 @@
             _calendar_inner_html += '<div class="container-fluid calendar-app-container">';
             _calendar_inner_html += '<div class="row">';
             _calendar_inner_html += '<div class="col-9 calendar-mount-container">';
-            _calendar_inner_html += _private.CalendarObj.prototype.get_calendar_html(_calendar_obj);
+            _calendar_inner_html += this.get_calendar_html(_calendar_obj);
             _calendar_inner_html += '</div>';
             _calendar_inner_html += '<div class="col-3 filters-container">';
-            _calendar_inner_html += _private.CalendarObj.prototype.get_filters_html();
+            _calendar_inner_html += this.get_filters_html();
+            _calendar_inner_html += this.get_legend_html();
             _calendar_inner_html += '</div>';
             _calendar_inner_html += '</div>';
             _calendar_inner_html += '</div>';
             _calendar_inner_html += '</div>';
             /* <- magic goes here*/
-            _private.CalendarObj.prototype.state = 'mounted';
+            this.state = 'mounted';
             // cl('Mounted');
             $_mount_obj.html(_calendar_inner_html);
         }
@@ -537,17 +688,17 @@
             //cl(__self.date_year);
             //cl(__self.date_month);
         });
-
-        $public.get_events(this_calendar.date_month, this_calendar.date_year).then( function( resp ){
+        $public.get_events(__self).then( function( resp ){
             events = resp;
-            this_calendar.events = events;
-            this_calendar.render_events(this_calendar.events);
+            __self.events = events;
+            __self.render_events(events);
             $('.calendar-event').removeClass('d-none');
-            this_calendar.opacity_change();
+            __self.opacity_change();
         } ).catch( function( e ){ console.error( e ); } );
     };
     _private.CalendarObj.prototype.render_calendar = function (callback) {
         var __self = this;
+
         __self.set_date_with_first_day();
         __self.set_date_month();
         __self.set_month_name_ru();
@@ -556,7 +707,7 @@
         __self.set_date_month_first_dayweek();
         __self.set_next_month_num(__self.date_month);
         __self.set_next_prev_num(__self.date_month);
-        $(__self.mount_id+' .calendar-mount-container').html(_private.CalendarObj.prototype.get_calendar_html(__self));
+        $(__self.mount_id+' .calendar-mount-container').html(__self.get_calendar_html(__self));
         callback();
     };
     _private.find_index_event_by_id = function(__events_array, __id){
@@ -588,6 +739,11 @@
             self.day_end = new Date(self.finish_date).getDate();
             self.position = self.position ? self.position++ : 0;
             self.break = 'none';
+            // cl(self);
+            if ((new Date(self.start_date)) < (new Date())){
+                // cl('brrrr');
+                self.is_open = 0;
+            }
             // // cl('day_start', self.day_start);
         });
 
@@ -641,16 +797,7 @@
             }
         }
 
-
-        cl('event_cell_row_array', event_cell_row_array);
-
-
-
-
-
-
-        // cl(__morphed_array);
-
+        // cl('event_cell_row_array', event_cell_row_array);
         var morphed_lenth = __morphed_array.length;
         for (var __event_counter = 0; __event_counter < morphed_lenth; __event_counter++){
             var __this_event = Object.assign({}, __morphed_array[__event_counter]);
@@ -682,372 +829,284 @@
 
 
         }
-
-        this_calendar.events = __morphed_array;
-        cl (this_calendar.events);
+        _private.CalendarObj.events = __morphed_array;
+        // cl(_private.CalendarObj.events);
         return __morphed_array;
     };
-    $public.init = function(args) {
-        args = args || {};
-        var _options = (function (_private, $public){
-            var __options = {};
-            for (var private_attrname in _private) { __options[private_attrname] = _private[private_attrname]; }
-            for (var public_attrname in $public) { __options[public_attrname] = $public[public_attrname]; }
-            return __options;
-        })(_private, args);
-        //cl('_options:', _options);
-        _options.state = 'started';
-        _private.calendar_object = new _private.CalendarObj(_options.cur_date, _options.days_in_row);
+    _private.CalendarObj.prototype.set_popup_container_html = function(){
+        var modal = document.createElement( "div" );
+        modal.setAttribute( "data-modal", "" );
 
-        var new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
-        new_calendar.mount_id = _options.mount_id;
+        var modalTrigger = document.createElement( "input" );
+        modalTrigger.setAttribute( "type", "checkbox" );
+        modalTrigger.setAttribute( "id", "modalTrigger" );
+        modalTrigger.setAttribute( "data-hiddenElement", "" );
+        modalTrigger.setAttribute( "data-modalTrigger", "" );
 
+        var modalOverlay = document.createElement( "label" );
+        modalOverlay.setAttribute( "for", "modalTrigger" );
+        modalOverlay.setAttribute( "data-modalOverlay", "" );
+        modalOverlay.setAttribute( "title", "Close" );
+        modalOverlay.setAttribute( "id", "popup-closer" );
 
+        var modalWindow = document.createElement( "div" );
+        modalWindow.setAttribute( "data-modalWindow", "" );
 
-        $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
+        var modalContent = document.createElement( "div" );
+        modalContent.setAttribute( "data-modalContent", "" );
 
+        var modalSpiner = document.createElement( "div" );
+        modalSpiner.setAttribute( "data-modalSpiner", "" );
+        modalSpiner.innerHTML = '<div class="circle"></div>';
 
-        $(_options.mount_id).on('click', '.month-select-arrow-left-button', function () {
-            // cl('prev');
-            new_calendar.change_month('b');
-            make_url();
-            $('.calendar-event').removeClass('d-none');
-        });
-        $(_options.mount_id).on('click', '.month-select-arrow-right-button', function () {
-            // cl('next');
-            new_calendar.change_month('f');
-            make_url();
-
-            $('.calendar-event').removeClass('d-none');
-            //cl(get_hash_object_from_url());
-        });
+        var modalClose = document.createElement( "label" );
+        modalClose.setAttribute( "for", "modalTrigger" );
+        modalClose.setAttribute( "data-modalClose", "" );
 
 
-        $(_options.mount_id).on('mouseenter','.calendar-event',function () {
-            if (!$(this).hasClass('event-hover') && !$(this).hasClass('event-hover')){
-                var this_id = $(this).attr('data-id');
-                $('[data-id="'+this_id+'"]').not('.calendar-event_btn').addClass('event-hover');
-            }
-            // cl(this_id);
-            // cl('hover');
-        });
-
-        $(_options.mount_id).on('mouseleave','.calendar-event',function () {
-            var this_id = $(this).attr('data-id');
-            $('[data-id="'+this_id+'"]').removeClass('event-hover');
-            // cl(this_id);
-            // cl('hover');
-        });
-
-        $(_options.mount_id).on('click','.calendar-event_btn',function () {
-            var this_id = $(this).attr('data-id');
-            this_hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
-            //cl('this_id', this_id);
-            this_hash_obj.opened_event = this_id;
-            //cl('this_hash_obj ', this_hash_obj);
-            _private.CalendarObj.prototype.change_hash(this_hash_obj);
-            // cl(this_id);
-            // cl('hover');
-        });
-
-        $(document).on('change','#modalTrigger', function () {
-            //cl("$(this).prop('checked')", $(this).prop('checked'));
-            if (!$(this).prop('checked')){
-                this_hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
-                this_hash_obj.opened_event = '';
-                //cl('this_hash_obj ', this_hash_obj);
-                _private.CalendarObj.prototype.change_hash(this_hash_obj);
-            }
-            // cl(this_id);
-            // cl('hover');
-        });
-
-        $(document).on('click','#reg-button', function () {
-            var __event_id = $(this).attr('data-id');
-            var __event_idx = $(this).attr('data-idx');
-            //cl(__event_idx);
-
-            $.ajax({
-                // url: "./custom_web_template.html?object_id=6675296127857605162",
-                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'reg'}
-
-            }).done(function() {
-                //cl('__event_idx', __event_idx);
-                this_calendar.events[__event_idx].registred = 1;
-                $('.calendar-event[data-id="'+__event_id+'"]').attr('data-registred', 1);
-                new_calendar.opacity_change();
-                $( '#reg-container' ).html( "<span style='font-weight:700'>Вы успешно зарегистрированы!</span>" );
-            });
-            //&user_id=6263149697912937503&event_id=6675247569081145555
+        modal.appendChild( modalTrigger );
+        modal.appendChild( modalOverlay );
+        modal.appendChild( modalWindow );
+        modalWindow.appendChild( modalSpiner );
+        modalWindow.appendChild( modalContent );
+        modalWindow.appendChild( modalClose );
+        document.body.appendChild( modal );
 
 
-        });
-
-        $(document).on('click','#unreg-button', function () {
-            var __event_id = $(this).attr('data-id');
-            var __event_idx = $(this).attr('data-idx');
-            //cl(__event_id);
-
-            $.ajax({
-                // url: "./custom_web_template.html?object_id=6675296127857605162",
-                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'unreg'}
-
-            }).done(function() {
-                this_calendar.events[__event_idx].registred = 0;
-                $('.calendar-event[data-id="'+__event_id+'"]').attr('data-registred', 0);
-                new_calendar.opacity_change();
-                $( '#reg-container' ).html( "<span style='font-weight:700'>Вы успешно отменили регистрацию!</span>" );
-            });
-            //&user_id=6263149697912937503&event_id=6675247569081145555
-
-
-        });
-
+        /* todo delete */
         /*
-        {
-            month: 1
-            ,year: 2019
-            ,filters:['is_open', 'prof']
-            ,opened_event: 3523984723749
+        var mBtn = document.querySelector( "[data-modalBtn][for='modalTrigger']" );
+
+        function changeApply() {
+          if ( modalTrigger.checked == true ) {
+
+            //modalWindow.innerHTML = data.innerHTML ;
+            mBtn.classList.add( "active" );
+          } else {
+            mBtn.classList.remove( "active" );
+          }
         }
-        1/2019/is_open&prof/3523984723749
         */
 
+        // if ("onpropertychange" in modalTrigger) {
+        //     // старый IE
+        //     modalTrigger.onpropertychange = function() {
+        //         // проверим имя изменённого свойства
+        //         if (event.propertyName == "checked") {
+        //             //changeApply();
+        //             // do something
+        //         }
+        //     };
+        // } else {
+        //     // остальные браузеры
+        //     modalTrigger.onchange = function() {
+        //         //changeApply();
+        //         // do something
+        //     };
+        // }
+
+        window.modal = modal;
+        modal.content = modalContent;
+        modal.window = modalWindow;
+        modal.spiner = modalSpiner;
+    };
+    _private.CalendarObj.prototype.set_popup_html = function(__events, _target, _open){
+        // var _self = this;
+        // cl('target.getAttribute( "data-idx" ) ', _target.getAttribute( "data-idx" ) );
+        cl('_target', _target);
+        if ( !window.replacer ) window['replacer'] = function ( item ){
+            return item.replace( /&amp;/g, "&" )
+                .replace( /&amp;/g, "&" )
+                .replace( /&nbsp;/g, " " )
+                .replace( /&raquo;/g, "»" )
+                .replace( /&laquo;/g, "«" )
+                .replace( /&quot;/g, "\"" )
+                .replace( /&lsquo;/g, "‘" )
+                .replace( /&rsquo;/g, "’" )
+                .replace( /&copy;/g, "©" )
+                .replace( /&bull;/g, "•" )
+                .replace( /&reg;/g, "®" )
+                .replace( /&deg;/g, "°" )
+                .replace( /&lt;/g, "<" )
+                .replace( /&gt;/g, ">" )
+                .replace( /&tilde;/g, "~" )
+                .replace( /&ndash;/g, "–" )
+                .replace( /&mdash;/g, "—" )
+                .replace( /&ldquo;/g, "“" )
+                .replace( /&rdquo;/g, "”" )
+                .replace( /&bdquo;/g, "„" )
+                .replace( /&hellip;/g, "…" )
+                .replace( /&trade;/g, "™" )
+        };
+
+        window.modal || console.error( "not loaded module popup" );
+
+        function format_date( _date ){
+            var st_date_str = _date.split('+')[0].replace('T', ' ');
+            st_date_str = st_date_str.substring(0, st_date_str.length-3);
+            var st_date_time = st_date_str.split(' ')[1];
+            var st_date_date = st_date_str.split(' ')[0];
+            var st_date_date_str = st_date_date.split('-');
+            return st_date_date_str[2]+'.'+st_date_date_str[1]+'.'+st_date_date_str[0] + ' ' + st_date_time;
+        }
+
+        function createContent( idx ) {
+            // cl(idx)
+            modal.content.innerHTML = '';
+            // cl(__events);
+            var obj = __events[ idx ];
+            // cl(obj)
+            var _data = document.createDocumentFragment();
+
+            var mHeader = document.createElement( "div" );
+            mHeader.classList.add( "m-header" );
+
+            // console.log( idx, obj );
+            // console.log( replacer("&laquo;Рец&lsquo;&rsquo;епт&amp;amp;©успе&bull;шной®презе&ldquo;нт&rdquo;ац&bdquo;ии&deg;от&nbsp;ай&mdash;&hellip;ай&lt;ен&gt;ан&trade;ка&raquo;") );
+
+            /* TODO */
+
+            var icons_arr = obj.type_val.split(';');
+            //console.log('icons_arr', icons_arr);
 
 
 
-        // var get_hash_object_from_url = function(){
-        // 	var hash_object = {month: undefined, year: undefined, filters: undefined, opened_event: undefined}
-        // 	var hash = window.location.hash.replace('#', '').split('/');
-        // 	hash_object.month = hash[0];
-        // 	hash_object.year = hash[1];
-        // 	hash_object.filters = hash[2].split('&');
-        // 	hash_object.opened_event = hash.length > 3 ? hash[3] : '';
-        // 	return hash_object;
-        // };
-
-
-
-
-        var make_url = function(is_inited){
-            this_hash_obj = {opened_event: '', month: new_calendar.date_month, year: new_calendar.date_year, filters: []};
-            if (is_inited){
-                cl('is_inited', is_inited);
-                this_hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
-            }
-
-
-
-            var checked_cbs = this_hash_obj.filters;
-            // cl('checked_cbs', checked_cbs);
-
-            var __this_cb_id_value_array = [];
-            for (var _checked_counter=0; _checked_counter < checked_cbs.length; _checked_counter++){
-                __this_cb_id_value_array = checked_cbs[_checked_counter].split('=');
-                if (__this_cb_id_value_array.length > 1){
-
-                    if(__this_cb_id_value_array[1] !== ''){
-                        $(__this_cb_id_value_array[1].split(';')).each(function(){
-                            $('.filter-col-container[data-id="'+__this_cb_id_value_array[0]+'"]').find('#'+this).prop('checked', true);
-                        });
-                    }
+            var mheader_html = '';
+            // cl('obj', obj);
+            mheader_html += '<div class="m-cell-1">'
+                +'<div class="m-name">' + obj.name + '</div>'
+                +'</div>'
+                +'<div class="m-cell-2">'
+                +'<div class="m-icons">';
+            for (var icon_c=0; icon_c < icons_arr.length; icon_c++){
+                if (icons_arr[icon_c] !== ''){
+                    mheader_html += '<div class="m-icons-item" ><i class="fa-2x far '+icons_arr[icon_c].split('][')[0]+'"></i><span>'+icons_arr[icon_c].split('][')[1].replace('br', '<br>')+'</span></div>';
                 }
             }
 
-            var $checked_cb = $('.filter-col-container');//.find('input:checked');
+            mheader_html += '</div></div>';
 
-            $checked_cb.map(function () {
-                var self = this;
-                var checked_ids_arr = [];
-
-                $($(self).find('.form-check-input:checked')).map(function (t) {
-                    checked_ids_arr.push($(this).attr('id'));
-                });
-                $(self).attr('data-value', checked_ids_arr.join(';'));
-
-            });
-
-            var checked_cb_ids = [];
-            $checked_cb.map(function (cb) {
-                // cl(cb);
-                checked_cb_ids.push($(this).attr('data-id')+'='+$(this).attr('data-value'));
-            });
-            cl('checked_cb_ids!', checked_cb_ids);
-            var new_hash_obj = {month: this_hash_obj.month, year: this_hash_obj.year, filters: checked_cb_ids, opened_event: this_hash_obj.opened_event};
-            _private.CalendarObj.prototype.change_hash(new_hash_obj);
-            cl('new_hash_obj', new_hash_obj);
+            mHeader.innerHTML = mheader_html;
 
 
+            var mMain = document.createElement( "div" );
+            var mMainInnerHtml = '';
+            mMain.classList.add( "m-main" );
+            /* TODO */
+            // cl('obj.description', obj.description)
+            mMainInnerHtml = '<div class="m-cell-1">'
+                + replacer(obj.description) +
+                '</div>'
+                +'<div class="m-cell-2">'
+                //+'<div class="m-title">Type:</div>'
+                //+'<p>' + obj.type + '</p>'
+                +'<div class="m-title">Дата начала:</div>'
+                +'<p>' + format_date(obj.start_date) + '</p>'
+                +'<div class="m-title">Дата завершения:</div>'
+                +'<p>' + format_date(obj.finish_date) + '</p>'
+                +'<div class="m-title">Свободных мест:</div>'
+                +'<p>' + obj.max_pers + '</p>';
+            if (obj.price){
+                mMainInnerHtml += '<div class="m-title">Стоимость:</div>'
+                    +'<p>' + obj.price + '</p>';
+            }
+            mMainInnerHtml += '<div class="m-title">Регион:</div>'
+                +'<p>' + obj.hub + '</p>'
+                +'<div class="m-title">Преподаватель:</div>'
+                +'<p>' + obj.company.replace('br', '<br>') + '</p>'
+                +'</div>';
 
+            mMain.innerHTML = mMainInnerHtml;
+            var mFooter = document.createElement( "div" );
+            mFooter.classList.add( "m-footer" );
+            /* TODO */
 
+            var footer_html = '';
 
+            footer_html += '<div class="m-cell-1" id="reg-container">';
+            if (obj.is_open == 0){
+                footer_html += obj.type_no_access;
+            }
+            else if (obj.registred == 0){
+                footer_html +='<button class="btn m-btn m-btn_black" id="reg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Зарегистрироваться</button>';
+            }
+            else if(obj.max_pers == 0){
+                footer_html +='<button class="btn m-btn m-btn_black" id="list-button" data-id="'+obj.id+'" data-idx="'+idx+'">Лист ожидания</button>';
+            }
+            else if (obj.registred == 1){
+                footer_html +='<button class="btn m-btn m-btn_black" id="unreg-button" data-id="'+obj.id+'" data-idx="'+idx+'">Отменить регистрацию</button>';
+            }
+            footer_html +='</div>'
+                +'<div class="m-cell-2">'
+                /*+'<button class="btn m-btn m-btn_white">Зарегистрироваться</button>    '*/
+                +'</div>';
 
+            mFooter.innerHTML = footer_html;
 
+            _data.appendChild( mHeader );
+            _data.appendChild( mMain);
+            _data.appendChild( mFooter );
+            modal.content.appendChild( _data );
+            modal.window.setAttribute( "data-loaded", "" );
+            // $("#modalTrigger").prop('checked', true);
+            cl(modal)
+        }
 
+        if (_target){
+            if ( !_target.classList.contains( "calendar-event_btn" ) || !_target.hasAttribute( "for" )  ) return false;
 
+            // var response = getInfo( e.target.getAttribute( "data-name" ) );
+            // var response = get_events( e.target.getAttribute( "data-name" ) );
 
+            modal.window.removeAttribute( "data-loaded" );
 
-            new_calendar.opacity_change();
-            $('.calendar-event').removeClass('d-none');
+            // response.then( function( resp ){
+            // createContent( resp );
+            // } ).catch( function( e ){ console.error( e ); } )
 
+            //console.log( events[e.target.getAttribute( "data-idx" )].name );
+            var data_opt_event_type = _target.getAttribute( "data-opt-event-type" );
+            //if ( modal.window.hasAttribute( e.target.getAttribute( "data-opt" ) ) ) modal.window.removeAttribute( e.target.getAttribute( "data-opt" ) );
+            modal.window.setAttribute( "data-event-type", data_opt_event_type );
+            //console.log( e.target.getAttribute( "data-opt-event-type" )  );
 
-
-            /*
-			var $checked_cb = $('.filters-container').find('input:checked');
-            // cl($checked_cb);
-            var checked_cb_ids = [];
-            $checked_cb.map(function (cb) {
-                // cl(cb);
-                checked_cb_ids.push($(this).attr('id'));
-            });
-            var hash = window.location.hash.split('?');
-            var new_hash = checked_cb_ids.join('&') + ( hash.length > 1 ? hash[1] : '' );
-            window.location.hash = checked_cb_ids.join('&');
-			*/
-        };
-
-
-        $(_options.mount_id).on('click','#filters-clear',function () {
-            //cl('click');
-            $(this).toggleClass('cb_toggled');
-            var $all_inputs;
-            $all_inputs = $('.filters-container').find('input');
-            // cl($all_inputs);
-            $all_inputs.prop('checked', false);
-            make_url();
-        });
-
-        // $(_options.mount_id+' .filters-container').on('change ','input',function () {
-        //     $(this).toggleClass('this_cb_toggled');
-        //     $(this).prop('checked', $(this).hasClass('cb_toggled'));
-        // });
-        // $('.filters-container').find('input');
-
-        //cl(window.location.hash);
-        if (window.location.hash === '' || window.location.hash === '#'){
-            // cl('make');
-            make_url();
-            $public.get_events(new_calendar.date_month, new_calendar.date_year).then( function( resp ){
-                events = resp;
-                this_calendar.events = events;
-                _private.calendar_object.render_events(this_calendar.events);
-                $('.calendar-event').removeClass('d-none');
-            } ).catch( function( e ){ cl( e ); } );
+            createContent( _target.getAttribute( "data-idx" ) );
         }
         else{
-            hash_obj = _private.CalendarObj.prototype.get_hash_object_from_url();
-
-
-            _private.calendar_object = new _private.CalendarObj(new Date(hash_obj.year, hash_obj.month, 1), _options.days_in_row);
-            //cl('bad'); //dev
-            new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
-            new_calendar.mount_id = _options.mount_id;
-            //cl('new_calendar', new_calendar);
-
-
-            $public.get_events(new_calendar.date_month, new_calendar.date_year).then( function( resp ){
-                events = resp;
-                //cl('rresp', events);
-                this_calendar.events = events;
-                _private.calendar_object.render_events(this_calendar.events);
-
-                if (hash_obj.opened_event){
-                    $($('[data-id="'+hash_obj.opened_event+'"]')[1]).click();
-                    //cl('click!');
-                }
-                make_url(1);
-
-
-
-            } ).catch( function( e ){ cl( e ); } );
-
-            $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
-
+            createContent( 0 );
 
         }
 
 
-
-        $(_options.mount_id).on('change','.form-check-input',function () {
-            make_url();
-        });
-
-        return new_calendar;
-    };
-    $public.get_events = function(date_month, date_year){
-        //args = args || {};
-
-        // get this month events: delete after backend configured
-        var middleware = function( _events ){
-            // cl(this_calendar.date_with_first_day);
-
-            _events = _events
-                .filter(function(_events){
-                    return (
-                        ( new Date(_events.start_date) > new Date(this_calendar.date_with_first_day) )
-                        && ( new Date(_events.start_date) < new Date(this_calendar.date_with_last_day) )
-                        && _events.type !== 'conf'
-                    );
-                });
-
-            // cl('gogo powerRangers:', _events);
-            return _events;
-        };
-
-        // cl('get_events args:', args);
-        return new Promise ( function( resolve, reject ) {
-            /* TODO fetch */
-            $.ajax({
-                method: "GET",
-                dataType: 'json',
-                url: "./custom_web_template.html?object_id=6673451655755009275" //dev
-                //url: "./server/db.json" //dev
-                ,data: { date_month: date_month, date_year: date_year }
-            })
-                .done( function( msg ) {
-                    //cl( "Event data loaded: ", msg );
-                    //msg = middleware(msg); // dev
-                    resolve( msg );
-                });
-        } );
     };
     _private.CalendarObj.prototype.render_events = function (__events) {
         // cl('rendering events... ', __events);
         __events = _private.morph_events_array(__events);
+        this.events = __events;
         // cl('morphed events... ', __events);
-
-        function _a( idx ) {
-            var _event_rb_real_type = [];
-            __events[idx].event_rb_type.split(';').map(function(__ev){
-                _event_rb_real_type.push(__ev.split('][')[0]);
+        var get_data_element_html = function (___events, ___idx, _name) {
+            var _data_element_html = '';
+            var _event_data_attribute_array = [];
+            ___events[___idx][_name].split(';').map(function(__ev){
+                _event_data_attribute_array.push(__ev.split('][')[0]);
             });
+            for (var counter=0; counter<_event_data_attribute_array.length; counter++){
+                _data_element_html += 'data-'+_event_data_attribute_array[counter]+'="1"';
+            }
+            return _data_element_html;
+        };
 
-            var _for_real_type = [];
-            __events[idx].for_type.split(';').map(function(__ev){
-                _for_real_type.push(__ev.split('][')[0]);
-            });
-
+        var get_event_html = function ( idx ) {
+            // cl('detailed', _detailed);
             var __event_html = '<div data-event-type="' + __events[idx].type + '" ' +
                 'data-id="'+__events[idx].id+'" ' +
-
                 'data-registred="'+ __events[idx].registred +'" ' +
                 'data-is_open="'+ __events[idx].is_open  +'" ' +
                 'data-beexpert="'+  __events[idx].beexpert +'" ';
-
-
-
-            for (var _rt=0; _rt<_for_real_type.length; _rt++){
-                __event_html += 'data-'+_for_real_type[_rt]+'="1"';
-            }
-
-            for (var _rbt=0; _rbt<_event_rb_real_type.length; _rbt++){
-                __event_html += 'data-'+_event_rb_real_type[_rbt]+'="1"';
-            }
-
-            //   'data-for_type="'+_for_real_type.join(';')+'" ' +
-            // 'data-event_rb_type="'+_event_rb_real_type.join(';')+'" ' +
-
-
+            __event_html += get_data_element_html(__events, idx, 'hub');
+            __event_html += get_data_element_html(__events, idx, 'type_detailed');
+            __event_html += get_data_element_html(__events, idx, 'for_type');
+            __event_html += get_data_element_html(__events, idx, 'event_rb_type');
             __event_html += 'class="d-none calendar-event ct-'+__events[idx].top+' ' +
                 'ce-'+(__events[idx].length_round) +'">\n' +
                 '<div class="calendar-event-container container-fluid">\n' +
@@ -1075,18 +1134,255 @@
                 'data-opt-event-type="' + __events[idx].type + '" ' +
                 'title="' + __events[idx].name + ' ">' +
                 '</label>\n'
-        }
-
+            return __event_html;
+        };
 
         for (var _event = 0; _event < __events.length; _event++){
-            $('[data-id="'+__events[_event].day_start+'"]').append( _a( _event ) );
+            $('[data-id="'+__events[_event].day_start+'"]').append( get_event_html( _event ) );
         }
+    };
+
+    $public.init = function(args) {
+        args = args || {};
+        var _options = (function (_private, $public){
+            var __options = {};
+            for (var private_attrname in _private) { __options[private_attrname] = _private[private_attrname]; }
+            for (var public_attrname in $public) { __options[public_attrname] = $public[public_attrname]; }
+            return __options;
+        })(_private, args);
+        //cl('_options:', _options);
+        _options.state = 'started';
+
+        _private.calendar_object = new _private.CalendarObj(_options.cur_date, _options.days_in_row);
+        var new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
+
+        new_calendar.mount_id = _options.mount_id;
+        new_calendar.set_popup_container_html();
+
+        $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
+        $(_options.mount_id).on('click', '.month-select-arrow-left-button', function () {
+            // cl('prev');
+            new_calendar.change_month('b');
+            make_url();
+            $('.calendar-event').removeClass('d-none');
+        });
+        $(_options.mount_id).on('click', '.month-select-arrow-right-button', function () {
+            // cl('next');
+            new_calendar.change_month('f');
+            make_url();
+            $('.calendar-event').removeClass('d-none');
+            //cl(get_hash_object_from_url());
+        });
+        $(_options.mount_id).on('mouseenter','.calendar-event',function () {
+            if (!$(this).hasClass('event-hover') && !$(this).hasClass('event-disabled')){
+                var this_id = $(this).attr('data-id');
+                $('[data-id="'+this_id+'"]').not('.calendar-event_btn').addClass('event-hover');
+            }
+            // cl(this_id);
+            // cl('hover');
+        });
+        $(_options.mount_id).on('mouseleave','.calendar-event',function () {
+            var this_id = $(this).attr('data-id');
+            $('[data-id="'+this_id+'"]').removeClass('event-hover');
+            // cl(this_id);
+            // cl('hover');
+        });
+        $(_options.mount_id).on('click','.calendar-event_btn',function () {
+            var this_id = $(this).attr('data-id');
+            this_hash_obj = new_calendar.get_hash_object_from_url();
+            //cl('this_id', this_id);
+            this_hash_obj.opened_event = this_id;
+            //cl('this_hash_obj ', this_hash_obj);
+            new_calendar.change_hash(this_hash_obj);
+            // cl('new_calendar.events', new_calendar.events);
 
 
+            new_calendar.set_popup_html(new_calendar.events, this, 1);
+            // cl(this_id);
+            // cl('hover');
+        });
+        $(document).on('change','#modalTrigger', function () {
+            //cl("$(this).prop('checked')", $(this).prop('checked'));
+            if (!$(this).prop('checked')){
+                this_hash_obj = new_calendar.get_hash_object_from_url();
+                this_hash_obj.opened_event = '';
+                //cl('this_hash_obj ', this_hash_obj);
+                new_calendar.change_hash(this_hash_obj);
+            }
+            // cl(this_id);
+            // cl('hover');
+        });
+        $(document).on('click','#reg-button', function () {
+            var __event_id = $(this).attr('data-id');
+            var __event_idx = $(this).attr('data-idx');
+            //cl(__event_idx);
+            $.ajax({
+                url: "./custom_web_template.html?object_id=6675296127857605162", //dev
+                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'reg'}
 
-        // $( $('.calendar-cell-event-wrapper')[6]).append( _a( 1 ) );
-        // $( $('.calendar-cell-event-wrapper')[10]).append( _a( 3 ) );
-        // $( $('.calendar-cell-event-wrapper')[15]).append( _a( 7 ) );
+            }).done(function() {
+                //cl('__event_idx', __event_idx);
+                new_calendar.events[__event_idx].registred = 1;
+                $('.calendar-event[data-id="'+__event_id+'"]').attr('data-registred', 1);
+                new_calendar.opacity_change();
+                $( '#reg-container' ).html( "<span style='font-weight:700'>Вы успешно зарегистрированы!</span>" );
+            });
+        });
+        $(document).on('click','#unreg-button', function () {
+            var __event_id = $(this).attr('data-id');
+            var __event_idx = $(this).attr('data-idx');
+            //cl(__event_id);
+            $.ajax({
+                url: "./custom_web_template.html?object_id=6675296127857605162", //dev
+                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'unreg'}
+
+            }).done(function() {
+                new_calendar.events[__event_idx].registred = 0;
+                $('.calendar-event[data-id="'+__event_id+'"]').attr('data-registred', 0);
+                new_calendar.opacity_change();
+                $( '#reg-container' ).html( "<span style='font-weight:700'>Вы успешно отменили регистрацию!</span>" );
+            });
+        });
+
+
+        var make_url = function(is_inited){
+            this_hash_obj = {opened_event: '', month: new_calendar.date_month, year: new_calendar.date_year, filters: []};
+            if (is_inited){
+                // cl('is_inited', is_inited);
+                this_hash_obj = new_calendar.get_hash_object_from_url();
+            }
+            var checked_cbs = this_hash_obj.filters;
+            var __this_cb_id_value_array = [];
+            for (var _checked_counter=0; _checked_counter < checked_cbs.length; _checked_counter++){
+                __this_cb_id_value_array = checked_cbs[_checked_counter].split('=');
+                if (__this_cb_id_value_array.length > 1){
+
+                    if(__this_cb_id_value_array[1] !== ''){
+                        $(__this_cb_id_value_array[1].split(';')).each(function(){
+                            $('.filter-col-container[data-id="'+__this_cb_id_value_array[0]+'"]').find('#'+this).prop('checked', true);
+                        });
+                    }
+                }
+            }
+            var $checked_cb = $('.filter-col-container');//.find('input:checked');
+
+            $checked_cb.map(function () {
+                var self = this;
+                var checked_ids_arr = [];
+                $($(self).find('.form-check-input:checked')).map(function (t) {
+                    checked_ids_arr.push($(this).attr('id'));
+                });
+                $(self).attr('data-value', checked_ids_arr.join(';'));
+            });
+
+            var checked_cb_ids = [];
+            $checked_cb.map(function (cb) {
+                // cl(cb);
+                checked_cb_ids.push($(this).attr('data-id')+'='+$(this).attr('data-value'));
+            });
+            // cl('checked_cb_ids!', checked_cb_ids);
+            var new_hash_obj = {month: this_hash_obj.month, year: this_hash_obj.year, filters: checked_cb_ids, opened_event: this_hash_obj.opened_event};
+            new_calendar.change_hash(new_hash_obj);
+            // cl('new_hash_obj', new_hash_obj);
+            new_calendar.opacity_change();
+            $('.calendar-event').removeClass('d-none');
+        };
+        $(_options.mount_id).on('click','#filters-clear',function () {
+            //cl('click');
+            $(this).toggleClass('cb_toggled');
+            var $all_inputs;
+            $all_inputs = $('.filters-container').find('input');
+            // cl($all_inputs);
+            $all_inputs.prop('checked', false);
+            make_url();
+        });
+
+        if (window.location.hash === '' || window.location.hash === '#'){
+            // cl('make');
+            make_url();
+            var hash_obj = new_calendar.get_hash_object_from_url();
+            $public.get_events(new_calendar).then( function( resp ){
+                events = resp;
+                new_calendar.events = events;
+                // new_calendar.set_popup_container_html();
+                // if(hash_obj.opened_event){
+                //     cl('waaaa');
+                // new_calendar.set_popup_html(new_calendar.events);
+                // }
+
+                new_calendar.render_events(new_calendar.events);
+                $('.calendar-event').removeClass('d-none');
+            } ).catch( function( e ){ cl( e ); } );
+        }
+        else{
+
+            var hash_obj = new_calendar.get_hash_object_from_url();
+            _private.calendar_object = new _private.CalendarObj(new Date(hash_obj.year, hash_obj.month, 1), _options.days_in_row);
+            //cl('bad'); //dev
+            new_calendar = _private.calendar_object.init_calendar(_options.mount_id, _private.calendar_object);
+            new_calendar.mount_id = _options.mount_id;
+
+            // cl('new_calendar', new_calendar);
+            $public.get_events(new_calendar).then( function( resp ){
+                events = resp;
+                new_calendar.events = resp;
+
+                new_calendar.render_events(new_calendar.events);
+                hash_obj = new_calendar.get_hash_object_from_url();
+                if (hash_obj.opened_event){
+                    cl('waaaa');
+
+                    // cl($('[data-id="'+hash_obj.opened_event+'"]')[1]);
+                    new_calendar.set_popup_html(new_calendar.events, $('[data-id="'+hash_obj.opened_event+'"]')[1]);
+                    $('#modalTrigger').prop('checked', true);
+                    // $($('[data-id="'+hash_obj.opened_event+'"]')[1]).click();
+                    //cl('click!');
+                }
+                make_url(1);
+            } ).catch( function( e ){ cl( e ); } );
+            $(_options.mount_id+' .weekday-name').css('width', Math.floor(100/_options.days_in_row)+'%');
+        }
+        $(_options.mount_id).on('change','.form-check-input',function () {
+            make_url();
+        });
+
+        return new_calendar;
+    };
+    $public.get_events = function(_calendar_obj){
+        // cl('_calendar_obj', _calendar_obj);
+        //args = args || {};
+        // get this month events: delete after backend configured
+        var middleware = function( _events ){
+            // cl('_calendar_obj.date_with_first_day',_calendar_obj.date_with_first_day);
+            _events = _events
+                .filter(function(_events){
+                    return (
+                        ( new Date(_events.start_date) > new Date(_calendar_obj.date_with_first_day) )
+                        && ( new Date(_events.start_date) < new Date(_calendar_obj.date_with_last_day) )
+                        && _events.type !== 'conf'
+                    );
+                });
+            // cl('gogo powerRangers:', _events);
+            return _events;
+        };
+        // cl('get_events args:', args);
+        return new Promise ( function( resolve, reject ) {
+            /* TODO fetch */
+            $.ajax({
+                method: "GET",
+                dataType: 'json',
+                url: "./custom_web_template.html?object_id=6673451655755009275" //dev
+                //url: "./server/db.json" //dev
+                ,data: { date_month: _calendar_obj.date_month, date_year: _calendar_obj.date_year }
+            })
+                .done( function( _events ) {
+                    // cl( "Event data loaded: ", msg );
+                    _events = middleware(_events); // dev
+                    // cl('msg', msg);
+                    // _calendar_obj.set_popup_html(_events);
+                    resolve( _events );
+                });
+        } );
     };
     /*<-public*/
 }(window.rb_calendar = (window.rb_calendar || {}), window, jQuery));
