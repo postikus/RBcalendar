@@ -162,8 +162,7 @@ if (!Object.assign) {
 /// Module Pattern with Imports and Exports
 ///
 
-;(function($public, $window, $, undefined) {
-
+(function ($public, $window, $, undefined) {
     var _private = {};
     _private = {
         state: 'start_init',
@@ -203,19 +202,21 @@ if (!Object.assign) {
         // cl('<-----------CALENDAR OBJ-------------------');
     };
     _private.CalendarObj.prototype.change_hash = function(__hash_object){
-        //cl('__hash_object', __hash_object);
+        // cl('__hash_object', __hash_object);
         window.location.hash = __hash_object.month
             + '/' + __hash_object.year
             + '/' + __hash_object.filters.join('&')
-            + '/' + __hash_object.opened_event;
+            + '/' + __hash_object.opened_event
+            + '/' + __hash_object.search_string;
     };
     _private.CalendarObj.prototype.get_hash_object_from_url = function(){
-        var hash_object = {month: undefined, year: undefined, filters: undefined, opened_event: undefined}
+        var hash_object = {month: undefined, year: undefined, filters: undefined, opened_event: undefined, search_string: undefined};
         var hash = window.location.hash.replace('#', '').split('/');
         hash_object.month = hash[0];
         hash_object.year = hash[1];
         hash_object.filters = hash[2].split('&');
         hash_object.opened_event = hash.length > 3 ? hash[3] : '';
+        hash_object.search_string = hash.length > 4 ? hash[4] : '';
         return hash_object;
     };
     _private.CalendarObj.prototype.set_date_month = function (){
@@ -385,9 +386,9 @@ if (!Object.assign) {
         __calendar_view_button_html += '</div>';
         return __calendar_view_button_html;
     };
-    _private.CalendarObj.prototype.get_search_html = function () {
+    _private.CalendarObj.prototype.get_search_html = function (__id) {
         var __search_html = '';
-        __search_html += '<input class="form-control" class="calendar-search" placeholder="Поиск">';
+        __search_html += '<input class="form-control" id="'+__id+'" class="calendar-search" placeholder="Поиск">';
         return __search_html;
     };
     _private.CalendarObj.prototype.get_checkbox_html = function (__q_object) {
@@ -421,7 +422,7 @@ if (!Object.assign) {
         __filter_row_html += '<div class="col-12 filter-col-container" data-id="'+q_object.id+'" data-value="">';
         switch (type){
             case 'search':
-                __filter_row_html += _self.get_search_html();
+                __filter_row_html += _self.get_search_html(q_object.id);
                 break;
             case 'checkbox':
                 __filter_row_html += _self.get_checkbox_html(q_object);
@@ -443,7 +444,7 @@ if (!Object.assign) {
         __filters_html += '<div class="row" id="filters-header-container">';
         __filters_html += self.get_calendar_view_button_container();
         __filters_html += '</div>';
-        // __filters_html += _private.CalendarObj.prototype.get_filters_row_container('search');
+        __filters_html += _private.CalendarObj.prototype.get_filters_row_container('search', {id: 'rb_calendar_search'});
         __filters_html += _private.CalendarObj.prototype.get_filters_row_container('checkbox', {id: 'registred', label: 'Мои мероприятия'});
         __filters_html += _private.CalendarObj.prototype.get_filters_row_container('checkbox', {id: 'is_open', label: 'Открыта регистрация'});
         // __filters_html += _private.CalendarObj.prototype.get_filters_row_container('checkbox', {id: 'beexpert', label: '<span style="color: red; font-weight:700">Be</span>Expert'});
@@ -1102,6 +1103,7 @@ if (!Object.assign) {
             // cl('detailed', _detailed);
             var __event_html = '<div data-event-type="' + __events[idx].type + '" ' +
                 'data-id="'+__events[idx].id+'" ' +
+                'data-name="'+__events[idx].name+'" ' +
                 'data-registred="'+ __events[idx].registred +'" ' +
                 'data-is_open="'+ __events[idx].is_open  +'" ' +
                 'data-beexpert="'+  __events[idx].beexpert +'" ';
@@ -1135,7 +1137,7 @@ if (!Object.assign) {
                 'data-id="' + __events[idx].id + '" ' +
                 'data-opt-event-type="' + __events[idx].type + '" ' +
                 'title="' + __events[idx].name + ' ">' +
-                '</label>\n'
+                '</label>\n';
             return __event_html;
         };
 
@@ -1214,13 +1216,34 @@ if (!Object.assign) {
             // cl(this_id);
             // cl('hover');
         });
+
+        // cl('go')
+        $(document).on('keyup', $('#rb_calendar_search'), function(){
+            //cl($('#rb_calendar_search').val());
+            var hash_obj = new_calendar.get_hash_object_from_url();
+            hash_obj.search_string = $('#rb_calendar_search').val();
+            new_calendar.change_hash(hash_obj);
+            var reg = new RegExp(hash_obj.search_string,"ig");
+            $('.calendar-event').map(function(){
+                //cl($(this).attr('data-name').search('/Fa/i'));
+
+                if ($(this).attr('data-name').search(reg) === -1){
+                    $(this).addClass('event-disabled-bysearch');
+                }
+                else{
+                    $(this).removeClass('event-disabled-bysearch');
+                }
+            });
+        });
+
+
         $(document).on('click','#reg-button', function () {
             var __event_id = $(this).attr('data-id');
             var __event_idx = $(this).attr('data-idx');
             //cl(__event_idx);
             $.ajax({
                 url: "./custom_web_template.html?object_id=6675296127857605162", //dev
-                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'reg'}
+                //data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'reg'}
 
             }).done(function() {
                 //cl('__event_idx', __event_idx);
@@ -1236,7 +1259,7 @@ if (!Object.assign) {
             //cl(__event_id);
             $.ajax({
                 url: "./custom_web_template.html?object_id=6675296127857605162", //dev
-                data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'unreg'}
+                //data: {event_id: __event_id, user_id: $('#curUserID').val(), method: 'unreg'}
 
             }).done(function() {
                 new_calendar.events[__event_idx].registred = 0;
@@ -1248,7 +1271,7 @@ if (!Object.assign) {
 
 
         var make_url = function(is_inited){
-            this_hash_obj = {opened_event: '', month: new_calendar.date_month, year: new_calendar.date_year, filters: []};
+            this_hash_obj = {opened_event: '', month: new_calendar.date_month, year: new_calendar.date_year, filters: [], search_string: ''};
             if (is_inited){
                 // cl('is_inited', is_inited);
                 this_hash_obj = new_calendar.get_hash_object_from_url();
@@ -1283,7 +1306,9 @@ if (!Object.assign) {
                 checked_cb_ids.push($(this).attr('data-id')+'='+$(this).attr('data-value'));
             });
             // cl('checked_cb_ids!', checked_cb_ids);
-            var new_hash_obj = {month: this_hash_obj.month, year: this_hash_obj.year, filters: checked_cb_ids, opened_event: this_hash_obj.opened_event};
+            //this_hash_obj.search_string = $('[data-id=search]').val();
+            $('#rb_calendar_search').val(this_hash_obj.search_string);
+            var new_hash_obj = {month: this_hash_obj.month, year: this_hash_obj.year, filters: checked_cb_ids, opened_event: this_hash_obj.opened_event, search_string: this_hash_obj.search_string};
             new_calendar.change_hash(new_hash_obj);
             // cl('new_hash_obj', new_hash_obj);
             new_calendar.opacity_change();
@@ -1373,13 +1398,13 @@ if (!Object.assign) {
             $.ajax({
                 method: "GET",
                 dataType: 'json',
-                url: "./custom_web_template.html?object_id=6673451655755009275" //dev
+                 url: "./custom_web_template.html?object_id=6673451655755009275" //dev
                 //url: "./server/db.json" //dev
                 ,data: { date_month: _calendar_obj.date_month, date_year: _calendar_obj.date_year }
             })
                 .done( function( _events ) {
                     // cl( "Event data loaded: ", msg );
-                    _events = middleware(_events); // dev
+                    //_events = middleware(_events); // dev
                     // cl('msg', msg);
                     // _calendar_obj.set_popup_html(_events);
                     resolve( _events );

@@ -323,7 +323,7 @@
     color: #ffffff;
 }
 
-.event-disabled{
+.event-disabled, .event-disabled-bysearch{
 	/* IE 8 */
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
     /* IE 5-7 */
