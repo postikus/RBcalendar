@@ -1087,9 +1087,11 @@ if (!Object.assign) {
         var get_data_element_html = function (___events, ___idx, _name) {
             var _data_element_html = '';
             var _event_data_attribute_array = [];
-            ___events[___idx][_name].split(';').map(function(__ev){
-                _event_data_attribute_array.push(__ev.split('][')[0]);
-            });
+            if (___events[___idx][_name]){
+                ___events[___idx][_name].split(';').map(function(__ev){
+                    _event_data_attribute_array.push(__ev.split('][')[0]);
+                });
+            }
             for (var counter=0; counter<_event_data_attribute_array.length; counter++){
                 _data_element_html += 'data-'+_event_data_attribute_array[counter]+'="1"';
             }
