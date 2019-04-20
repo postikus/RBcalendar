@@ -253,6 +253,14 @@
   display: inline-block;
   margin-right: 1em;
 }
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box .list-box__item.calendar-event.event-opacity02 {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.20;
+    -khtml-opacity: 0.20;
+    opacity: 0.20;
+    cursor: default !important;
+}
 .list-box__item {
   display: block;
   height: auto;
@@ -361,3 +369,48 @@
   opacity: 1;
   background: #fff;
 }
+
+
+
+[data-spiner] {
+  position: fixed;
+  top: calc( 50% - 70px );
+  left: calc( 50% - 60px );
+  /*display: none;*/
+  box-sizing: border-box;
+  padding: 0px;
+  margin: auto;
+  transition: visibility 0s 0.4s;
+}
+[data-spiner]::before {
+    content: "Загрузка...";
+    position: absolute;
+    z-index: 1;
+    top: calc( 50% - 0.85em );
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    text-shadow: 1px 1px 1px #000;
+}
+[data-spiner-show="false"] {  
+  visibility: hidden;
+  transition: visibility 0s 0s;
+}
+[data-spiner-circle] {
+  box-sizing: border-box;
+  width: 140px;
+  height: 140px;
+  border-radius: 100%; 
+  border: 2px solid #fbd0e6;
+  border-top-color: red;
+  animation: spin 1s infinite linear;
+}
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+}
+

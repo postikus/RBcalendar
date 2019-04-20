@@ -131,37 +131,37 @@
 }
 .month-select-name-container_color::after {
   content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 107%;
-    width: 36px;
-    height: 2px;
-    background: red;
+  position: absolute;
+  bottom: -4px;
+  left: 107%;
+  width: 36px;
+  height: 2px;
+  background: red;
 }
 .calendar-event-pers {
   position: absolute;
   right: -16px;
 }
 .calendar-event-container .row .col-12 {
-    padding-right: 54px;
-    white-space: nowrap;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-       text-overflow: ellipsis;
+  padding-right: 54px;
+  white-space: nowrap;
+  overflow: hidden;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 .legend-title {
-    font-weight: 700;
-    margin-left: -16px;
-    color: rgba(119, 119, 119, 0.92);
+  font-weight: 700;
+  margin-left: -16px;
+  color: rgba(119, 119, 119, 0.92);
 }
 .legend-box {
-    display: inline-block;
-    width: 1em;
-    position: relative;
-    height: 1em;
-    top: 2px;
-    margin-right: 4px;
-  }
+  display: inline-block;
+  width: 1em;
+  position: relative;
+  height: 1em;
+  top: 2px;
+  margin-right: 4px;
+}
 .legend-description {
   display: inline-block;
 }
@@ -222,7 +222,7 @@
   overflow: hidden;
   margin: 0;
   -o-text-overflow: ellipsis;
-     text-overflow: ellipsis;
+  text-overflow: ellipsis;
   font-weight: 700;
   vertical-align: baseline;
 }
@@ -255,7 +255,7 @@
   min-height: 60px;
   padding: 8px;
   -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
-          box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
+  box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
   background-color: rgba(255, 255, 255, 0.4);
 }
 .list-box__item-param {
@@ -263,12 +263,12 @@
   margin-right: 1em;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box .list-box__item.calendar-event.event-opacity02 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-    filter: alpha(opacity=20);
-    -moz-opacity: 0.20;
-    -khtml-opacity: 0.20;
-    opacity: 0.20;
-    cursor: default !important;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+  -moz-opacity: 0.20;
+  -khtml-opacity: 0.20;
+  opacity: 0.20;
+  cursor: default !important;
 }
 .list-box__item {
   display: block;
@@ -276,13 +276,13 @@
   margin: 0 0 16px;
   /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
   -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-          box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
   -webkit-transform: translateY( 200% );
 
-      -ms-transform: translateY( 200% );
+  -ms-transform: translateY( 200% );
 
-          transform: translateY( 200% );
+  transform: translateY( 200% );
   opacity: 0;
   visibility: hidden;
   overflow: hidden;
@@ -296,8 +296,8 @@
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item {
   -webkit-transform: none;
-      -ms-transform: none;
-          transform: none;
+  -ms-transform: none;
+  transform: none;
   opacity: 1;
   max-height: 80px;
   visibility: visible;
@@ -308,11 +308,11 @@
   transition-property: transform, opacity, max-height, visibility;
   transition-property: transform, opacity, max-height, visibility, -webkit-transform;
   -webkit-transition-duration: 0.3s, 0.3s, 0s, 0s;
-       -o-transition-duration: 0.3s, 0.3s, 0s, 0s;
-          transition-duration: 0.3s, 0.3s, 0s, 0s;
+  -o-transition-duration: 0.3s, 0.3s, 0s, 0s;
+  transition-duration: 0.3s, 0.3s, 0s, 0s;
   -webkit-transition-delay: 0s, 0s, 0s, 0s;
-       -o-transition-delay: 0s, 0s, 0s, 0s;
-          transition-delay: 0s, 0s, 0s, 0s;
+  -o-transition-delay: 0s, 0s, 0s, 0s;
+  transition-delay: 0s, 0s, 0s, 0s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item.event-hover {
   background-color: #555!important;
@@ -321,100 +321,100 @@
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(1) {
   -webkit-transition-delay:0s,0s;
-       -o-transition-delay:0s,0s;
-          transition-delay:0s,0s;
+  -o-transition-delay:0s,0s;
+  transition-delay:0s,0s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(2) {
   -webkit-transition-delay:0.3s,0.3s;
-       -o-transition-delay:0.3s,0.3s;
-          transition-delay:0.3s,0.3s;
+  -o-transition-delay:0.3s,0.3s;
+  transition-delay:0.3s,0.3s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(3) {
   -webkit-transition-delay:0.4s,0.4s;
-       -o-transition-delay:0.4s,0.4s;
-          transition-delay:0.4s,0.4s;
+  -o-transition-delay:0.4s,0.4s;
+  transition-delay:0.4s,0.4s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(4) {
   -webkit-transition-delay:0.5s,0.5s;
-       -o-transition-delay:0.5s,0.5s;
-          transition-delay:0.5s,0.5s;
+  -o-transition-delay:0.5s,0.5s;
+  transition-delay:0.5s,0.5s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(5) {
   -webkit-transition-delay:0.6s,0.6s;
-       -o-transition-delay:0.6s,0.6s;
-          transition-delay:0.6s,0.6s;
+  -o-transition-delay:0.6s,0.6s;
+  transition-delay:0.6s,0.6s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(6) {
   -webkit-transition-delay:0.7s,0.7s;
-       -o-transition-delay:0.7s,0.7s;
-          transition-delay:0.7s,0.7s;
+  -o-transition-delay:0.7s,0.7s;
+  transition-delay:0.7s,0.7s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(7) {
   -webkit-transition-delay:0.8s,0.8s;
-       -o-transition-delay:0.8s,0.8s;
-          transition-delay:0.8s,0.8s;
+  -o-transition-delay:0.8s,0.8s;
+  transition-delay:0.8s,0.8s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(8) {
   -webkit-transition-delay:0.9s,0.9s;
-       -o-transition-delay:0.9s,0.9s;
-          transition-delay:0.9s,0.9s;
+  -o-transition-delay:0.9s,0.9s;
+  transition-delay:0.9s,0.9s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(9) {
   -webkit-transition-delay:1s,1s;
-       -o-transition-delay:1s,1s;
-          transition-delay:1s,1s;
+  -o-transition-delay:1s,1s;
+  transition-delay:1s,1s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(10) {
   -webkit-transition-delay:1.1s,1.1s;
-       -o-transition-delay:1.1s,1.1s;
-          transition-delay:1.1s,1.1s;
+  -o-transition-delay:1.1s,1.1s;
+  transition-delay:1.1s,1.1s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(11) {
   -webkit-transition-delay:1.2s,1.2s;
-       -o-transition-delay:1.2s,1.2s;
-          transition-delay:1.2s,1.2s;
+  -o-transition-delay:1.2s,1.2s;
+  transition-delay:1.2s,1.2s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(12) {
   -webkit-transition-delay:1.3s,1.3s;
-       -o-transition-delay:1.3s,1.3s;
-          transition-delay:1.3s,1.3s;
+  -o-transition-delay:1.3s,1.3s;
+  transition-delay:1.3s,1.3s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(13) {
   -webkit-transition-delay:1.4s,1.4s;
-       -o-transition-delay:1.4s,1.4s;
-          transition-delay:1.4s,1.4s;
+  -o-transition-delay:1.4s,1.4s;
+  transition-delay:1.4s,1.4s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(14) {
   -webkit-transition-delay:1.5s,1.5s;
-       -o-transition-delay:1.5s,1.5s;
-          transition-delay:1.5s,1.5s;
+  -o-transition-delay:1.5s,1.5s;
+  transition-delay:1.5s,1.5s;
 }
 #triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(15) {
   -webkit-transition-delay:1.6s,1.6s;
-       -o-transition-delay:1.6s,1.6s;
-          transition-delay:1.6s,1.6s;
+  -o-transition-delay:1.6s,1.6s;
+  transition-delay:1.6s,1.6s;
 }
 
 [data-p-box] {
-    display: inline-block;
-    margin: 2em;
+  display: inline-block;
+  margin: 2em;
 }
 [data-p-btn] {
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    padding: 2px 8px;
-    line-height: 1.4;
-    font-size: 18px;
-    font-weight: 400;
-    margin: 0 8px;
-    min-width: 2em;
-    text-align: center;
-    opacity: 0.5;
-    background-color: #ddd;
-    -webkit-transition: all .3s cubic-bezier(.25,.8,.25,1);
-    -o-transition: all .3s cubic-bezier(.25,.8,.25,1);
-    transition: all .3s cubic-bezier(.25,.8,.25,1);
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 2px;
+  padding: 2px 8px;
+  line-height: 1.4;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 8px;
+  min-width: 2em;
+  text-align: center;
+  opacity: 0.5;
+  background-color: #ddd;
+  -webkit-transition: all .3s cubic-bezier(.25,.8,.25,1);
+  -o-transition: all .3s cubic-bezier(.25,.8,.25,1);
+  transition: all .3s cubic-bezier(.25,.8,.25,1);
 }
 [data-p-btn].enabled {
   opacity: 1;
@@ -429,3 +429,70 @@
   opacity: 1;
   background: #fff;
 }
+
+
+
+
+
+
+[data-spiner] {
+  position: fixed;
+  top: calc( 50% - 70px );
+  left: calc( 50% - 60px );
+  z-index: 10002;
+  /*display: none;*/
+  box-sizing: border-box;
+  padding: 0px;
+  margin: auto;
+  transition: visibility 0s 0.3s;
+}
+[data-spiner]::before {
+  content: "Загрузка...";
+  position: absolute;
+  z-index: 1;
+  top: calc( 50% - 0.85em );
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #000;
+}
+[data-spiner-overlay] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background-color: rgba( 25, 25, 25, 0.6 );
+  user-select: none;
+  transition: opacity .3s cubic-bezier( .25, .85, .25, 1 ),
+  visibility 0s 0s;  
+}
+[data-spiner-show="false"] {  
+  visibility: hidden;
+  transition: visibility 0s 0s;
+}
+[data-spiner-show="false"] [data-spiner-overlay] {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .3s cubic-bezier( .25, .85, .25, 1 ), visibility 0s .3s; 
+}  
+[data-spiner-circle] {
+  box-sizing: border-box;
+  width: 140px;
+  height: 140px;
+  border-radius: 100%; 
+  border: 2px solid #fbd0e6;
+  border-top-color: red;
+  animation: spin 1s infinite linear;
+}
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+}
+
