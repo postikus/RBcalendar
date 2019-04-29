@@ -1,0 +1,122 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+<%
+Env = Request.Session.Env;
+curUserID = Env.GetOptProperty( 'curUserID', null );
+curUser = Env.GetOptProperty( 'curUser', null );
+var event_id = Request.Query.HasProperty('evid') ? Int(Request.Query.GetProperty('evid')) : 0;
+
+function add_to_waiting_list(){
+    requestTypeDoc = OpenDoc( UrlFromDocID( 6140852915953543348 ) ).TopElem;
+    requestDoc = OpenNewDoc( 'x-local://wtv/wtv_request.xmd' );
+    requestDoc.TopElem.person_id = curUserID;
+    tools.common_filling( 'collaborator', requestDoc.TopElem, curUserID, curUser );
+    // requestDoc.TopElem.object_type = 'event';
+    tools.common_filling( 'request_type', requestDoc.TopElem, 6140852915953543348, requestTypeDoc );
+    requestDoc.TopElem.object_id = event_id;
+    // tools.object_filling( requestDoc.TopElem.type, requestDoc.TopElem, event_id, OpenDoc(UrlFromDocID(event_id)) );
+    // tools.admin_access_copying( null, requestDoc.TopElem, event_id, OpenDoc(UrlFromDocID(event_id)) );
+    ms_tools.raise_system_event_env( 'portal_create_request', {
+        'requestTypeID': 6140852915953543348,
+        'requestTypeDoc': OpenDoc(UrlFromDocID(6140852915953543348)),
+        'curUserID': curUserID,
+        'curUser': curUser,
+        'curDoc': OpenDoc(UrlFromDocID(event_id)),
+        'curDocID': event_id,
+        'requestDoc': requestDoc
+    } );
+    requestDoc.BindToDb( DefaultDb );
+    requestDoc.Save();
+}
+
+function access(edu_meth_id){
+    var access = 1;  
+    return access;
+}
+
+if (event_id == 0){
+    Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">Во время регистрации произошла ошибка. Пожалуйста, направьте на адрес <a href="mailto:2000">2000</a> письмо с описание проблемы. <br /> Спасибо!</td></tr></table>')
+}
+else{
+    var event_doc = OpenDoc(UrlFromDocID(event_id)).TopElem;
+    access = access(String(event_doc.education_method_id));
+    var not_in_waiting_list = 0;
+    var not_participated = 0;
+    var waiting_place = 0;
+
+    var waiting_place_array = ArrayDirect(XQuery("sql:
+        SELECT
+        rs.id
+        ,es.start_date
+        FROM
+        requests rs
+        INNER JOIN
+        events es
+        ON es.id = rs.object_id
+        WHERE rs.object_id = "+event_id+" AND rs.status_id != 'cancel'
+    "))
+
+    if (ArrayCount(waiting_place_array) < 10){
+        waiting_place = 1;
+    }
+
+    var in_waiting_list_array = ArrayDirect(XQuery("sql:
+        SELECT
+        rs.id
+        ,es.start_date
+        FROM
+        requests rs
+        INNER JOIN
+        events es
+        ON es.id = rs.object_id
+        WHERE es.education_method_id = "+event_doc.education_method_id+" AND person_id = "+curUserID+" AND rs.status_id != 'cancel'
+    "))
+
+    if (ArrayCount(in_waiting_list_array) == 0){
+        not_in_waiting_list = 1;
+    }
+
+    var participated_array = ArrayDirect(XQuery("sql: 
+        SELECT
+        id
+        ,start_date
+        FROM
+        event_collaborators
+        WHERE education_method_id = "+event_doc.education_method_id+"
+        AND start_date > CONVERT(varchar(10), DATEADD(yy, -1, GETDATE()), 120)
+        AND collaborator_id = "+curUserID+"
+        AND is_collaborator=1
+    "));
+
+    if (ArrayCount(participated_array) == 0){
+        not_participated = 1;
+    }
+
+    if(access == 0){
+        Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">У Вас нет доступа для просмотра данной страницы. Все вопросы, касающиеся участия в данном тренинге, пожалуйста, направляйте на trainings@raiffeisen.ru</td></tr></table>')
+    }
+
+    if(not_participated == 0){
+        Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">Вы уже были зарегистрированы на даты ' + DateNewTime(participated_array[0].start_date) + ' - '+DateNewTime(DateOffset(participated_array[0].start_date, 172800))+'</td></tr></table>')
+    }
+
+    if(not_in_waiting_list == 0){
+        Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">Вы уже находитесь в листе ожидания на даты ' + DateNewTime(in_waiting_list_array[0].start_date) + ' - '+DateNewTime(DateOffset(in_waiting_list_array[0].start_date, 172800))+'</td></tr></table>')
+    }
+
+    if (waiting_place == 0){
+        Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">За время подачи Вашей заявки, лист ожидания был сформирован.</td></tr></table>')
+    }
+
+    if (not_participated == 1 && not_in_waiting_list == 1 && access == 1 && waiting_place == 1){
+        add_to_waiting_list();
+        Response.Write('<table width="100%" height="100%" border=0><tr><td align="center">Вы подали заявку в Лист ожидания.</td></tr></table>')
+    }
+}
+%>
+</body>
+</html>
