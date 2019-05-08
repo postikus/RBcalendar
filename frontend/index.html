@@ -9,8 +9,10 @@
     <link href="./public/libs/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
     <link href="./public/libs/fontawesome-free-5.7.2-web/css/all.css" rel="stylesheet">
     <link href="./public/style.css" rel="stylesheet">
-    <link href="./public/css/style-popup.css" rel="stylesheet">
-    <link href="./public/css/style-update.css" rel="stylesheet">
+    <!-- <link href="./frontend/public/css/style-popup.css" rel="stylesheet"> -->
+    <link href="./frontend/public/css/style-popup-autopref.css" rel="stylesheet">
+    <!-- <link href="./frontend/public/css/style-update.css" rel="stylesheet"> -->
+    <link href="./frontend/public/css/style-update-autopref.css" rel="stylesheet">
     <script src="./public/libs/jquery-3.3.1.min.js"></script>
     <script src="./public/index.js"></script>
 
@@ -27,7 +29,7 @@
             ,cur_date: cur_date
             ,days_in_row: 5
         });
-        rb_calendar.get_events({calendar_obj: this_calendar});
+        //rb_calendar.get_events({calendar_obj: this_calendar});
 
 
 //var a = ('<div class="calendar-event ce-4" style="margin-top: 21px" data-event-color_2>\n' +
@@ -54,7 +56,91 @@
 
 //});
 
+
+    function get_events( args ) {
+      args = args || {};
+      console.log('get_events args:', args);
+
+      var response;
+
+      return new Promise ( function( resolve, reject ) {
+
+        /* TODO fetch */
+        $.ajax({
+          method: "GET",
+          url: "../server/db.json",
+          data: { name: "John", location: "Boston" }
+        })
+        .done( function( msg ) {
+          console.log( "Event data loaded: ", msg );
+          resolve( msg );
+        });
+
+      } );
+        
+        
+    };
+
+var response = get_events( "any" );
+var events = {};
+
+response.then( function( resp ){
+
+    events = resp;
+
+    function _a( idx ) {
+        return '<div class="calendar-event ce-4" data-event-color_2>\n' +
+           '<div class="calendar-event-container container-fluid">\n' +
+               '<div class="row">\n' +
+                   '<div class="col-9">\n' +
+                       '<div class="calendar-event-type "></div>\n' +
+                       '<span class="calendar-event-name">' + resp[idx].name + '</span>\n' +
+                   '</div>\n' +
+                   '<div class="col-3">\n' +
+                       '<div class="calendar-event-icons text-right">\n' + resp[idx].max_pers +
+                       ' <i class="fa fa-users"></i>\n' +
+                   '</div>\n' +
+               '</div>\n' +
+           '</div>\n' +
+       '</div>\n' +
+       '<label for="modalTrigger" data-modalBtn class="calendar-event_btn" data-idx="' + idx + '" title="show more info about ' + resp[idx].name + ' "></label>\n'
+    };
+
+
+    $( $('.calendar-cell-event-wrapper')[6]).append( _a( 0 ) );
+    $( $('.calendar-cell-event-wrapper')[10]).append( _a( 3 ) );
+    $( $('.calendar-cell-event-wrapper')[17]).append( _a( 7 ) );
+      
+} ).catch( function( e ){ console.error( e ); } )
+
 </script>
+
+<script>
+    ;'use strict';
+    ( function( undefined ) {
+        var _legend = window[ '_legend' ] || {};
+
+        _legend.target = document.querySelector( '.filters-container' );
+        _legend.body = document.createDocumentFragment();
+
+        _legend.init = function( opt ) {
+            var _r = document.createElement( 'div' );
+            _r.classList.add( 'row' );
+            _r.innerHTML = '<div class="col-12"><hr><div class="legend-title">Легенда:</div><div>' + opt + ' </div></div>';
+            _legend.body.appendChild( _r );
+            _legend.target.appendChild( _legend.body );
+        };
+        _str = '<div class="legend-list">'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="conf"></div><div class="legend-description"> - Конференция</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="webinar"></div><div class="legend-description"> - Вебинар</div></div>'
+            + '<div class="legend-list-item"><div class="legend-box" data-event-type="training"></div><div class="legend-description"> - Тренинг</div></div>'
+            + '</div>';
+        _legend.init( _str );
+
+    } ( void( 0 ) ) );
+</script>
+
+
 <script src="./public/js/popup.js"></script>
 </body>
 </html>

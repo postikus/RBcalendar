@@ -1,0 +1,503 @@
+.calendar-cell-today {
+  /*background-color: #fbd0e6;*/
+  /*background-color: rgba(255, 229, 243, 0.78);*/
+  background-color: #fbd0e6;
+  background-color: rgba(255, 229, 243, 0.78);
+  /*background-color: #eb2d90;*/
+  background-color: #0300d0;
+}
+.calendar-cell-today .calendar-cell-date{
+	color: #FFF;
+}
+
+.weekday-name {
+  height: 2.3em;
+  font-size: 1em;
+  line-height: 2.2em;
+  vertical-align: middle;
+  padding: 0;
+}
+#calendar-search {
+  font-size: 1em;
+  line-height: 2em;
+  padding: 0 0.7em;
+  height: auto;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.calendar-event-name {
+  font-size: 10px;
+  display: inline;
+  top: -3px;
+  height: 1em;
+  line-height: 1;
+  vertical-align: middle;
+  position: relative;
+}
+.calendar-event-type {
+  height: 17px;
+  /* padding-bottom: 5px; */
+  width: 5px;
+  position: relative;
+  top: 0;
+  margin: -2px 0;
+  font-size: 16px;
+  line-height: 1;
+  display: inline-block;
+}
+
+.calendar-event-icons {
+  font-size: 12px;
+  padding-right: 10px;
+  position: relative;
+  top: 1px;
+}
+
+[data-event-type="webinar"] {
+	background-color: rgb(183, 151, 207);
+  /*background-color: #e9d6ff;*/
+}
+[data-event-type="webinar"] .calendar-event-type {
+  background-color: #4900a3;
+}
+
+[data-event-type="training"] {
+	background-color: rgb(238, 151, 157);
+	/*background-color: #f0adb3;*/
+	/*background-color:#ccfbff;*/
+}
+[data-event-type="training"] .calendar-event-type {
+	background-color: red;
+  /*background-color: #005961;*/
+}
+[data-event-type="conf"] {
+  /*background-color: #f0adb3;*/
+}
+[data-event-type="conf"] .calendar-event-type {
+  /*background-color: red;*/
+}
+
+[data-ex] {
+  background: #eaeaea;
+}
+.filter-row-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.filter-row-container:nth-child(2) {
+  padding-top: 0
+}
+.filter-name {
+  font-weight: 700;
+  color: rgba(119, 119, 119, 0.92);
+}
+.col-9.calendar-mount-container {
+  padding-right: 32px;
+}
+.form-control {
+  width: 235px
+}
+.form-check-label {
+  line-height: 1.1;
+}
+.form-check {
+  margin-left: 16px;
+  font-size: 14px;
+  color: #000;
+}
+.form-check .form-check-input,
+.form-check .form-check-label {
+  cursor: pointer;
+}
+.form-check:hover {
+  color:red;
+}
+.weekday-name {
+  font-size: 14px;
+}
+.btn-outline-secondary {
+  border-color:rgba( 0, 0, 0, 0.03 );
+}
+.btn-outline-secondary:hover {
+  background: red;
+}
+.month-select-name-container_color {
+  color: red;
+  font-weight: 700;
+  position: relative;
+}
+.month-select-name-container {
+  font-weight: 500;
+  position: relative;
+  font-size: 16px;
+}
+.month-select-name-container_color::after {
+	content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 107%;
+    width: 36px;
+    height: 2px;
+    background: red;
+}
+.calendar-event-pers {
+  position: absolute;
+  right: -16px;
+}
+.calendar-event-container .row .col-12 {
+    padding-right: 54px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.legend-title {
+    font-weight: 700;
+    margin-left: -16px;
+    color: rgba(119, 119, 119, 0.92);
+}
+.legend-box {
+    display: inline-block;
+    width: 1em;
+    position: relative;
+    height: 1em;
+    top: 2px;
+    margin-right: 4px;
+  }
+.legend-description {
+  display: inline-block;
+  font-weight: 400;
+  position: relative;
+}
+.month-select-name-container_color::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 90%;
+  width: 3em;
+  height: 2px;
+  background: red;
+}
+
+.list-container,
+.calendar-container {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.4s ease, visibility 0s 0s ease;
+    -o-transition: opacity 0.4s ease, visibility 0s 0s ease;
+    transition: opacity 0.4s ease, visibility 0s 0s ease;
+}
+[data-calendar], [data-list]  {
+    display: inline-block;
+    padding: 0 8px;
+}
+#triggerVievLayout:checked ~ .filters-container [data-calendar] {
+    display: none;
+}
+#triggerVievLayout:not(:checked) ~ .filters-container [data-list] {
+    display: none;
+}
+
+#triggerVievLayout:checked ~ .calendar-mount-container .list-container {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    -webkit-transition: opacity 0.4s ease, visibility 0.4s ease;
+    -o-transition: opacity 0.4s ease, visibility 0.4s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .calendar-container {
+    /*display: none;*/
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    width: 93.7353567%;
+    -webkit-transition: opacity 0.4s ease, visibility 0.4s ease;
+    -o-transition: opacity 0.4s ease, visibility 0.4s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+.list-box__item-header {
+    position: relative;
+    padding: 8px 168px 0 8px;
+    height: 40px;
+}
+.list-box .calendar-event-name {
+    display: inline-block;
+    font-size: 16px;
+    position: static;
+    line-height: 1.5;
+    height: auto;
+    max-height: 1.4em;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    margin: 0;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    font-weight: 700;
+    vertical-align: baseline;
+}
+.list-box .calendar-event_btn {
+    position: absolute;
+    display: inline-block;
+    top: 8px;
+    right: 8px;
+    width: auto;
+    height: auto;
+    border: 1px solid #ccc;
+    left: auto;
+    padding: 0 8px;
+    background-color: rgba(238, 238, 238, 0.53);
+}
+.list-box .calendar-event-pers {
+    position: absolute;
+    right: 100px;
+    top: 8px;
+    font-size: 16px;
+    line-height: 1.1;
+}
+.list-box .calendar-event-icons {
+    font-size: 16px;
+    top: 0;
+    position: static;
+    margin: 4px 8px 0 0;
+}
+.list-box__item-body {
+    min-height: 60px;
+    padding: 8px;
+    -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
+    box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, .1);
+    background-color: rgba(255, 255, 255, 0.4);
+}
+.list-box__item-param {
+    display: inline-block;
+    margin-right: 1em;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box .list-box__item.calendar-event.event-disabled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+    filter: alpha(opacity=20);
+    -moz-opacity: 0.20;
+    -khtml-opacity: 0.20;
+    opacity: 0.20;
+    cursor: default !important;
+}
+.list-box__item {
+    display: block;
+    height: auto;
+    margin: 0 0 16px;
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+
+    -webkit-transform: translateY( 200% );
+
+    -ms-transform: translateY( 200% );
+
+    transform: translateY( 200% );
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    max-height: 0;
+    position: absolute;
+    -webkit-transition: opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease, -webkit-transform 0s 0.4s ease;
+    transition: opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease, -webkit-transform 0s 0.4s ease;
+    -o-transition: transform 0s 0.4s ease, opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease;
+    transition: transform 0s 0.4s ease, opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease;
+    transition: transform 0s 0.4s ease, opacity 0.3s ease, 0.4s 0s visibility ease, 0.4s 0s background-color ease, -webkit-transform 0s 0.4s ease;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item {
+    -webkit-transform: none;
+    -ms-transform: none;
+    transform: none;
+    opacity: 1;
+    max-height: 80px;
+    visibility: visible;
+    position: relative;
+    -webkit-transition-property: opacity, max-height, visibility, -webkit-transform;
+    transition-property: opacity, max-height, visibility, -webkit-transform;
+    -o-transition-property: transform, opacity, max-height, visibility;
+    transition-property: transform, opacity, max-height, visibility;
+    transition-property: transform, opacity, max-height, visibility, -webkit-transform;
+    -webkit-transition-duration: 0.3s, 0.3s, 0s, 0s;
+    -o-transition-duration: 0.3s, 0.3s, 0s, 0s;
+    transition-duration: 0.3s, 0.3s, 0s, 0s;
+    -webkit-transition-delay: 0s, 0s, 0s, 0s;
+    -o-transition-delay: 0s, 0s, 0s, 0s;
+    transition-delay: 0s, 0s, 0s, 0s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item.event-hover {
+    background-color: #555!important;
+    color: #fff;
+    text-shadow: none;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(1) {
+    -webkit-transition-delay:0s,0s;
+    -o-transition-delay:0s,0s;
+    transition-delay:0s,0s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(2) {
+    -webkit-transition-delay:0.3s,0.3s;
+    -o-transition-delay:0.3s,0.3s;
+    transition-delay:0.3s,0.3s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(3) {
+    -webkit-transition-delay:0.4s,0.4s;
+    -o-transition-delay:0.4s,0.4s;
+    transition-delay:0.4s,0.4s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(4) {
+    -webkit-transition-delay:0.5s,0.5s;
+    -o-transition-delay:0.5s,0.5s;
+    transition-delay:0.5s,0.5s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(5) {
+    -webkit-transition-delay:0.6s,0.6s;
+    -o-transition-delay:0.6s,0.6s;
+    transition-delay:0.6s,0.6s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(6) {
+    -webkit-transition-delay:0.7s,0.7s;
+    -o-transition-delay:0.7s,0.7s;
+    transition-delay:0.7s,0.7s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(7) {
+    -webkit-transition-delay:0.8s,0.8s;
+    -o-transition-delay:0.8s,0.8s;
+    transition-delay:0.8s,0.8s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(8) {
+    -webkit-transition-delay:0.9s,0.9s;
+    -o-transition-delay:0.9s,0.9s;
+    transition-delay:0.9s,0.9s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(9) {
+    -webkit-transition-delay:1s,1s;
+    -o-transition-delay:1s,1s;
+    transition-delay:1s,1s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(10) {
+    -webkit-transition-delay:1.1s,1.1s;
+    -o-transition-delay:1.1s,1.1s;
+    transition-delay:1.1s,1.1s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(11) {
+    -webkit-transition-delay:1.2s,1.2s;
+    -o-transition-delay:1.2s,1.2s;
+    transition-delay:1.2s,1.2s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(12) {
+    -webkit-transition-delay:1.3s,1.3s;
+    -o-transition-delay:1.3s,1.3s;
+    transition-delay:1.3s,1.3s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(13) {
+    -webkit-transition-delay:1.4s,1.4s;
+    -o-transition-delay:1.4s,1.4s;
+    transition-delay:1.4s,1.4s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(14) {
+    -webkit-transition-delay:1.5s,1.5s;
+    -o-transition-delay:1.5s,1.5s;
+    transition-delay:1.5s,1.5s;
+}
+#triggerVievLayout:not(:checked) ~ .calendar-mount-container .list-box__item:nth-child(15) {
+    -webkit-transition-delay:1.6s,1.6s;
+    -o-transition-delay:1.6s,1.6s;
+    transition-delay:1.6s,1.6s;
+}
+
+[data-p-box] {
+    display: inline-block;
+    margin: 2em;
+}
+[data-p-btn] {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 2px 8px;
+    line-height: 1.4;
+    font-size: 18px;
+    font-weight: 400;
+    margin: 0 8px;
+    min-width: 2em;
+    text-align: center;
+    opacity: 0.5;
+    background-color: #ddd;
+    -webkit-transition: all .3s cubic-bezier(.25,.8,.25,1);
+    -o-transition: all .3s cubic-bezier(.25,.8,.25,1);
+    transition: all .3s cubic-bezier(.25,.8,.25,1);
+}
+[data-p-btn].enabled {
+    opacity: 1;
+    background-color: #fff;
+    cursor: pointer;
+}
+[data-p-btn].enabled:hover {
+    background-color: red;
+    color: #fff;
+}
+[data-p-btn-num] {
+    opacity: 1;
+    background: #fff;
+}
+
+
+[data-spiner] {
+  position: fixed;
+  top: calc( 50% - 70px );
+  left: calc( 50% - 60px );
+  z-index: 10002;
+  /*display: none;*/
+  box-sizing: border-box;
+  padding: 0px;
+  margin: auto;
+  transition: visibility 0s 0.3s;
+}
+[data-spiner]::before {
+  content: "Загрузка...";
+  position: absolute;
+  z-index: 1;
+  top: calc( 50% - 0.85em );
+  display: block;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #000;
+}
+[data-spiner-overlay] {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 1;
+  background-color: rgba( 25, 25, 25, 0.6 );
+  user-select: none;
+  transition: opacity .3s cubic-bezier( .25, .85, .25, 1 ),
+  visibility 0s 0s;  
+}
+[data-spiner-show="false"] {  
+  visibility: hidden;
+  transition: visibility 0s 0s;
+}
+[data-spiner-show="false"] [data-spiner-overlay] {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .3s cubic-bezier( .25, .85, .25, 1 ), visibility 0s .3s; 
+}  
+[data-spiner-circle] {
+  box-sizing: border-box;
+  width: 140px;
+  height: 140px;
+  border-radius: 100%; 
+  border: 2px solid #fbd0e6;
+  border-top-color: red;
+  animation: spin 1s infinite linear;
+}
+@keyframes spin { 
+  100% { 
+    transform: rotate(360deg); 
+  } 
+}

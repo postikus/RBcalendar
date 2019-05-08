@@ -1,0 +1,72 @@
+#filters-clear {
+    font-size: 16px;
+	background-color: blue;
+}
+
+#filters-clear:hover{
+	color: red;
+}
+
+.legend-box {
+    margin-right: 0;
+}
+.legend-description {
+    padding: 0 8px;
+}
+
+.btn-outline-secondary {
+    border-color: rgba( 0, 0, 0, 0 );
+}
+
+.event-hover {
+    text-shadow: 1px 0px 1px #000;
+}
+.event-hover .calendar-event-container,
+.calendar-event:hover .calendar-event-container {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+}
+
+.m-icons-item {
+    display: inline-block;
+    position: relative;
+}
+
+element.style {
+}
+.m-icons-item:hover span {
+    opacity: 1;
+}
+.m-icons-item span {
+    position: absolute;
+    display: inline-block;
+    background-color: black;
+    padding: 13px;
+    z-index: 1;
+    font-size: 12px;
+    line-height: 1;
+    max-width: 40px;
+    margin: 0px 0px 0 -30px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    /* left: 50%; */
+    white-space: nowrap;
+    /* top: 100%; */
+    opacity: 0;
+    max-height: 0;
+    pointer-events: none;
+    transform: translateX(-26%);
+    transition: opacity 0.2s cubic-bezier( 0.3, 1, 0.3, 1 ),
+    margin-top 0.3s cubic-bezier( 0.3, 1, 0.3, 1 ),
+    max-height 0.2s cubic-bezier( 0.3, 1, 0.3, 1 ),
+    max-width 0.2s cubic-bezier( 0.3, 1, 0.3, 1 );
+}
+.m-icons-item:hover span {
+    opacity: 1;
+    margin-top: -55px;
+    max-height: 100px;
+    max-width: 120px;
+}

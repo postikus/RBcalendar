@@ -1,0 +1,45 @@
+<link href="./frontend/public/libs/normalize-8.0.1/normalize.css" rel="stylesheet">
+<link href="./frontend/public/libs/bootstrap-4.3.1-dist/css/bootstrap.css" rel="stylesheet">
+<link href="./frontend/public/libs/fontawesome-free-5.7.2-web/css/all.css" rel="stylesheet">
+<link href="./frontend/public/style.css" rel="stylesheet">
+<!-- <link href="./frontend/public/css/style-popup.css" rel="stylesheet"> -->
+<link href="./frontend/public/css/style-popup-autopref.css" rel="stylesheet">
+<!-- <link href="./frontend/public/css/style-update.css" rel="stylesheet"> -->
+<link href="./frontend/public/css/style-update-autopref.css" rel="stylesheet">
+<link href="./frontend/public/css/updates.css" rel="stylesheet">
+<script src="./frontend/public/libs/es6-promise.min.js"></script>
+<script src="./frontend/public/libs/es6-promise.auto.min.js"></script>
+<script src="./frontend/public/libs/jquery-3.3.1.min.js"></script>
+<script>
+// $.noConflict(); //dev
+</script>
+
+<script src="./frontend/public/index_dev.js"></script>
+<input type="hidden" id="curUserID" value="<%=curUserID%>">
+<div id="calendar-app"></div>
+<!-- dev
+<%
+function dateFormatter(_date){
+	var new_date = String(_date).split(' ')[0];
+	//Response.Write(new_date);
+	new_date = new_date.split('.');
+	//Response.Write('DATE'+new_date[2]+'-'+new_date[1]+'-'+new_date[0])
+	return (new_date[2]+'-'+new_date[1]+'-'+new_date[0]);
+}
+%>
+-->
+<script>
+    //    $(document).ready(function(){
+
+
+    //var cur_date = new Date('<%=dateFormatter(Date())%>'); //dev
+    var cur_date = new Date(); //dev
+    var this_calendar = rb_calendar.init({
+        mount_id: '#calendar-app'
+        ,cur_date: cur_date
+        ,days_in_row: 5
+        ,json_path: './server/db.json' //dev
+        //,json_path: "./custom_web_template.html?object_id=6673451655755009275" //dev
+    });
+
+</script>
